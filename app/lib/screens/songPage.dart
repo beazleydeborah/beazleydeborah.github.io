@@ -1,0 +1,389 @@
+import './settingsPage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+import 'dart:typed_data';
+import 'package:auto_size_text/auto_size_text.dart';
+
+import 'dart:convert';
+
+import '../models/song.dart';
+
+class SongPage extends StatefulWidget {
+  static const routeName = '/songpage';
+  final Map<String, bool> currentSettings;
+  SongPage(this.currentSettings);
+
+  @override
+  _SongPageState createState() => _SongPageState();
+}
+
+class _SongPageState extends State<SongPage> {
+  List<String> displayedText = [];
+  String displayedTitle = '';
+  List<String> splitLineText = [];
+
+  int searchResults = 0;
+  List<String> searchIndexes = [];
+  List<String> indexData = [];
+  List<Song> songListResults = [];
+  String errorHandle;
+  var autoDisplay = AutoSizeGroup();
+
+  Song currentSong = Song(
+    id: 1,
+    title: 'Overheads Mobile',
+    bookPrefix: '',
+    songNumber: '',
+    chords: [],
+    order: [],
+    lyrics: [],
+    language: '',
+    topic: '',
+    chordNames: '',
+  );
+
+  @override
+  void initState() {
+    loadIndex();
+    loadSong(currentSong);
+
+    super.initState();
+  }
+
+  loadIndex() async {
+    List<String> indexfileData;
+    final ByteData data = await rootBundle.load('assets/index.txt');
+    final uint64list = data.buffer.asUint8List();
+
+    final decoded = utf8.decode(uint64list);
+
+    indexfileData = LineSplitter().convert(decoded);
+
+    // index = data.split(RegExp('KBC-1'));
+    // search(decoded, 'Shout to the Lord');
+    setState(() {
+      indexData = indexfileData;
+    });
+  }
+
+  loadSong(Song currentSong) async {
+    if (currentSong.title != 'Overheads Mobile') {
+      await rootBundle
+          .loadString(
+              'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.TXT')
+          .then((value) {
+        fileToSong(value, currentSong);
+        editLyricsForDisplay(currentSong);
+      }).catchError((error, currentSong) {
+        errorMessage(currentSong);
+      });
+    }
+  }
+
+  //  final String text =
+  errorMessage(Song currentSong) {
+    setState(() {
+      displayedText = [
+        'An error occured with this song',
+        'Navajo not yet supported.',
+        '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
+        '',
+        'Send any other errors to beazleydeborah@gmail.com with the above code'
+      ];
+    });
+  }
+
+  fileToSong(String fileText, Song currentSong) {
+    List<String> splitTextData = LineSplitter().convert(fileText);
+    currentSong.lyrics = [];
+    currentSong.chords = [];
+
+    splitTextData.forEach((line) {
+      line = line.replaceAll('@', '');
+
+      if (line.startsWith('title:')) {
+        currentSong.title = line.substring(6, line.length);
+      } else if (line.startsWith('order:')) {
+        line = line.replaceAll(';', ',');
+
+        List<String> stringOrder = (line.substring(6)).split(',');
+
+        List<int> intOrder = stringOrder.map(int.parse).toList();
+        currentSong.order = intOrder;
+      } else if (line.startsWith('topic:')) {
+        currentSong.topic = line.substring(6);
+      } else if (line.startsWith('chords:')) {
+        currentSong.chordNames = line.substring(7);
+      } else if (line.contains('%')) {
+        currentSong.chords.add(line);
+      } else {
+        currentSong.lyrics.add(line);
+      }
+    });
+
+    String fullTextString =
+        fileText.substring(fileText.indexOf('='), fileText.length);
+    List<String> fullText = LineSplitter().convert(fullTextString);
+    currentSong.fullText = fullText;
+  }
+
+  editLyricsForDisplay(Song currentSong) {
+    List<String> lyricsOnly = [];
+    List<String> lyricsAndChords = [];
+    List<int> order = currentSong.order;
+
+//Lyrics only
+    if (order.isEmpty) {
+      currentSong.lyrics.removeAt(0);
+      currentSong.lyrics.forEach((line) {
+        line = line.replaceAll('=', '');
+        lyricsOnly.add(line);
+      });
+    } else {
+      order.forEach((element) {
+        int verseIndex = 0;
+        currentSong.lyrics.forEach((line) {
+          if (line == '=') {
+            setState(() {
+              verseIndex = verseIndex + 1;
+            });
+          }
+          if (verseIndex == element) {
+            line = line.replaceAll('=', '');
+            lyricsOnly.add(line);
+          }
+        });
+      });
+    }
+    lyricsOnly.removeAt(0);
+
+    setState(() {
+      displayedText = lyricsOnly;
+    });
+//Lyrics and Chords
+    if (this.widget.currentSettings['chords']) {
+      if (order.isEmpty) {
+        currentSong.fullText.removeAt(0);
+        currentSong.fullText.forEach((line) {
+          line = line.replaceAll('=', '');
+          line = line.replaceAll('%', '');
+          lyricsAndChords.add(line);
+        });
+      } else {
+        order.forEach((element) {
+          int verseIndex = 0;
+          currentSong.fullText.forEach((line) {
+            if (line == '=') {
+              setState(() {
+                verseIndex = verseIndex + 1;
+              });
+            }
+            if (verseIndex == element) {
+              line = line.replaceAll('=', '');
+              line = line.replaceAll('%', '');
+              lyricsAndChords.add(line);
+            }
+          });
+        });
+        lyricsAndChords.removeAt(0);
+      }
+
+      setState(() {
+        displayedText = lyricsAndChords;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ScrollController scrollController = ScrollController();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('${currentSong.title}'),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showSearch(
+                          context: context,
+                          delegate: SongSearch(indexData, currentSong))
+                      .then((value) {
+                    setState(() {
+                      currentSong = value;
+                      loadSong(currentSong);
+                    });
+                  });
+                }),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                return Navigator.pushNamed(context, SettingsPage.routeName)
+                    .then((result) {
+                  setState(() {
+                    loadSong(currentSong);
+                  });
+                });
+              },
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.builder(
+              controller: scrollController,
+              itemCount: displayedText.length,
+              itemBuilder: (BuildContext context, int index) {
+                scrollController.jumpTo(0);
+                return AutoSizeText(
+                  '${displayedText[index]}',
+                  style: TextStyle(fontSize: 80),
+                  maxLines: 1,
+                  group: autoDisplay,
+                );
+              }),
+        ));
+  }
+}
+
+class SongSearch extends SearchDelegate<Song> {
+  final List<String> indexData;
+  final Song currentSong;
+  SongSearch(this.indexData, this.currentSong);
+
+  findSongs(String searchText, List<String> indexList) {
+    //finds  all indexString of format KBC-181 and converts to Song
+    String indexSubString = '';
+    String titleSubString = '';
+    String languageSubString = '';
+
+    List<Song> songList = [];
+
+    String query = searchText;
+
+    indexList.forEach((indexLine) {
+      String lowerCaseQuery = query.toLowerCase();
+      String lowerCaseIndexLine = indexLine.toLowerCase();
+
+      if (lowerCaseIndexLine.contains(lowerCaseQuery)) {
+        indexSubString = indexLine.substring(
+          indexLine.lastIndexOf('|') + 1,
+          indexLine.length,
+        );
+        titleSubString = indexLine.substring(
+          indexLine.indexOf('|') + 1,
+          indexLine.indexOf('||'),
+        );
+        languageSubString = indexLine.substring(
+          0,
+          indexLine.indexOf('|'),
+        );
+
+        Song indexedSong = Song(
+          bookPrefix: indexSubString.substring(0, 3),
+          songNumber: indexSubString
+              .substring(indexSubString.indexOf('-') + 1, indexSubString.length)
+              .padLeft(3, '0'),
+          title: titleSubString,
+          language: languageSubString,
+        );
+
+        songList.add(indexedSong);
+      }
+      return null;
+    });
+
+    return songList;
+  }
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return theme.copyWith(
+        inputDecorationTheme: InputDecorationTheme(
+            hintStyle:
+                TextStyle(color: theme.primaryTextTheme.headline6.color)),
+        primaryColor: theme.primaryColor,
+        primaryIconTheme: theme.primaryIconTheme,
+        primaryColorBrightness: theme.primaryColorBrightness,
+        primaryTextTheme: theme.primaryTextTheme,
+        textTheme: theme.textTheme.copyWith(
+            headline6: theme.textTheme.headline6
+                .copyWith(color: theme.primaryTextTheme.headline6.color)));
+  }
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.close),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, currentSong);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<Song> songList = findSongs(query, indexData);
+
+    return ListView.builder(
+      itemCount: songList.length,
+      itemBuilder: (ctx, index) {
+        return Card(
+          color: Theme.of(context).accentColor,
+          child: ListTile(
+            title: Text(
+              songList[index].title,
+              style: TextStyle(fontSize: 24),
+            ),
+            onTap: () {
+              currentSong.title = songList[index].title;
+              currentSong.songNumber = songList[index].songNumber;
+              currentSong.bookPrefix = songList[index].bookPrefix;
+              currentSong.language = songList[index].language;
+              close(context, currentSong);
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<Song> songList = findSongs(query, indexData);
+
+    return ListView.builder(
+      itemCount: songList.length,
+      itemBuilder: (ctx, index) {
+        return Card(
+          child: ListTile(
+            title: Text(
+              songList[index].title,
+              style: TextStyle(fontSize: 24),
+            ),
+            onTap: () {
+              currentSong.title = songList[index].title;
+              currentSong.songNumber = songList[index].songNumber;
+              currentSong.bookPrefix = songList[index].bookPrefix;
+              currentSong.language = songList[index].language;
+              close(context, currentSong);
+            },
+          ),
+        );
+      },
+    );
+  }
+}
