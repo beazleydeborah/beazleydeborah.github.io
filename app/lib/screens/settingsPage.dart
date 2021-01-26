@@ -5,6 +5,7 @@ class SettingsPage extends StatefulWidget {
 
   final Function saveSettings;
   final Map<String, bool> currentSettings;
+
   SettingsPage(this.saveSettings, this.currentSettings);
 
   @override
@@ -50,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 final selectedSettings = {
                   'darkMode': _darkMode,
                   'chords': _chords,
-                  'songNumber': _songNumber
+                  'songNumber': _songNumber,
                 };
 
                 widget.saveSettings(selectedSettings);
@@ -60,13 +61,6 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         body: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'All settings features are in beta.',
-                style: TextStyle(fontSize: 15),
-              ),
-            ),
             Expanded(
               child: ListView(
                 children: [

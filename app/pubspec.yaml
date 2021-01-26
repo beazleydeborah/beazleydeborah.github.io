@@ -21,8 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  
-  
+  shared_preferences: ^0.5.12+4
   auto_size_text: ^2.1.0
   flutter:
     sdk: flutter
@@ -39,9 +38,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: 'assets/images/overheads.png'
-  adaptive_icon_foreground: 'assets/images/overheads.png'
-  adaptive_icon_background: '#191919'
+  image_path: 'assets/images/iconmap.png'
+  adaptive_icon_foreground: 'assets/images/iconmap.png'
+  adaptive_icon_background: '#FFFFFF'
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

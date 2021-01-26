@@ -2,6 +2,8 @@ import './settingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+// import 'package:shared_preferences/shared_preferences.dart';
+
 import 'dart:typed_data';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -12,6 +14,7 @@ import '../models/song.dart';
 class SongPage extends StatefulWidget {
   static const routeName = '/songpage';
   final Map<String, bool> currentSettings;
+
   SongPage(this.currentSettings);
 
   @override
@@ -19,10 +22,6 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
-  List<String> displayedText = [];
-  String displayedTitle = '';
-  List<String> splitLineText = [];
-
   int searchResults = 0;
   List<String> searchIndexes = [];
   List<String> indexData = [];
@@ -30,23 +29,15 @@ class _SongPageState extends State<SongPage> {
   String errorHandle;
   var autoDisplay = AutoSizeGroup();
 
-  Song currentSong = Song(
-    id: 1,
-    title: 'Overheads Mobile',
-    bookPrefix: '',
-    songNumber: '',
-    chords: [],
-    order: [],
-    lyrics: [],
-    language: '',
-    topic: '',
-    chordNames: '',
-  );
+  List<String> displayedText = [];
+  String displayedTitle = '';
+  List<String> splitLineText = [];
+
+  Song currentSong = Song();
 
   @override
   void initState() {
     loadIndex();
-    loadSong(currentSong);
 
     super.initState();
   }
@@ -60,25 +51,44 @@ class _SongPageState extends State<SongPage> {
 
     indexfileData = LineSplitter().convert(decoded);
 
-    // index = data.split(RegExp('KBC-1'));
-    // search(decoded, 'Shout to the Lord');
     setState(() {
       indexData = indexfileData;
     });
   }
 
   loadSong(Song currentSong) async {
+    // final prefs = await SharedPreferences.getInstance();
+    // if (currentSong.title == null) {
+    //   setState(() {
+    //     currentSong = this.widget.initSong;
+    //   });
+    // }
+
     if (currentSong.title != 'Overheads Mobile') {
       await rootBundle
           .loadString(
               'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.TXT')
           .then((value) {
         fileToSong(value, currentSong);
-        editLyricsForDisplay(currentSong);
+        editForDisplay(currentSong);
       }).catchError((error, currentSong) {
         errorMessage(currentSong);
       });
     }
+
+    // final userSong = json.encode({
+    //   'currentSong': {
+    //     'bookPrefix': currentSong.bookPrefix,
+    //     'songNumber': currentSong.songNumber,
+    //     'chords': currentSong.chords,
+    //     'order': currentSong.order,
+    //     'lyrics': currentSong.lyrics,
+    //     'language': currentSong.language,
+    //     'topic': currentSong.topic,
+    //     'chordNames': currentSong.chordNames,
+    //   }
+    // });
+    // prefs.setString('userSong', userSong);
   }
 
   //  final String text =
@@ -128,10 +138,19 @@ class _SongPageState extends State<SongPage> {
     currentSong.fullText = fullText;
   }
 
-  editLyricsForDisplay(Song currentSong) {
+  editForDisplay(Song currentSong) {
     List<String> lyricsOnly = [];
     List<String> lyricsAndChords = [];
+
     List<int> order = currentSong.order;
+
+    if (this.widget.currentSettings['songNumber']) {
+      currentSong.title =
+          '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
+    }
+    setState(() {
+      displayedTitle = currentSong.title;
+    });
 
 //Lyrics only
     if (order.isEmpty) {
@@ -193,21 +212,24 @@ class _SongPageState extends State<SongPage> {
         displayedText = lyricsAndChords;
       });
     }
+    //Title
   }
 
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
+    // Song currentSong = this.widget.initSong;
     return Scaffold(
         appBar: AppBar(
-          title: Text('${currentSong.title}'),
+          title: Text('$displayedTitle'),
           actions: [
             IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
                   showSearch(
                           context: context,
-                          delegate: SongSearch(indexData, currentSong))
+                          delegate: SongSearch(indexData, currentSong,
+                              this.widget.currentSettings))
                       .then((value) {
                     setState(() {
                       currentSong = value;
@@ -229,7 +251,7 @@ class _SongPageState extends State<SongPage> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: ListView.builder(
               controller: scrollController,
               itemCount: displayedText.length,
@@ -247,9 +269,19 @@ class _SongPageState extends State<SongPage> {
 }
 
 class SongSearch extends SearchDelegate<Song> {
+  final Map<String, bool> currentSettings;
   final List<String> indexData;
   final Song currentSong;
-  SongSearch(this.indexData, this.currentSong);
+  String subtitle;
+  SongSearch(this.indexData, this.currentSong, this.currentSettings);
+  songNumberSubtitle(Song song) {
+    String subtitle = '';
+    int songNumber = int.tryParse(song.songNumber);
+    if (currentSettings['songNumber']) {
+      subtitle = '${song.bookPrefix}-$songNumber';
+    }
+    return subtitle;
+  }
 
   findSongs(String searchText, List<String> indexList) {
     //finds  all indexString of format KBC-181 and converts to Song
@@ -341,21 +373,21 @@ class SongSearch extends SearchDelegate<Song> {
     return ListView.builder(
       itemCount: songList.length,
       itemBuilder: (ctx, index) {
-        return Card(
-          color: Theme.of(context).accentColor,
-          child: ListTile(
-            title: Text(
-              songList[index].title,
-              style: TextStyle(fontSize: 24),
-            ),
-            onTap: () {
-              currentSong.title = songList[index].title;
-              currentSong.songNumber = songList[index].songNumber;
-              currentSong.bookPrefix = songList[index].bookPrefix;
-              currentSong.language = songList[index].language;
-              close(context, currentSong);
-            },
+        return ListTile(
+          title: Text(
+            songList[index].title,
+            style: TextStyle(fontSize: 24),
           ),
+          subtitle: currentSettings['songNumber'] == true
+              ? Text(songNumberSubtitle(songList[index]))
+              : null,
+          onTap: () {
+            currentSong.title = songList[index].title;
+            currentSong.songNumber = songList[index].songNumber;
+            currentSong.bookPrefix = songList[index].bookPrefix;
+            currentSong.language = songList[index].language;
+            close(context, currentSong);
+          },
         );
       },
     );
@@ -374,6 +406,9 @@ class SongSearch extends SearchDelegate<Song> {
               songList[index].title,
               style: TextStyle(fontSize: 24),
             ),
+            subtitle: currentSettings['songNumber'] == true
+                ? Text(songNumberSubtitle(songList[index]))
+                : null,
             onTap: () {
               currentSong.title = songList[index].title;
               currentSong.songNumber = songList[index].songNumber;

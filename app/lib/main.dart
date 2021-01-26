@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+
 import './screens/songPage.dart';
-
 import './screens/settingsPage.dart';
+// import './models/song.dart';
+// import './sharedPreferences.dart';
 
-void main() {
-  runApp(MyApp());
+main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await sharedPrefs.init();
+
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -44,7 +52,6 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.light,
           primarySwatch: Colors.indigo,
           primaryColor: Color(0xFF010066),
-          accentColor: Colors.white,
         );
       });
   }
