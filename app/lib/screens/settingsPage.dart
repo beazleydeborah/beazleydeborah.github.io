@@ -43,10 +43,10 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Settings Page'),
+          title: const Text('Settings Page'),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.save),
+              icon: const Icon(Icons.save),
               onPressed: () {
                 final selectedSettings = {
                   'darkMode': _darkMode,
@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 children: [
                   _buildSwitchListTile(
                       'Dark Mode',
-                      'Changes theme to dark for better night viewing.',
+                      'Changes theme to dark for better night viewing',
                       _darkMode, (newValue) {
                     setState(() {
                       _darkMode = newValue;
@@ -85,10 +85,26 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(() {
                       _songNumber = newValue;
                     });
-                  })
+                  }),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(14.0, 0, 0, 0),
+                    child: Text(
+                      '* Turn device sideways for larger font',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Please send any suggestions or errors to: beazleydeborah@gmail.com',
+                textAlign: TextAlign.center,
+              ),
+            )
           ],
         ));
   }

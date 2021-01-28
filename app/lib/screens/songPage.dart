@@ -91,7 +91,6 @@ class _SongPageState extends State<SongPage> {
     // prefs.setString('userSong', userSong);
   }
 
-  //  final String text =
   errorMessage(Song currentSong) {
     setState(() {
       displayedText = [
@@ -145,8 +144,10 @@ class _SongPageState extends State<SongPage> {
     List<int> order = currentSong.order;
 
     if (this.widget.currentSettings['songNumber']) {
-      currentSong.title =
-          '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
+      setState(() {
+        currentSong.title =
+            '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
+      });
     }
     setState(() {
       displayedTitle = currentSong.title;
@@ -231,6 +232,7 @@ class _SongPageState extends State<SongPage> {
                           delegate: SongSearch(indexData, currentSong,
                               this.widget.currentSettings))
                       .then((value) {
+                    scrollController.jumpTo(0);
                     setState(() {
                       currentSong = value;
                       loadSong(currentSong);
@@ -256,7 +258,6 @@ class _SongPageState extends State<SongPage> {
               controller: scrollController,
               itemCount: displayedText.length,
               itemBuilder: (BuildContext context, int index) {
-                scrollController.jumpTo(0);
                 return AutoSizeText(
                   '${displayedText[index]}',
                   style: TextStyle(fontSize: 80),
