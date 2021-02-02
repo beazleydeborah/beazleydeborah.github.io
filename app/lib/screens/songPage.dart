@@ -65,15 +65,17 @@ class _SongPageState extends State<SongPage> {
     // }
 
     if (currentSong.title != 'Overheads Mobile') {
-      await rootBundle
-          .loadString(
-              'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.TXT')
-          .then((value) {
-        fileToSong(value, currentSong);
-        editForDisplay(currentSong);
-      }).catchError((error, currentSong) {
-        errorMessage(currentSong);
-      });
+      try {
+        await rootBundle
+            .loadString(
+                'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.TXT')
+            .then((value) {
+          fileToSong(value, currentSong);
+        });
+      } catch (e) {
+        print(e);
+        error(currentSong);
+      }
     }
 
     // final userSong = json.encode({
@@ -91,14 +93,16 @@ class _SongPageState extends State<SongPage> {
     // prefs.setString('userSong', userSong);
   }
 
-  errorMessage(Song currentSong) {
+  error(Song currentSong) {
     setState(() {
       displayedText = [
         'An error occured with this song',
         'Navajo not yet supported.',
         '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
         '',
-        'Send any other errors to beazleydeborah@gmail.com with the above code'
+        'Send any other errors to:',
+        'beazleydeborah@gmail.com ',
+        'with the above song number'
       ];
     });
   }
@@ -135,6 +139,8 @@ class _SongPageState extends State<SongPage> {
         fileText.substring(fileText.indexOf('='), fileText.length);
     List<String> fullText = LineSplitter().convert(fullTextString);
     currentSong.fullText = fullText;
+
+    editForDisplay(currentSong);
   }
 
   editForDisplay(Song currentSong) {
@@ -154,8 +160,7 @@ class _SongPageState extends State<SongPage> {
     });
 
 //Lyrics only
-    if (order.isEmpty) {
-      currentSong.lyrics.removeAt(0);
+    if (order == null) {
       currentSong.lyrics.forEach((line) {
         line = line.replaceAll('=', '');
         lyricsOnly.add(line);
@@ -183,7 +188,7 @@ class _SongPageState extends State<SongPage> {
     });
 //Lyrics and Chords
     if (this.widget.currentSettings['chords']) {
-      if (order.isEmpty) {
+      if (order == null) {
         currentSong.fullText.removeAt(0);
         currentSong.fullText.forEach((line) {
           line = line.replaceAll('=', '');
