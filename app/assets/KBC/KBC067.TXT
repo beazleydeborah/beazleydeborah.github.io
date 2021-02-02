@@ -1,4 +1,5 @@
 A Mighty Fortress Is Our God
+topic:hymn
 =
 A mighty fortress is our God,
 A bulwark never failing;

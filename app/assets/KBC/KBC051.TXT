@@ -1,5 +1,6 @@
 title:1 John 1:9, 10
 order:1,2,1
+topic:scripture
 =
          D        Bm%
 If we confess our sins
