@@ -1,9 +1,9 @@
 Hallelujah, What a Savior! (Cohen)
 order: 1,2,3,2,4,2
 =
-C                a%
+C                A%
 "Man of Sorrows! what a name
-C              a% 
+C              A% 
 for the Son of God who came
 F              G%
 ruined sinners to reclaim! 
@@ -11,21 +11,21 @@ ruined sinners to reclaim!
 Hallelujah!
 C                 F        G%
 Bearing shame and scoffing rude, 
-a              F%
+A              F%
 in my place condemned He stood;
 E                a%
 sealed my pardon with His blood;
      F%
 Hallelujah!
 =
-     F           a%
+     F           A%
 Hallelujah, Hallelujah,
-     F             C-G-C-a-C-a%
+     F             C-G-C-A-C-A%
 Hallelujah, what a Savior!
 =
-C                a%
+C                A%
 Guilty, vile and helpless we;
-C                a%
+C                A%
 Spotless Lamb of God was He;
 F                G%
 "Full atonement" can it be.
@@ -33,16 +33,16 @@ F                G%
 Hallelujah!
 C             F     G%
 Lifted up was He to die,
- a                F%
+ A                F%
 "It is finished," was His cry;
-E               a%
+E               A%
 now in heaven exalted high;
      F%
 Hallelujah!
 =
-C                a%
+C                A%
 "Man of Sorrows! what a name
-C              a% 
+C              A% 
 for the Son of God who came
 F              G%
 ruined sinners to reclaim! 
@@ -50,9 +50,9 @@ ruined sinners to reclaim!
 Hallelujah!
 C                  F        G%
 When He comes, our glorious King, 
-a                F%
+A                F%
 all His ransomed home to bring,
-E              a%
+E              A%
 then anew this song we'll sing:
      F%
 Hallelujah!
