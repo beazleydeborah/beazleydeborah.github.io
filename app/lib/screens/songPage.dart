@@ -39,6 +39,8 @@ class _SongPageState extends State<SongPage> {
   void initState() {
     loadIndex();
 
+    loadSong(currentSong);
+
     super.initState();
   }
 
@@ -58,13 +60,11 @@ class _SongPageState extends State<SongPage> {
 
   loadSong(Song currentSong) async {
     // final prefs = await SharedPreferences.getInstance();
-    // if (currentSong.title == null) {
-    //   setState(() {
-    //     currentSong = this.widget.initSong;
-    //   });
-    // }
-
-    if (currentSong.title != 'Overheads Mobile') {
+    if (currentSong.title == null) {
+      setState(() {
+        currentSong = Song(title: 'Overheads Mobile');
+      });
+    } else {
       try {
         await rootBundle
             .loadString(
@@ -94,17 +94,23 @@ class _SongPageState extends State<SongPage> {
   }
 
   error(Song currentSong) {
-    setState(() {
-      displayedText = [
-        'An error occured with this song',
-        'Navajo not yet supported.',
-        '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
-        '',
-        'Send any other errors to:',
-        'beazleydeborah@gmail.com ',
-        'with the above song number'
-      ];
-    });
+    if (currentSong.bookPrefix == null) {
+      setState(() {
+        currentSong = Song();
+      });
+    } else {
+      setState(() {
+        displayedText = [
+          'An error occured with this song',
+          'Navajo not yet supported.',
+          '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
+          '',
+          'Send any other errors to:',
+          'beazleydeborah@gmail.com ',
+          'with the above song number'
+        ];
+      });
+    }
   }
 
   fileToSong(String fileText, Song currentSong) {
@@ -155,48 +161,54 @@ class _SongPageState extends State<SongPage> {
             '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
       });
     }
+    print(currentSong.title);
     setState(() {
       displayedTitle = currentSong.title;
     });
 
 //Lyrics only
-    if (order == null) {
-      currentSong.lyrics.forEach((line) {
-        line = line.replaceAll('=', '');
-        lyricsOnly.add(line);
-      });
-    } else {
-      order.forEach((element) {
-        int verseIndex = 0;
+    if (!this.widget.currentSettings['chords']) {
+      if (currentSong.order == null) {
+        currentSong.lyrics.removeAt(0);
         currentSong.lyrics.forEach((line) {
-          if (line == '=') {
-            setState(() {
-              verseIndex = verseIndex + 1;
-            });
-          }
-          if (verseIndex == element) {
-            line = line.replaceAll('=', '');
-            lyricsOnly.add(line);
-          }
+          line = line.replaceAll('=', '');
+          lyricsOnly.add(line);
+          print(line);
         });
+      } else {
+        currentSong.order.forEach((element) {
+          int verseIndex = 0;
+          currentSong.lyrics.forEach((line) {
+            if (line == '=') {
+              setState(() {
+                verseIndex = verseIndex + 1;
+              });
+            }
+            if (verseIndex == element) {
+              line = line.replaceAll('=', '');
+              lyricsOnly.add(line);
+            }
+          });
+        });
+      }
+      lyricsOnly.removeAt(0);
+
+      setState(() {
+        displayedText = lyricsOnly;
       });
     }
-    lyricsOnly.removeAt(0);
-
-    setState(() {
-      displayedText = lyricsOnly;
-    });
 //Lyrics and Chords
     if (this.widget.currentSettings['chords']) {
-      if (order == null) {
+      if (currentSong.order == null) {
         currentSong.fullText.removeAt(0);
         currentSong.fullText.forEach((line) {
           line = line.replaceAll('=', '');
           line = line.replaceAll('%', '');
           lyricsAndChords.add(line);
+          print(line);
         });
       } else {
-        order.forEach((element) {
+        currentSong.order.forEach((element) {
           int verseIndex = 0;
           currentSong.fullText.forEach((line) {
             if (line == '=') {
@@ -218,7 +230,6 @@ class _SongPageState extends State<SongPage> {
         displayedText = lyricsAndChords;
       });
     }
-    //Title
   }
 
   @override
@@ -277,7 +288,7 @@ class _SongPageState extends State<SongPage> {
 class SongSearch extends SearchDelegate<Song> {
   final Map<String, bool> currentSettings;
   final List<String> indexData;
-  final Song currentSong;
+  Song currentSong;
   String subtitle;
   SongSearch(this.indexData, this.currentSong, this.currentSettings);
   songNumberSubtitle(Song song) {
@@ -324,6 +335,12 @@ class SongSearch extends SearchDelegate<Song> {
               .padLeft(3, '0'),
           title: titleSubString,
           language: languageSubString,
+          order: null,
+          chordNames: null,
+          chords: null,
+          fullText: null,
+          lyrics: null,
+          topic: null,
         );
 
         songList.add(indexedSong);
@@ -388,10 +405,8 @@ class SongSearch extends SearchDelegate<Song> {
               ? Text(songNumberSubtitle(songList[index]))
               : null,
           onTap: () {
-            currentSong.title = songList[index].title;
-            currentSong.songNumber = songList[index].songNumber;
-            currentSong.bookPrefix = songList[index].bookPrefix;
-            currentSong.language = songList[index].language;
+            currentSong = songList[index];
+
             close(context, currentSong);
           },
         );
@@ -416,10 +431,8 @@ class SongSearch extends SearchDelegate<Song> {
                 ? Text(songNumberSubtitle(songList[index]))
                 : null,
             onTap: () {
-              currentSong.title = songList[index].title;
-              currentSong.songNumber = songList[index].songNumber;
-              currentSong.bookPrefix = songList[index].bookPrefix;
-              currentSong.language = songList[index].language;
+              currentSong = songList[index];
+
               close(context, currentSong);
             },
           ),
