@@ -1,4 +1,5 @@
 Hallelujah, What a Savior
+order: 1,2,3,2,4,2
 =
 A                 F#m%
 Man of sorrows what a name
@@ -39,11 +40,14 @@ Now in Heav'n exalted high,
      F#m%
 Hallelujah!
 =
-      D           F#m%
-Hallelujah, hallelujah,
-      D             A-E-A%
-Hallelujah, what a Savior!
-=
+A                 F#m%
+Man of sorrows what a name
+A                 F#m%
+For the Son of God who came
+D                 E%
+Ruined sinners to reclaim 
+     A    E%
+Hallelujah!
 A                  D       E%
 When He comes our glorious King
 F#m               D%
@@ -52,8 +56,5 @@ E               C#%
 Then anew this song we'll sing
       F#m%
 Hallelujah!
-      D           F#m%
-Hallelujah, hallelujah,
-      D             A-E-A%
-Hallelujah, what a Savior!
+
 
