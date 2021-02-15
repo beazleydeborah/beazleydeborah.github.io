@@ -2,6 +2,7 @@ class Song {
   int id;
   String bookPrefix;
   String title;
+  String subTitle;
   String songNumber;
   List<String> lyrics;
   String language;
@@ -15,6 +16,7 @@ class Song {
     this.id,
     this.bookPrefix,
     this.title,
+    this.subTitle,
     this.songNumber,
     this.lyrics,
     this.language,

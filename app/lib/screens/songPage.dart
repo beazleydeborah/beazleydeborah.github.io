@@ -132,6 +132,8 @@ class _SongPageState extends State<SongPage> {
         currentSong.order = intOrder;
       } else if (line.startsWith('topic:')) {
         currentSong.topic = line.substring(6);
+      } else if (line.startsWith('subtitle:')) {
+        currentSong.subTitle = line.substring(9);
       } else if (line.startsWith('chords:')) {
         currentSong.chordNames = line.substring(7);
       } else if (line.contains('%')) {
@@ -335,6 +337,7 @@ class SongSearch extends SearchDelegate<Song> {
               .padLeft(3, '0'),
           title: titleSubString,
           language: languageSubString,
+          subTitle: null,
           order: null,
           chordNames: null,
           chords: null,
