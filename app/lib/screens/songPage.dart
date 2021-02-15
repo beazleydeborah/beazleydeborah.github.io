@@ -155,8 +155,6 @@ class _SongPageState extends State<SongPage> {
     List<String> lyricsOnly = [];
     List<String> lyricsAndChords = [];
 
-    List<int> order = currentSong.order;
-
     if (this.widget.currentSettings['songNumber']) {
       setState(() {
         currentSong.title =
