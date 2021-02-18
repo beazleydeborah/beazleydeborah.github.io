@@ -41,6 +41,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedSettings = {
+      'darkMode': _darkMode,
+      'chords': _chords,
+      'songNumber': _songNumber,
+    };
     return Scaffold(
         appBar: AppBar(
           title: const Text('Settings Page'),
@@ -48,12 +53,6 @@ class _SettingsPageState extends State<SettingsPage> {
             IconButton(
               icon: const Icon(Icons.save),
               onPressed: () {
-                final selectedSettings = {
-                  'darkMode': _darkMode,
-                  'chords': _chords,
-                  'songNumber': _songNumber,
-                };
-
                 widget.saveSettings(selectedSettings);
               },
             )

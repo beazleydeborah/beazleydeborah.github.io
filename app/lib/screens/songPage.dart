@@ -169,7 +169,6 @@ class _SongPageState extends State<SongPage> {
 //Lyrics only
     if (!this.widget.currentSettings['chords']) {
       if (currentSong.order == null) {
-        currentSong.lyrics.removeAt(0);
         currentSong.lyrics.forEach((line) {
           line = line.replaceAll('=', '');
           lyricsOnly.add(line);
@@ -308,13 +307,12 @@ class SongSearch extends SearchDelegate<Song> {
 
     List<Song> songList = [];
 
-    String query = searchText;
+    String formattedQuery = formatQuery(searchText);
 
     indexList.forEach((indexLine) {
-      String lowerCaseQuery = query.toLowerCase();
-      String lowerCaseIndexLine = indexLine.toLowerCase();
+      String formattedIndexLine = indexLine.toLowerCase();
 
-      if (lowerCaseIndexLine.contains(lowerCaseQuery)) {
+      if (formattedIndexLine.contains(formattedQuery)) {
         indexSubString = indexLine.substring(
           indexLine.lastIndexOf('|') + 1,
           indexLine.length,
@@ -350,6 +348,23 @@ class SongSearch extends SearchDelegate<Song> {
     });
 
     return songList;
+  }
+
+  formatQuery(String query) {
+    String formattedQuery;
+
+    query = query.toLowerCase();
+
+    // query = query.replaceAll(RegExp('(\:|,|;|\?|\.|_|\!|-| )',caseSensitive: false), "(\\:|,|;|\\?|\\.|\\!|-| )");
+    query = query.replaceAll(RegExp('(�|,|-)', caseSensitive: false), "");
+
+    // 1st, 2nd, 3rd Bible references
+    query = query.replaceAll(RegExp('1st', caseSensitive: false), "1");
+    query = query.replaceAll(RegExp('2nd', caseSensitive: false), "2");
+    query = query.replaceAll(RegExp('3rd', caseSensitive: false), "3");
+
+    formattedQuery = query;
+    return formattedQuery;
   }
 
   @override
@@ -397,19 +412,21 @@ class SongSearch extends SearchDelegate<Song> {
     return ListView.builder(
       itemCount: songList.length,
       itemBuilder: (ctx, index) {
-        return ListTile(
-          title: Text(
-            songList[index].title,
-            style: TextStyle(fontSize: 24),
-          ),
-          subtitle: currentSettings['songNumber'] == true
-              ? Text(songNumberSubtitle(songList[index]))
-              : null,
-          onTap: () {
-            currentSong = songList[index];
+        return Card(
+          child: ListTile(
+            title: Text(
+              songList[index].title,
+              style: TextStyle(fontSize: 24),
+            ),
+            subtitle: currentSettings['songNumber'] == true
+                ? Text(songNumberSubtitle(songList[index]))
+                : null,
+            onTap: () {
+              currentSong = songList[index];
 
-            close(context, currentSong);
-          },
+              close(context, currentSong);
+            },
+          ),
         );
       },
     );
