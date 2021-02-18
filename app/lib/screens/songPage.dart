@@ -33,7 +33,8 @@ class _SongPageState extends State<SongPage> {
   String displayedTitle = '';
   List<String> splitLineText = [];
 
-  Song currentSong = Song();
+  Song currentSong =
+      Song(title: 'Overheads Mobile', bookPrefix: 'KBC', songNumber: '000');
 
   @override
   void initState() {
@@ -60,22 +61,17 @@ class _SongPageState extends State<SongPage> {
 
   loadSong(Song currentSong) async {
     // final prefs = await SharedPreferences.getInstance();
-    if (currentSong.title == null) {
-      setState(() {
-        currentSong = Song(title: 'Overheads Mobile');
+
+    try {
+      await rootBundle
+          .loadString(
+              'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.TXT')
+          .then((value) {
+        fileToSong(value, currentSong);
       });
-    } else {
-      try {
-        await rootBundle
-            .loadString(
-                'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.TXT')
-            .then((value) {
-          fileToSong(value, currentSong);
-        });
-      } catch (e) {
-        print(e);
-        error(currentSong);
-      }
+    } catch (e) {
+      print(e);
+      error(currentSong);
     }
 
     // final userSong = json.encode({
@@ -161,18 +157,19 @@ class _SongPageState extends State<SongPage> {
             '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
       });
     }
-    print(currentSong.title);
+
     setState(() {
       displayedTitle = currentSong.title;
     });
 
 //Lyrics only
     if (!this.widget.currentSettings['chords']) {
+      currentSong.fullText.removeWhere((line) => line.contains('%'));
       if (currentSong.order == null) {
-        currentSong.lyrics.forEach((line) {
+        currentSong.fullText.forEach((line) {
           line = line.replaceAll('=', '');
+
           lyricsOnly.add(line);
-          print(line);
         });
       } else {
         currentSong.order.forEach((element) {
@@ -191,7 +188,6 @@ class _SongPageState extends State<SongPage> {
         });
       }
       lyricsOnly.removeAt(0);
-
       setState(() {
         displayedText = lyricsOnly;
       });
@@ -204,7 +200,6 @@ class _SongPageState extends State<SongPage> {
           line = line.replaceAll('=', '');
           line = line.replaceAll('%', '');
           lyricsAndChords.add(line);
-          print(line);
         });
       } else {
         currentSong.order.forEach((element) {
