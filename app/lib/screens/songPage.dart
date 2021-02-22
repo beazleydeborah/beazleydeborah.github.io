@@ -305,7 +305,7 @@ class SongSearch extends SearchDelegate<Song> {
     String formattedQuery = formatQuery(searchText);
 
     indexList.forEach((indexLine) {
-      String formattedIndexLine = indexLine.toLowerCase();
+      String formattedIndexLine = formatIndexLine(indexLine);
 
       if (formattedIndexLine.contains(formattedQuery)) {
         indexSubString = indexLine.substring(
@@ -343,6 +343,16 @@ class SongSearch extends SearchDelegate<Song> {
     });
 
     return songList;
+  }
+
+  formatIndexLine(String indexLine) {
+    String formattedIndexLine;
+    indexLine = indexLine.toLowerCase();
+    indexLine =
+        indexLine.replaceAll(RegExp(r'(�|,|-)', caseSensitive: false), "");
+
+    formattedIndexLine = indexLine;
+    return formattedIndexLine;
   }
 
   formatQuery(String query) {
