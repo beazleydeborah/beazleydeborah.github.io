@@ -1,5 +1,5 @@
 subtitle:Go Tell It On the Mountain
-order:1,2,1,1̜,1,4,1,e̜,1,6,1
+order:1,2,1,1̜,1,4,1,5,1,6,1
 language:navajo
 =
 Dził ghá̜á̜’ góó  baa  da hoł ne’,

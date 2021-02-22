@@ -1,6 +1,6 @@
 title:God Naa Áhályá̜a̜ Doo
 subtitle:God Will Take Care of You
-order:1,2,3,2,4,2,e̜,2,6,2
+order:1,2,3,2,4,2,5,2,6,2
 language:navajo
 =
 T’áadoo nił yé’í hinínáa doo,
