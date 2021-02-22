@@ -1,4 +1,5 @@
 Psalm 45:1-4
+order:1,2,3,2,1
 =
    D          Bm7         Em7    A7%
 My heart overflows with a good theme
@@ -28,12 +29,3 @@ And in Thy majesty ride on victoriously
 For the cause of truth and meekness
     A7 4-3  D-D7%
 And righteousness
-=
-Grace is poured out upon Thy lips
-Therefore God has blessed Thee forever
-Forever
-=
-My heart overflows with a good theme
-I address my verse to the King
-My tongue is the pen of a ready writer
-Thou art fairer than the sons of men

@@ -1,4 +1,5 @@
 I Can Only Imagine
+order:1,2,3,4,2,3
 =
             D%
 I can only imagine what it will be like
@@ -49,7 +50,7 @@ I can only imagine
 I can only imagine
 =
 G%
-Surrounded by You glory
+Surrounded by Your glory
 A%
 What will my heart feel
         D%
