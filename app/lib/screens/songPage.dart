@@ -110,13 +110,13 @@ class _SongPageState extends State<SongPage> {
   }
 
   fileToSong(String fileText, Song currentSong) {
+    fileText = fileText.replaceAll('�', '');
+    fileText = fileText.replaceAll('@', '');
     List<String> splitTextData = LineSplitter().convert(fileText);
     currentSong.lyrics = [];
     currentSong.chords = [];
 
     splitTextData.forEach((line) {
-      line = line.replaceAll('@', '');
-
       if (line.startsWith('title:')) {
         currentSong.title = line.substring(6, line.length);
       } else if (line.startsWith('order:')) {

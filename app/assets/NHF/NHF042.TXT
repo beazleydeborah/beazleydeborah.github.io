@@ -1,5 +1,5 @@
 title:Doo Iits’a’í Da Hodííyi̜i̜d
-subtitle:Silent Night\Á  Holy Night\Á
+subtitle:Silent Night Holy Night
 language:navajo
 order:1,2,3,4
 =
