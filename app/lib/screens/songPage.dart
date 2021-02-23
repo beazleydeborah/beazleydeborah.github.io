@@ -98,7 +98,6 @@ class _SongPageState extends State<SongPage> {
       setState(() {
         displayedText = [
           'An error occured with this song',
-          'Navajo not yet supported.',
           '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
           '',
           'Send any other errors to:',
