@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -26,18 +26,23 @@ class _MyAppState extends State<MyApp> {
 
   Future<bool> _getSettingsAndSong() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     Settings savedSettings;
+
     Song savedSong;
 
-    final rawSettingsJson = prefs.getString('settings') ?? '';
-    Map<String, dynamic> settingsMap = jsonDecode(rawSettingsJson);
+    final rawSettingsJson = prefs.getString('settings') ??
+        '{"darkMode":false,"chords":false,"songNumber":false}';
+
+    Map<String, dynamic> settingsMap = json.decode(rawSettingsJson);
     savedSettings = Settings(
         chords: settingsMap['chords'],
         darkMode: settingsMap['darkMode'],
         songNumber: settingsMap['songNumber']);
 
-    final rawSongJson = prefs.getString('song') ?? '';
-    Map<String, dynamic> songMap = jsonDecode(rawSongJson);
+    final rawSongJson = prefs.getString('song') ??
+        '{"title":"Overheads Mobile","bookPrefix":"KBC","songNumber":"000"}';
+    Map<String, dynamic> songMap = json.decode(rawSongJson);
     savedSong = Song(
         title: songMap['title'],
         bookPrefix: songMap['bookPrefix'],
@@ -75,7 +80,7 @@ class _MyAppState extends State<MyApp> {
       'darkMode': data.darkMode,
       'songNumber': data.songNumber,
     };
-    String rawJson = jsonEncode(map);
+    String rawJson = json.encode(map);
     prefs.setString('settings', rawJson);
     setState(() {
       settings = settingsData;
@@ -90,7 +95,7 @@ class _MyAppState extends State<MyApp> {
       'bookPrefix': data.bookPrefix,
       'songNumber': data.songNumber,
     };
-    String rawJson = jsonEncode(map);
+    String rawJson = json.encode(map);
     prefs.setString('song', rawJson);
     setState(() {
       song = songData;
