@@ -265,7 +265,7 @@ class _SongPageState extends State<SongPage> {
               itemBuilder: (BuildContext context, int index) {
                 return AutoSizeText(
                   '${displayedText[index]}',
-                  style: TextStyle(fontSize: 80),
+                  style: TextStyle(fontSize: 25),
                   maxLines: 1,
                   group: autoDisplay,
                 );
