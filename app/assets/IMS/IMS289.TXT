@@ -1,5 +1,5 @@
 Who Am I
-ORDER:1,2,3,4,2,3
+order:1,2,3,4,2,3
 =
        G           D/F#            Em7%
 Who am I that the Lord of all the earth
@@ -24,7 +24,7 @@ Not because of what I've done
 But because of who You are
 =
 G         D/F#            Em7%
- I am a flower quickly fading
+I am a flower quickly fading
         D               C%
 Here today and gone tomorrow
     D                 C%

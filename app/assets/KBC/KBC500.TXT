@@ -1,7 +1,7 @@
 KBC Rules Songs
 =
-<b><i>Rule Number One</b></i>
-<br>
+Rule Number One
+
 Rule number one, rule number one,
 And I say just be nice.
 Little children, it's been a long cold lonely winter.
@@ -28,8 +28,8 @@ And I say just be nice.
 Rule number one, rule number one.
 Just be nice, just be nice.
 =
-<b><i>Rule Number Two</b></i>
-<br>
+Rule Number Two
+
 I'm sittin' here all alone,
 Thinkin' what I might have done.
 I thought that I couldn't miss,
@@ -46,16 +46,16 @@ Don't be a fool, it's the second rule.
 It ain't just the staff I love,
 It's the whole camp that I'm thinkin' of!
 =
-<b><i>Rule Number Three</b></i>
-<br>
+Rule Number Three
+
 Obey God and you'll be sitting
 On top of the world!
 =
 Don't be afraid to try the greatest life around.
-     <i>(Obey God, obey God)</i>
+     (Obey God, obey God)
 Not everybody tries it once.
 Those who don't just have to put it down.
-     <i>(Obey God, obey God)</i>
+    (Obey God, obey God)
 One reads His word, turns around, obeys,
 And, baby, that's all there is,
 And you will be amazed!
@@ -63,10 +63,10 @@ You gotta obey God and you're sittin'
 On top of the world!
 =
 Not just a fad cause it's been going on so long.
-     <i>(Obey God, obey God)</i>
+    (Obey God, obey God)
 All the saints going strong.
 They said it couldn't last too long.
-     <i>(Obey God, obey God)</i>
+    (Obey God, obey God)
 They'll eat their words with a fork and spoon,
 And watch us live our lives,
 And sing another tune,
@@ -77,10 +77,10 @@ Obey God and you're
 Sittin' on top of the world.
 =
 So take a lesson from a life-long Christian boy.
-     <i>(Obey God, obey God)</i>
+    (Obey God, obey God)
 Get yourself a Holy Word,
 But don't you treat it like a toy.
-     <i>(Obey God, obey God)</i>
+    (Obey God, obey God)
 Just get away from the other stuff,
 And follow all it says, it will be enough,
 And when you
@@ -90,8 +90,8 @@ On top of the world
 Obey God and you're
 Sittin' on top of the world.
 =
-<b><i>Rule Number Four</b></i>
-<br>
+Rule Number Four
+
 You can serve, you can play,
 Having the time of your life, ooh, ooooh.
 When they come, be unseen.
