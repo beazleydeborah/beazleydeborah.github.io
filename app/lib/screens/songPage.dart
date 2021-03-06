@@ -344,9 +344,7 @@ class SongSearch extends SearchDelegate<Song> {
     String formattedIndexLine;
     indexLine = indexLine.toLowerCase();
     indexLine =
-        indexLine.replaceAll(RegExp(r'(�|,|-)', caseSensitive: false), "");
-    // indexLine =
-    //     indexLine.replaceAll(RegExp(r'(.|?|!)', caseSensitive: false), "");
+        indexLine.replaceAll(RegExp(r'(�|,|-|/s|!)', caseSensitive: false), "");
 
     formattedIndexLine = indexLine;
     return formattedIndexLine;
@@ -358,7 +356,7 @@ class SongSearch extends SearchDelegate<Song> {
     query = query.toLowerCase();
 
     // query = query.replaceAll(RegExp('(\:|,|;|\?|\.|_|\!|-| )',caseSensitive: false), "(\\:|,|;|\\?|\\.|\\!|-| )");
-    query = query.replaceAll(RegExp('(�|,|-)', caseSensitive: false), "");
+    query = query.replaceAll(RegExp('(�|,|-|/s|!)', caseSensitive: false), "");
 
     // 1st, 2nd, 3rd Bible references
     query = query.replaceAll(RegExp('1st', caseSensitive: false), "1");
