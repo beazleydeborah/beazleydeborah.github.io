@@ -10,10 +10,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:convert';
 
 import '../models/song.dart';
+import '../models/settings.dart';
 
 class SongPage extends StatefulWidget {
   static const routeName = '/songpage';
-  final Map<String, bool> currentSettings;
+  final Settings currentSettings;
 
   SongPage(this.currentSettings);
 
@@ -30,7 +31,7 @@ class _SongPageState extends State<SongPage> {
   var autoDisplay = AutoSizeGroup();
 
   List<String> displayedText = [];
-  String displayedTitle = '';
+  String displayedTitle;
   List<String> splitLineText = [];
 
   Song currentSong =
@@ -38,6 +39,7 @@ class _SongPageState extends State<SongPage> {
 
   @override
   void initState() {
+    print(displayedTitle);
     loadIndex();
 
     loadSong(currentSong);
@@ -150,7 +152,7 @@ class _SongPageState extends State<SongPage> {
     List<String> lyricsOnly = [];
     List<String> lyricsAndChords = [];
 
-    if (this.widget.currentSettings['songNumber']) {
+    if (this.widget.currentSettings.songNumber) {
       setState(() {
         currentSong.title =
             '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
@@ -162,7 +164,7 @@ class _SongPageState extends State<SongPage> {
     });
 
 //Lyrics only
-    if (!this.widget.currentSettings['chords']) {
+    if (!this.widget.currentSettings.chords) {
       currentSong.fullText.removeWhere((line) => line.contains('%'));
       if (currentSong.order == null) {
         currentSong.fullText.forEach((line) {
@@ -192,7 +194,7 @@ class _SongPageState extends State<SongPage> {
       });
     }
 //Lyrics and Chords
-    if (this.widget.currentSettings['chords']) {
+    if (this.widget.currentSettings.chords) {
       if (currentSong.order == null) {
         currentSong.fullText.removeAt(0);
         currentSong.fullText.forEach((line) {
@@ -228,7 +230,7 @@ class _SongPageState extends State<SongPage> {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
-    // Song currentSong = this.widget.initSong;
+    print(displayedTitle);
     return Scaffold(
         appBar: AppBar(
           title: Text('$displayedTitle'),
@@ -279,7 +281,7 @@ class _SongPageState extends State<SongPage> {
 }
 
 class SongSearch extends SearchDelegate<Song> {
-  final Map<String, bool> currentSettings;
+  final Settings currentSettings;
   final List<String> indexData;
   Song currentSong;
   String subtitle;
@@ -287,7 +289,7 @@ class SongSearch extends SearchDelegate<Song> {
   songNumberSubtitle(Song song) {
     String subtitle = '';
     int songNumber = int.tryParse(song.songNumber);
-    if (currentSettings['songNumber']) {
+    if (currentSettings.songNumber) {
       subtitle = '${song.bookPrefix}-$songNumber';
     }
     return subtitle;
@@ -349,6 +351,8 @@ class SongSearch extends SearchDelegate<Song> {
     indexLine = indexLine.toLowerCase();
     indexLine =
         indexLine.replaceAll(RegExp(r'(�|,|-)', caseSensitive: false), "");
+    // indexLine =
+    //     indexLine.replaceAll(RegExp(r'(.|?|!)', caseSensitive: false), "");
 
     formattedIndexLine = indexLine;
     return formattedIndexLine;
@@ -404,6 +408,7 @@ class SongSearch extends SearchDelegate<Song> {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
+        query = query;
         close(context, currentSong);
       },
     );
@@ -422,7 +427,7 @@ class SongSearch extends SearchDelegate<Song> {
               songList[index].title,
               style: TextStyle(fontSize: 24),
             ),
-            subtitle: currentSettings['songNumber'] == true
+            subtitle: currentSettings.songNumber == true
                 ? Text(songNumberSubtitle(songList[index]))
                 : null,
             onTap: () {
@@ -449,7 +454,7 @@ class SongSearch extends SearchDelegate<Song> {
               songList[index].title,
               style: TextStyle(fontSize: 24),
             ),
-            subtitle: currentSettings['songNumber'] == true
+            subtitle: currentSettings.songNumber == true
                 ? Text(songNumberSubtitle(songList[index]))
                 : null,
             onTap: () {

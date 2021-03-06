@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 import './screens/songPage.dart';
 import './screens/settingsPage.dart';
-// import './models/song.dart';
-// import './sharedPreferences.dart';
+import './models/settings.dart';
 
 main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await sharedPrefs.init();
-
   runApp(
     MyApp(),
   );
@@ -22,23 +19,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Map<String, bool> _settings = {
-    'darkMode': false,
-    'chords': false,
-    'songNumber': false,
-  };
+  @override
+  void initState() {
+    _getSettings();
+
+    super.initState();
+  }
+
+  Settings settings = Settings(
+    chords: false,
+    darkMode: false,
+    songNumber: false,
+  );
+
   ThemeData theme = ThemeData(
     brightness: Brightness.light,
     primarySwatch: Colors.indigo,
     primaryColor: Color(0xFF010066),
   );
+  void _getSettings() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+  }
 
-  void _setSettings(settingsData) {
+  void _saveSettings(settingsData) async {
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // String userSettings = json.encode(settings);
+    // preferences.setString('settings', userSettings);
     setState(() {
-      _settings = settingsData;
+      settings = settingsData;
     });
 
-    if (_settings['darkMode']) {
+    if (settings.darkMode) {
       setState(() {
         theme = ThemeData(
           brightness: Brightness.dark,
@@ -61,11 +72,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Overheads App',
         theme: theme,
-        home: SongPage(_settings),
+        home: SongPage(settings),
         routes: {
-          SongPage.routeName: (ctx) => SongPage(_settings),
+          SongPage.routeName: (ctx) => SongPage(settings),
           SettingsPage.routeName: (ctx) =>
-              SettingsPage(_setSettings, _settings),
+              SettingsPage(_saveSettings, settings),
         });
   }
 }

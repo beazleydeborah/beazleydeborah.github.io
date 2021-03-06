@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import '../models/settings.dart';
 
 class SettingsPage extends StatefulWidget {
   static const routeName = '/settingspage';
 
   final Function saveSettings;
-  final Map<String, bool> currentSettings;
+  final Settings currentSettings;
 
   SettingsPage(this.saveSettings, this.currentSettings);
 
@@ -13,78 +14,66 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var _darkMode = false;
-  var _chords = false;
-  var _songNumber = false;
-
-  Widget _buildSwitchListTile(
-    String title,
-    String subtitle,
-    bool currentValue,
-    Function updateValue,
-  ) {
-    return SwitchListTile(
-      title: Text(title),
-      value: currentValue,
-      subtitle: Text(subtitle),
-      onChanged: updateValue,
-    );
-  }
+  bool _darkMode = false;
+  bool _chords = false;
+  bool _songNumber = false;
 
   @override
   void initState() {
-    _darkMode = widget.currentSettings['darkMode'];
-    _chords = widget.currentSettings['chords'];
-    _songNumber = widget.currentSettings['songNumber'];
+    _darkMode = widget.currentSettings.darkMode;
+    _chords = widget.currentSettings.chords;
+    _songNumber = widget.currentSettings.songNumber;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final selectedSettings = {
-      'darkMode': _darkMode,
-      'chords': _chords,
-      'songNumber': _songNumber,
-    };
+    final selectedSettings =
+        Settings(darkMode: _darkMode, chords: _chords, songNumber: _songNumber);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Settings Page'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.save),
-              onPressed: () {
-                widget.saveSettings(selectedSettings);
-              },
-            )
-          ],
         ),
         body: Column(
           children: [
             Expanded(
               child: ListView(
                 children: [
-                  _buildSwitchListTile(
-                      'Dark Mode',
-                      'Changes theme to dark for better night viewing',
-                      _darkMode, (newValue) {
-                    setState(() {
-                      _darkMode = newValue;
-                    });
-                  }),
-                  _buildSwitchListTile(
-                      'Chords', 'Adds chords to displayed text', _chords,
-                      (newValue) {
-                    setState(() {
-                      _chords = newValue;
-                    });
-                  }),
-                  _buildSwitchListTile(
-                      'Song Number', 'Shows song numbers', _songNumber,
-                      (newValue) {
-                    setState(() {
-                      _songNumber = newValue;
-                    });
-                  }),
+                  SwitchListTile(
+                      title: Text('Dark Mode'),
+                      subtitle: Text(
+                          'Changes theme to dark for better night viewing'),
+                      value: _darkMode,
+                      onChanged: (value) {
+                        setState(() {
+                          _darkMode = value;
+                          selectedSettings.darkMode = _darkMode;
+                        });
+                        widget.saveSettings(selectedSettings);
+                      }),
+                  SwitchListTile(
+                      title: Text('Chords'),
+                      subtitle: Text('Adds chords to displayed text'),
+                      value: _chords,
+                      onChanged: (value) {
+                        setState(() {
+                          _chords = value;
+                          selectedSettings.chords = _chords;
+                        });
+                        widget.saveSettings(selectedSettings);
+                      }),
+                  SwitchListTile(
+                      title: Text('Song Number'),
+                      subtitle: Text('Shows song numbers'),
+                      value: _songNumber,
+                      onChanged: (value) {
+                        setState(() {
+                          _songNumber = value;
+                          selectedSettings.songNumber = _songNumber;
+                        });
+                        widget.saveSettings(selectedSettings);
+                      }),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(14.0, 0, 0, 0),
                     child: Text(
