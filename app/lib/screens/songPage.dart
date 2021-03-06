@@ -2,8 +2,6 @@ import './settingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-// import 'package:shared_preferences/shared_preferences.dart';
-
 import 'dart:typed_data';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -14,9 +12,11 @@ import '../models/settings.dart';
 
 class SongPage extends StatefulWidget {
   static const routeName = '/songpage';
+  final Function saveSong;
+  final Song song;
   final Settings currentSettings;
 
-  SongPage(this.currentSettings);
+  SongPage(this.saveSong, this.song, this.currentSettings);
 
   @override
   _SongPageState createState() => _SongPageState();
@@ -31,17 +31,16 @@ class _SongPageState extends State<SongPage> {
   var autoDisplay = AutoSizeGroup();
 
   List<String> displayedText = [];
-  String displayedTitle;
+  String displayedTitle = '';
   List<String> splitLineText = [];
 
-  Song currentSong =
-      Song(title: 'Overheads Mobile', bookPrefix: 'KBC', songNumber: '000');
+  Song currentSong = Song();
 
   @override
   void initState() {
-    print(displayedTitle);
+    print(this.widget.song.title);
+    currentSong = this.widget.song;
     loadIndex();
-
     loadSong(currentSong);
 
     super.initState();
@@ -62,8 +61,6 @@ class _SongPageState extends State<SongPage> {
   }
 
   loadSong(Song currentSong) async {
-    // final prefs = await SharedPreferences.getInstance();
-
     try {
       await rootBundle
           .loadString(
@@ -146,22 +143,23 @@ class _SongPageState extends State<SongPage> {
     currentSong.fullText = fullText;
 
     editForDisplay(currentSong);
+    widget.saveSong(currentSong);
   }
 
   editForDisplay(Song currentSong) {
     List<String> lyricsOnly = [];
     List<String> lyricsAndChords = [];
-
+    print(currentSong.title);
     if (this.widget.currentSettings.songNumber) {
       setState(() {
-        currentSong.title =
+        displayedTitle =
             '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
       });
+    } else {
+      setState(() {
+        displayedTitle = currentSong.title;
+      });
     }
-
-    setState(() {
-      displayedTitle = currentSong.title;
-    });
 
 //Lyrics only
     if (!this.widget.currentSettings.chords) {
@@ -229,8 +227,6 @@ class _SongPageState extends State<SongPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScrollController scrollController = ScrollController();
-    print(displayedTitle);
     return Scaffold(
         appBar: AppBar(
           title: Text('$displayedTitle'),
@@ -243,7 +239,6 @@ class _SongPageState extends State<SongPage> {
                           delegate: SongSearch(indexData, currentSong,
                               this.widget.currentSettings))
                       .then((value) {
-                    scrollController.jumpTo(0);
                     setState(() {
                       currentSong = value;
                       loadSong(currentSong);
@@ -266,7 +261,6 @@ class _SongPageState extends State<SongPage> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: ListView.builder(
-              controller: scrollController,
               itemCount: displayedText.length,
               itemBuilder: (BuildContext context, int index) {
                 return AutoSizeText(

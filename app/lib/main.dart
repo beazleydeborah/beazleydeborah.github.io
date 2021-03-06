@@ -6,6 +6,7 @@ import 'dart:convert';
 import './screens/songPage.dart';
 import './screens/settingsPage.dart';
 import './models/settings.dart';
+import './models/song.dart';
 
 main() {
   runApp(
@@ -19,36 +20,32 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    _getSettings();
+  Settings settings;
+  Song song;
+  ThemeData theme;
 
-    super.initState();
-  }
+  Future<bool> _getSettingsAndSong() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Settings savedSettings;
+    Song savedSong;
 
-  Settings settings = Settings(
-    chords: false,
-    darkMode: false,
-    songNumber: false,
-  );
+    final rawSettingsJson = prefs.getString('settings') ?? '';
+    Map<String, dynamic> settingsMap = jsonDecode(rawSettingsJson);
+    savedSettings = Settings(
+        chords: settingsMap['chords'],
+        darkMode: settingsMap['darkMode'],
+        songNumber: settingsMap['songNumber']);
 
-  ThemeData theme = ThemeData(
-    brightness: Brightness.light,
-    primarySwatch: Colors.indigo,
-    primaryColor: Color(0xFF010066),
-  );
-  void _getSettings() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-  }
-
-  void _saveSettings(settingsData) async {
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-    // String userSettings = json.encode(settings);
-    // preferences.setString('settings', userSettings);
+    final rawSongJson = prefs.getString('song') ?? '';
+    Map<String, dynamic> songMap = jsonDecode(rawSongJson);
+    savedSong = Song(
+        title: songMap['title'],
+        bookPrefix: songMap['bookPrefix'],
+        songNumber: songMap['songNumber']);
     setState(() {
-      settings = settingsData;
+      settings = savedSettings;
+      song = savedSong;
     });
-
     if (settings.darkMode) {
       setState(() {
         theme = ThemeData(
@@ -57,7 +54,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.indigo,
         );
       });
-    } else
+    } else {
       setState(() {
         theme = ThemeData(
           brightness: Brightness.light,
@@ -65,18 +62,64 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color(0xFF010066),
         );
       });
+    }
+
+    return savedSong == null && savedSettings == null;
+  }
+
+  void _saveSettings(settingsData) async {
+    Settings data = settingsData;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> map = {
+      'chords': data.chords,
+      'darkMode': data.darkMode,
+      'songNumber': data.songNumber,
+    };
+    String rawJson = jsonEncode(map);
+    prefs.setString('settings', rawJson);
+    setState(() {
+      settings = settingsData;
+    });
+  }
+
+  void _saveSong(songData) async {
+    Song data = songData;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> map = {
+      'title': data.title,
+      'bookPrefix': data.bookPrefix,
+      'songNumber': data.songNumber,
+    };
+    String rawJson = jsonEncode(map);
+    prefs.setString('song', rawJson);
+    setState(() {
+      song = songData;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Overheads App',
-        theme: theme,
-        home: SongPage(settings),
-        routes: {
-          SongPage.routeName: (ctx) => SongPage(settings),
-          SettingsPage.routeName: (ctx) =>
-              SettingsPage(_saveSettings, settings),
+    return FutureBuilder<bool>(
+        future: _getSettingsAndSong(),
+        builder: (buildContext, snapshot) {
+          if (snapshot.hasData) {
+            return MaterialApp(
+                title: 'Overheads App',
+                theme: theme,
+                home: SongPage(_saveSong, song, settings),
+                routes: {
+                  SongPage.routeName: (ctx) =>
+                      SongPage(_saveSong, song, settings),
+                  SettingsPage.routeName: (ctx) =>
+                      SettingsPage(_saveSettings, settings),
+                });
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              ),
+            );
+          }
         });
   }
 }
