@@ -87,7 +87,7 @@ class _SongPageState extends State<SongPage> {
           '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
           '',
           'Send any other errors to:',
-          'beazleydeborah@gmail.com ',
+          'beazleyprograms@gmail.com ',
           'with the above song number'
         ];
       });

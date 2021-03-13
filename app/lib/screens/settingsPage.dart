@@ -89,7 +89,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Please send any suggestions or errors to: beazleydeborah@gmail.com',
+                'Please send any suggestions or errors to: beazleyprograms@gmail.com',
                 textAlign: TextAlign.center,
               ),
             )
