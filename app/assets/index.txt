@@ -1285,11 +1285,88 @@ navajo|How the Fire Fell(Navajo)||Saad éí baa hashne'go shił yá'át'ééh, N
 navajo|T’áá’áłahjį’ shił Hólǫ́|He Abides||Jį́ dóó tł‘ée’go shił hózhǫ́, |NHF-100
 navajo|Níłch’i Diyinii, Diyingo Adiníłdíín |Holy Ghost, with Light Divine||Níłch’i Diyin Nilíinii, |NHF-101
 navajo|Da’oodlání T’ááłá’í Yee Niłdzilii|The Church’s One Foundation||Oodlání t’ááłá’í yee niłdzilii éí Jesus,|NHF-102
+navajo|Doo la’Da\!|No, Not One\!||Doo la’ ak’is Jesusgi át’ée da, |NHF-103
+navajo|Dá’ák’eh Hózhǫ́ǫ́ Góne’|In the Garden||Dá’ák’eh hózhǫ́ogi níyá, |NHF-104
+navajo|Níighahgi |Close to Thee||Diyin God hool’áágóó shíi’ii |NHF-105
+navajo|Ba’jólíigo Bik’eh Hojíl‘í|Trust and Obey||Jesus bil yish’ashgo |NHF-106
+navajo|God Binahji’ Ádaniit’é|Leaning on the Everlasting Arms||God binahji’ ádaniit’éego éí |NHF-107
+navajo|Nizaad Shijéí Bii’ Ndél‘íí’|Thy Word Have I Hid in My Heart||Nizaad éí shá adiníldíín, |NHF-108
+navajo|Diyin God Bizaaad Wooshdlá|I Believe The bible.||God Bizaad éí wooshdlá, |NHF-109
+navajo|Shináá’ Oo’íigo Ánílééh|Open My Eyes, That I May See||Shináá’ oo’íigo ánílééh, |NHF-110
+navajo|Saad Ílíinii|Wonderful Words of Life||God Bizaad il hóshónígíí |NHF-111
+navajo|Bee Il Hózhǫ́|Blessed Be the Fountain ||Baahági ádadzaii bich’i’,|NHF-112
+navajo|Diyin God Yíníta’|Hold to God's Unchanging Hand||Díí k’ad hoozhishígíí  bii’gi |NHF-113
+navajo|Likanii Tsé Bii’ Hóló̜|Honey In The Rock||Shik’is, da’ Jesus bééhonísin? |NHF-114
+navajo|Jesus Hááshííltí|Jesus Paid It All||Jesus shich’i’ haadzíí’, |NHF-115
+navajo|Jesus T’áá’altso Niná’ídlá|Jesus Paid It All ||Jesus diséts’áa’go, |NHF-116
+navajo|Tooh Bits’ádi’nídíín Nahlin|Like A River Glorious||God bibeehodéezyéél|NHF-117
+navajo|Deiniidlánígíí|Our Creed||Diyin nilínígíí|NHF-118
+navajo|Jériko Atiingóó|On the Jericho Road||Jérido atiingóó|NHF-119
+navajo|Ak’ihojidlí Naaltin Doo|There Shall Be Showeres of Blessing||Ak’ihojidlí naaltindoo, |NHF-120
+navajo|Jesus Bízhi’ !díínílta’|Take the Name of Jesus with You||Yínííl nílíigo yínáalii,|NHF-121
+navajo|T’áá Náásgóó Iinídlá|Keep on Believing||K’os dilhil hak’iilzho’go Doo hoot’íi da haleeh,|NHF-122
+navajo|Odla’ T’óó Bee Ajoodlaah|Faith Is Just Believing||God áníinii joodláago éí oodlá wolyé, |NHF-123
+navajo|Adáádáá’, Díí Jí, Hool’áágóó|Yesterday, Today, Forever||Doodládó’ saad yá’át’éeh da, She’oodla’ nilí,|NHF-124
+navajo|Ni’ Bikáa’gi Adiníldíinii Éí Jesus|The Light of the World Is Jesus ||Nikokáá’ni’iilcoohii bee chahóólhéél, Adiníldíinii éí Jesus,|NHF-125
+navajo|Álchíní Shaa Hohkááh|Children Come||Álchíní, Hágo, shaa hohkááh, Áádóó dashíínólts’áá’,|NHF-126
+navajo|Da’ Dil Bee Táán’disgiz?|Are You Washed in the Blood?||Jesus daats’í néinikaahgo bee ííldiil, |NHF-127
+navajo|Dáádílkal T’áálá’í|One Door||Táálá’ígo t’éiyá yá’aashji’ dáádílkal,|NHF-128
+navajo|Jesus Baahági Ádaaníilii, Hágo Yilní|Christ Receiveth Sinful men||Jesus Hágo, nihilní, Baaháhi ádaahníilii,|NHF-129
+navajo|Tsin’alnáoszidhi Ak’ééhwiitaad|Burdens Are Lifted at Calvary||Yínííl ádaat’éii bil yoolkáál, Áko doo hats’íid da,|NHF-130
+navajo|Hágo, ShiTaa’ Bighangóó|Come and Go With Me||Hágo shil yí’ash, shiTaa’ bighangóó, ShiTaa’ bighangóó,|NHF-131
+navajo|Ni Níhólnííh, God\!|Have Thine Own Way, Lord\!||Ní níhólnííh, God, Ni níhólnííh,|NHF-132
+navajo|Shaa Dahohkááh|Come unto Me||Jesus k’ad dadoohts’ííh, Hágo, nihilní,|NHF-133
+navajo|Da’ Jesus Doo Bá Haz’áa Da?|Have You Any Room For Jesus?||Da’ Jesus doo bá haz’áa da? Ná ak’eh deesdlí’ígíí,|NHF-134
+navajo|Ni Ná Ádinisht’á|I Gave My Life for Thee||Shidil deezna’ii bee, Ni ná ádinisht’á,|NHF-135
+navajo|I Have Decided to Follow Jesus(Navajo)||Shí k'ad Jesus bikéé yisháał doo, Shí k'ad Jesus bikéé yisháał doo, Shí k'ad Jesus bikéé yisháał doo, T'á̜á̜'éí dooda, T'á̜á̜'éí dooda. Azhá̜ t'áá sáhí ndi, bikéé' yisháał doo, Azhá̜ t'áá sáhí ndi, bikéé' yisháał doo, Azhá̜ t'áá sáhí ndi, bikéé' yisháał doo, T'á̜á̜'éí dooda, T'á̜á̜'éí dooda. Nahonitł'ah ndi, bikéé' yisháał doo, Nahonitł'ah ndi, bikéé' yisháał doo, Nahonitł'ah ndi, bikéé' yisháał doo, T'á̜á̜'éí dooda, T'á̜á̜'éí dooda. Christ éí shilá̜a̜ji̜', neeni shikéédę́ę́, Christ éí shilá̜a̜ji̜', neeni shikéédę́ę́ Christ éí shilá̜a̜ji̜', neeni shikéédę́ę́ T'á̜á̜'éí dooda, T'á̜á̜'éí dooda.|NHF-136
+navajo|Shíínnízhíigo Diists’a’|I Hear Thy Welcome Voice||Jesus niinéé’ diists’a’, Nizaad bee shíínízhí,|NHF-137
+navajo|T’áá’álahji’ ni nisin|I Need Thee Every Hour||Jesus shil honíló?, T’áá ákwíí jí, |NHF-138
+navajo|John 3:16, 8:12, 14:6 (Navajo)||Jesus Christ God biYe nilíinii,|NHF-139
+navajo|Jesus Táágéedgo Nahasdzáán shíigo|If I Gained the World But Lost the Savior||Nahasdzáán bee Christ bitsáníyáago |NHF-140
+navajo|Da’ T’áásh’át’é Baa Ádíínít’á?|Is Your All on the Altar?||She’oodla’ noosáel doo, shiyi’hodáezyéel doo, |NHF-141
+navajo|Jesus Nihíká Ání |Jesus Calls Us||Jesus Christ nikíká ání, Hahóó’á éí bilááhdéé’,|NHF-142
+navajo|Jesus , Nich’i’ Nááshdáál|Jesus, I Come||Chahalheel bii’ shi’dóta’ yéédóó,|NHF-143
+navajo|Bóhólníihii Jesus Christ Yinídlaah|Believe on the Lord Jesus Christ||Bóhólníihii Jesus Christ yinídlaah,|NHF-144
+navajo|Jesus, Hágo, Nilní|Jesus Is Calling||Yá’aashdéé’k’ad Jesus, Hágo, nilní, |NHF-145
+navajo|Bee Il Hózho´ Nínízingo |If You Want Joy||Bee il hózho´, hózho´, nínízingo|NHF-146
+navajo|Tsin’alnáoszid Biyaají’ Nitsidinílgeeh |Kneel at the Cross||Tsin’alnáoszid biyaaji’, Jesus nidááh doogáál, |NHF-147
+navajo|Diné Hayiileehii Ánndeeshlííl|I Will Make You Fishers of Men||Diné hayiileeh áldeeshlííl, Ánídeeshlííl,|NHF-148
+navajo|Ni’diil‘áii Bóhólníihii Baa Diní’aah|Leave It There||Nahazdzáán bééshligaii dóó óola doo nei yí’aah góó|NHF-149
+navajo|Bíni’ Christ Nijéí Yiih Doogáál |Let Jesus Come into Your Heart||Baahági’át’éii haah nííníyáago Bíni’|NHF-150
+navajo|Táá Kóníshtéego|Just As I Am||Táá kóníshtéego saad táágééd,|NHF-151
+navajo|Yah Adoogáál|Let Him In||Ch’é’étiinde´e´’ la’ dzizi´, Yah adoogáál,|NHF-152
+navajo|Ch’é’étiin Nishli´|I Am the Door||Ch’é’étiin nishli´, Ch’é’étiin nishli´, |NHF-153
+navajo|Níníl‘i´igo Hiníná|Look and Live||God Bizaad bee iináanii bee nil hashne’, |NHF-154
+navajo|Christ bich’i’ Díní’i´i´’|Look to the Lamb of God||Hwéédóchííd laanaa nínízingogo Christ bich’i´’ díní’i´i´’,|NHF-155
+navajo|ShiTaa’ Bich’i’ Nááshdáál|Lord, I’m Coming Home||ShiTaa’ nízaadgóó nits’á níyá, Kad nich’í; nááshdááp,|NHF-156
+navajo|T’óó Ba’ooliih|Only Trust Him||Nihich’i’ nidahwii’náanii, God danohsinígíí,|NHF-157
+navajo|Hazhó’ógo, Ajooba’go|Softly and Tenderly||Hazhó’ó, jooba’go Jesus nihózhí, |NHF-158
+navajo|Jesus T’éiyá Níníl‘i´|Turn Your Eyes Upon Jesus||Jesus t’éiyá níníl‘i´, Binii’ nizhóníii níníl‘i´,|NHF-159
+navajo|Azhá Nibaahági ‘át’éii lichíí’ Nidi|Though Your Sins Be As Scarlet||Nibaahági’át’éii Éí yéego lichíí’ nidi,|NHF-160
+navajo|Jesussha’ Ha’át’íí Bee Ánílééh?|What Will You Do With Jesus?||Páílat bighangi Jesus dzizi´, Hak’is nidi ádingo dzizi´,|NHF-161
+navajo|Nihodi’neestáa’go Doo Baa Ádidíít’áal Da|Yield Not to Temptation||Yíní danicho´’í Doo bi’jil’i´i da,|NHF-162
+navajo|Christ Nílíinii, Aláahdi Ánósh’ní|More Love to Thee||Christ bee ánósh’ níinii, Biláah dooleel,|NHF-163
+navajo|Ts’ídá Nánidi’doochííl \!|Ye Must Be Born Again \!||Tl‘ée’go naat’áanii Jesus yaa níyá, |NHF-164
+navajo|Shijéí Góne’|Into My Heart||Shíjéí góne’, shijéí góne’, Jesus shijéí k’ad biih niddááh,|NHF-165
+navajo|Ha’át’éegosha’ Síníltee’?|Why Do You Wait?||Kwá’ásiní nílíinii, Ha’át’éegosha’|NHF-166
+navajo|T’áá’altsogóó Bikéé’ Yisháal Doo|Where He Leads Me||Jesus shózhíigo diséts’áá’, Jesus Shózhíigo diséts’áá’, |NHF-167
 english|A Beautiful Life(Navajo)||Nizhonigo hinishnaa doo Taa akwii ji shil ilii doo Jo sheiina altsiisi yee Ako ei baa jiinishba doo. Iina kadee / Iina kadee bileeaah / bileeaah Nikeedeeshdaal / Nikeedeeshdaal ei baa hoolzhiizh / ei baa hoolzhiizh Shinaanish yee Shinaanish yee ei neideestseel / ei neideestseel Aadi ei doo / Aadi ei doo eeaah da. / eeaah da. God beawee lanishliigo Sheiina ei bee hoolin doo Hoolaagoo God bichi hash taal Ei bee chanah eeshii doo. Iina kadee / Iina kadee bileeaah / bileeaah Nikeedeeshdaal / Nikeedeeshdaal ei baa hoolzhiizh / ei baa hoolzhiizh Shinaanish yee Shinaanish yee ei neideestseel / ei neideestseel Aadi ei doo / Aadi ei doo eeaah da. / eeaah da. Iina a yoo 'anoolninii Niltoligii ei tei dina Ei baa shiGod ba yideessiil Taa akwii ji choshoolii doo. Iina kadee / Iina kadee bileeaah / bileeaah Nikeedeeshdaal / Nikeedeeshdaal ei baa hoolzhiizh / ei baa hoolzhiizh Shinaanish yee Shinaanish yee ei neideestseel / ei neideestseel Aadi ei doo / Aadi ei doo eeaah da. / eeaah da.|NHF-168
+navajo|T’áá’altso Danizhóníii|All Things Bright and Beautiful||Dzil éí wót’ááh daaz’áago Ch’ilátah da’íchii’go|NHF-169
+navajo|Wódhgo Dah Shiisi´i´h|Higher Ground||Yá’aash bich’i’ náás shíyoolkáál,|NHF-170
+navajo|Bá Hinishnáa Doo|I’ll Live for Him||K’d she’iina’ naa dinish’aah, Aye’ shá dasínítsáanii, |NHF-171
+navajo|Aláahgo Ayóó’óóshníi Doo Nisin|I Want to Love Him More||Jesus hoo’áágóó bil yish’ash, Bízhi’ baa hashniih doo,|NHF-172
+navajo|Doo Shaah Chingóó Áshílééh|Cleanse Me||God hashísííd, shijéí nil bééhoozi´i´j’, |NHF-173
+navajo|Álahji’ Ayóó’óósh’níi Doo|I Never Will Cease to Love Him||Shá áát’iidii t’áá’altso baa, Álahji’ ayóó’óósh’níi doo,|NHF-174
+navajo|Jesus T’éiyá, Yideestséél|Jesus Only, Let Me See||Jesus t’éiyá ba’óshlí, Éí bee  yisdádeesháalgo|NHF-175
+navajo|Bóhólníihii Bijooba’ Bee Hashtaal Doo|I Will Sing of the Mercies Of The Lord||Bóhólníihii bijooba’ bee hashtaal dooleel,|NHF-176
+navajo|Ii’sizíinii Sodizin Yinízin|Prayer Is the Soul’s Sincere Desire||Ii’sizíinii jooba’ át’é, Doo yee haadziih da ndi,|NHF-177
+navajo|Bóhólníihii, Shí Ooshdláa Doo Nisin|Lord, I Want to Be a Christian||Jesus t’áá’aaníí ooshdláa doo, |NHF-178
+navajo|Jesus Ąózho´ Bééhodeessiil|More About Jesus||Jesus wózho´ bááhodeessi´i´l, |NHF-179
 navajo|Jesus Bił Hashne'|I Must Tell Jesus||Nashínítaahii éí bee bił hashne' T'áá sahí éí doo bínaash'a̜a̜ da Ti'hooshníihgo éí shiká análwo' T'áá bíhígíí éí yaa áhályá̜. Jesus bił hashne', Jesus bił hashne' T'áá sáhí éí doo bíneesh 'á̜a̜ da Jesus bił hashne', Jesus bił hashne' Jesus t'éiyá éí shaa áhályá̜. Ach'i̜' nahwii'ná éí bee bił hashne' Ayóó'ó'ó'ní éí yee jooba' !áłdííniidgo éí yii' hááshidoołtééł Yínííł nidaazii shá ła'yoolííł. Jesus bił hashne', Jesus bił hashne' T'áá sáhí éí doo bíneesh 'á̜a̜ da Jesus bił hashne', Jesus bił hashne' Jesus t'éiyá éí shaa áhályá̜. Yisdá'iiníiłii éí bídin nishłí̜ Yínííł nidaaz nahji̜' áyoolííł Jesus bił hashne' Jesus bił hashne' Yínííł nidaazii shá ła'yoolííł. Jesus bił hashne', Jesus bił hashne' T'áá sáhí éí doo bíneesh 'á̜a̜ da Jesus bił hashne', Jesus bił hashne' Jesus t'éiyá éí shaa áhályá̜.|NHF-203
 navajo|My God Is Real||Doo ayóo shił ééhózin da, Do t'áá' ałtsogóó yisháał da, Nidi díí t'éí shił bééhózin, God t'áá'aaníí shii' hináago shił bééhózin. God éí st'ídá / God éí st'ídá shił t'áá'aaníí, / shił t'áá'aaníí !shó'nínígíí éidí óola nahalin, / nahalin, Jó sha'át'e' / Jó sha'át'e' sha̜a̜h tánéízgiz, / sha̜a̜h tánéízgiz, God t'áá'aaníí shii'hináagoshił bééhózin. / bééhózin. Ła' God bił naaki danilí̜, !ádóó ła'éí t'óó yaa daadloh, Nidi shí God shił t'áá'aaníí, Háálá shiyi'di hináago shił bééhózin. Jesus yisdáshííłtínígíí, Doo baa hojólne' át'ée da, Aoo', iisisdla̜a̜d éí bijí̜í̜dá̜á̜'. Biníłch'i yee bibee'adziil shił bééhózin.|NHF-220
 navajo|Bidibé Nishłi̜|His Sheep Am I||God bikéyah góné tó sik'az yił shi'iisá, E'e'áahgo hasyę́elgo bił naash'aash, Bidibé dajílíinii t'éiyá hoł dahózhó̜, Bidibé nishłí̜. Tó sik'az, bikooh góyaa, hootsogóó, dził bighá̜a̜'di, E'e'áahgo e'e'áahgo Diyin bił naash'aash Tł'ée'go éí̜ bikooh góyaa, nahontł'ah, dził bighá̜a̜'di, Bóhólníihii bóhólníihii shił yi'ash. Jesus shaa áhóluá̜a̜ doo, Dishníigo sodiszin, Hootsogóó shił naa' aashgo shi'iisa̜, Náádeeshłiiłii t'ah hádá̜á̜' bíká ásht'í̜i̜ doo, Nidibé nishłí̜. Bóhólníi hii, Bó hólníihiini ch'í̜' so dis zin Ni a jooba 't' éiyá bee h'óshní, Bóhólníiníi hi̜i, Bólníihii,níighahgi hasih, Nidibénishłi̜.|NHF-233
 english|What a Friend We Have in Jesus(Navajo)||Doolado Jesus akis da Yiniil ei niha yooyeel Ei taa altso bee baooliih Kad eidi bee na haza Hodeezyeel adaah deiitiigo Nihichi nidahwiina Haala doo tsida taaaltso God bee bil dahwiilne da. Naihonitaahigiish kad Biyigi dahoniidlo? Doo nihaah nahodoolkal da Jesus bee bil hodoolnih Haadisha akis naahodlo Yiniil a yooyeligii? Jesus yeego niheehosin Ei baa bee bil daholne. Da nihidadiil'ahigiish Ei nihinidayiilaad? Jesus tei bee yisdaiildeeh Ei baa bichi sodilzin Da dineesh ei too naa daadloh Boholniihii bil holne? Bigaan yee nichaah deesnii doo Akwii nil hodeezyeel doo.|NHF-240
+navajo|Hasht’ehodít’é Nizhóníii||Háadi shíí shii’sizíinii ts’ídá alníi’di|NHF-244
 english|Under His Wings(Navajo)||Bit'a biyaa, sih haz'aagi honishlo, Chahalheel doo nahonitl'a nidi, Ba'iinishliigo t'aa ei shaa ahalya, Naashiis'nii'aadoo be'awee' nishli. Bit'a' biyaa, bit'a' biyaa, Haisha' yits'a shidoolteel, Bit'a' biyaa, akwii honishlo, Hool'aagoo bil honishlo. Bit'a' biyaa, doolado' baa hodlii da, Bidin nishliigo ei bee haahashyiih, Azee' bee naadideeshdaalii ei a din, Ei bee ha'iinishni, ei shil hosho. Bit'a' biyaa, doolado' il ho shoo da, T'aa akwii t'ei bine' ahinishcheeh, Nicho'igii doo atishidooliil da, Hool'aagoo Jesus ei bee yisdee ya.|NHF-259
 navajo|Precious Lord, Take My Hand(Navajo)||Atiin doo haldingóó Jesus shił honíló̜, She'iina' k'adę́e̜ ádi̜i̜h, Yishchago sodiszin, Shííníłts'á̜á̜', shííníta̜', Ni éí hooghangóó shił náát'ash doo, Bóhólníihii, shíla' yíníta̜' ch'ééh déyá, Sézí̜i̜go áshíínísin, Chahałheeł biyi'góó Hool'inji̜' shił náát'ash, Ni éí hooghangóó shił náát'ash doo. Chaha'oh haleehgo Chahałheeł baa halzhish, !ádóó jí̜ bił e'e'ááh, Tába̜a̜hgi sézí̜i̜go Níla'bee shííníta̜', Ni éí hooghangóó shił náát'ash doo. Bóhólníihii, shíla' yíníta̜' ch'ééh déyá, Sézí̜i̜go áshíínísin, Chahałheeł biyi'góó Hool'inji̜' shił náát'ash, Ni éí hooghangóó shił náát'ash doo. Iiná ninít'i'ji̜' Shidziil áshíínísin, Éí bee ak'eh dideeshdleeł, Jooba' bee níí'nishłí̜, Éí bee doo shił yée' da, Ni éí hooghangóó shił náát'ash doo. Bóhólníihii, shíla' yíníta̜' ch'ééh déyá, Sézí̜i̜go áshíínísin, Chahałheeł biyi'góó Hool'inji̜' shił náát'ash, Ni éí hooghangóó shił náát'ash doo.|NHF-268
 english|Glorious Freedom(Navajo)||Baahagi 'ateii shidiniiltsoodgo Bitsa nanishdaahgo cheeh iitiid Nitee Jesus niyaago sheidiichid Shikeh deesdliee yikeh deesdlii. Jesus sheidiichid ei baa shil hozho Ako kad ei doo tihooshniih da Jesus teieidiichiidii niliigo Eidi hoolaagoo shiiii dooleel. Taa daadzaaiii bitsaaji sheedoochid Ajoodla bitsaaji sheedoochid Chahwiideeni bitsaaji sheedoochid Doo il hozho bitsaa sheedoochid. Jesus sheidiichid ei baa shil hozho Ako kad ei doo tihooshniih da Jesus teieidiichiidii niliigo Eidi hoolaagoo shiiii dooleel. Adaa hodzodli biidoo sheedoochid Yodi bidin idliinii aadoo Hani asta bitsaaji sheedoochid Ei taaiiyisi baa shil hoozhood. Jesus sheidiichid ei baa shil hozho Ako kad ei doo tihooshniih da Jesus teieidiichiidii niliigo Eidi hoolaagoo shiiii dooleel. Yee bikee tihooshnihee sheedoochid Shidadiil'aii tishiyoolnihee Christ naashiisniiii taa bisheidiichid Shota yee ei sha yikeh deesdlii. Jesus sheidiichid ei baa shil hozho Ako kad ei doo tihooshniih da Jesus teieidiichiidii niliigo Eidi hoolaagoo shiiii dooleel.|NHF-280
