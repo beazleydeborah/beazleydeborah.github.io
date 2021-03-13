@@ -41,6 +41,7 @@ class _SongPageState extends State<SongPage> {
     print(this.widget.song.title);
     currentSong = this.widget.song;
     loadIndex();
+
     loadSong(currentSong);
 
     super.initState();
@@ -61,10 +62,12 @@ class _SongPageState extends State<SongPage> {
   }
 
   loadSong(Song currentSong) async {
+    print(
+        'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt');
     try {
       await rootBundle
           .loadString(
-              'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.TXT')
+              'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
           .then((value) {
         fileToSong(value, currentSong);
       });
@@ -108,6 +111,7 @@ class _SongPageState extends State<SongPage> {
   }
 
   fileToSong(String fileText, Song currentSong) {
+    print(fileText);
     fileText = fileText.replaceAll('�', '');
     fileText = fileText.replaceAll('@', '');
     List<String> splitTextData = LineSplitter().convert(fileText);
