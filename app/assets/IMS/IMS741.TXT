@@ -1,5 +1,5 @@
 He Shall Be Called
-ORDER:1,2,3,1,4,5,6,1
+order:1,2,3,1,4,5,6,1
 =
 D                 G%                   
 While shepherds watched their flocks

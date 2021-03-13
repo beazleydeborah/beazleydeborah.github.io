@@ -1,4 +1,4 @@
-TITLE:Kids of the Kingdom
+title:Kids of the Kingdom
 =
 Kids of the Kingdom
 That's what we are

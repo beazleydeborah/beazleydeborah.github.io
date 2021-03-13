@@ -35,10 +35,10 @@ class _SongPageState extends State<SongPage> {
   List<String> splitLineText = [];
 
   Song currentSong = Song();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
-    print(this.widget.song.title);
     currentSong = this.widget.song;
     loadIndex();
 
@@ -62,8 +62,6 @@ class _SongPageState extends State<SongPage> {
   }
 
   loadSong(Song currentSong) async {
-    print(
-        'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt');
     try {
       await rootBundle
           .loadString(
@@ -75,20 +73,6 @@ class _SongPageState extends State<SongPage> {
       print(e);
       error(currentSong);
     }
-
-    // final userSong = json.encode({
-    //   'currentSong': {
-    //     'bookPrefix': currentSong.bookPrefix,
-    //     'songNumber': currentSong.songNumber,
-    //     'chords': currentSong.chords,
-    //     'order': currentSong.order,
-    //     'lyrics': currentSong.lyrics,
-    //     'language': currentSong.language,
-    //     'topic': currentSong.topic,
-    //     'chordNames': currentSong.chordNames,
-    //   }
-    // });
-    // prefs.setString('userSong', userSong);
   }
 
   error(Song currentSong) {
@@ -111,7 +95,6 @@ class _SongPageState extends State<SongPage> {
   }
 
   fileToSong(String fileText, Song currentSong) {
-    print(fileText);
     fileText = fileText.replaceAll('�', '');
     fileText = fileText.replaceAll('@', '');
     List<String> splitTextData = LineSplitter().convert(fileText);
@@ -153,7 +136,7 @@ class _SongPageState extends State<SongPage> {
   editForDisplay(Song currentSong) {
     List<String> lyricsOnly = [];
     List<String> lyricsAndChords = [];
-    print(currentSong.title);
+
     if (this.widget.currentSettings.songNumber) {
       setState(() {
         displayedTitle =
@@ -245,6 +228,7 @@ class _SongPageState extends State<SongPage> {
                       .then((value) {
                     setState(() {
                       currentSong = value;
+                      _scrollController.jumpTo(0);
                       loadSong(currentSong);
                     });
                   });
@@ -264,16 +248,21 @@ class _SongPageState extends State<SongPage> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: ListView.builder(
-              itemCount: displayedText.length,
-              itemBuilder: (BuildContext context, int index) {
-                return AutoSizeText(
-                  '${displayedText[index]}',
-                  style: TextStyle(fontSize: 25),
-                  maxLines: 1,
-                  group: autoDisplay,
-                );
-              }),
+          child: OrientationBuilder(
+            builder: (context, orientation) => ListView.builder(
+                controller: _scrollController,
+                itemCount: displayedText.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return AutoSizeText(
+                    '${displayedText[index]}',
+                    style: orientation == Orientation.portrait
+                        ? TextStyle(fontSize: 25)
+                        : TextStyle(fontSize: 40),
+                    maxLines: 1,
+                    group: autoDisplay,
+                  );
+                }),
+          ),
         ));
   }
 }
@@ -347,8 +336,8 @@ class SongSearch extends SearchDelegate<Song> {
   formatIndexLine(String indexLine) {
     String formattedIndexLine;
     indexLine = indexLine.toLowerCase();
-    indexLine =
-        indexLine.replaceAll(RegExp(r'(�|,|-|/s|!)', caseSensitive: false), "");
+    indexLine = indexLine.replaceAll(
+        RegExp(r'(�|,|-|/s|!)', caseSensitive: false), " ");
 
     formattedIndexLine = indexLine;
     return formattedIndexLine;
