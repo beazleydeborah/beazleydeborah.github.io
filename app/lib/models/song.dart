@@ -11,6 +11,7 @@ class Song {
   List<int> order;
   String chordNames;
   List<String> fullText;
+  String searchText;
 
   Song({
     this.id,
@@ -25,5 +26,6 @@ class Song {
     this.order,
     this.chordNames,
     this.fullText,
+    this.searchText,
   });
 }

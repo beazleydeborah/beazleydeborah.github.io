@@ -212,9 +212,29 @@ class _SongPageState extends State<SongPage> {
     }
   }
 
+  Future<bool> _onWillPop() async {
+    return (await showSearch(
+        query: currentSong.searchText,
+        context: context,
+        delegate: SongSearch(
+          indexData,
+          currentSong,
+          this.widget.currentSettings,
+        )).then((value) {
+      setState(() {
+        currentSong = value;
+        _scrollController.jumpTo(0);
+        loadSong(currentSong);
+      });
+      return;
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
         appBar: AppBar(
           title: Text('$displayedTitle'),
           actions: [
@@ -222,10 +242,12 @@ class _SongPageState extends State<SongPage> {
                 icon: Icon(Icons.search),
                 onPressed: () {
                   showSearch(
-                          context: context,
-                          delegate: SongSearch(indexData, currentSong,
-                              this.widget.currentSettings))
-                      .then((value) {
+                      context: context,
+                      delegate: SongSearch(
+                        indexData,
+                        currentSong,
+                        this.widget.currentSettings,
+                      )).then((value) {
                     setState(() {
                       currentSong = value;
                       _scrollController.jumpTo(0);
@@ -263,7 +285,9 @@ class _SongPageState extends State<SongPage> {
                   );
                 }),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -417,7 +441,7 @@ class SongSearch extends SearchDelegate<Song> {
                 : null,
             onTap: () {
               currentSong = songList[index];
-
+              currentSong.searchText = query;
               close(context, currentSong);
             },
           ),
@@ -444,7 +468,7 @@ class SongSearch extends SearchDelegate<Song> {
                 : null,
             onTap: () {
               currentSong = songList[index];
-
+              currentSong.searchText = query;
               close(context, currentSong);
             },
           ),
