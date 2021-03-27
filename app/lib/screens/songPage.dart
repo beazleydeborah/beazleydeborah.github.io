@@ -33,6 +33,7 @@ class _SongPageState extends State<SongPage> {
   List<String> displayedText = [];
   String displayedTitle = '';
   List<String> splitLineText = [];
+  double displayedFontSize;
 
   Song currentSong = Song();
   final ScrollController _scrollController = ScrollController();
@@ -212,6 +213,18 @@ class _SongPageState extends State<SongPage> {
     }
   }
 
+  // transformText(List<String> displayedText) {
+  //   print(displayedText);
+  //   List<Widget> transformed;
+  //   // displayedText.forEach((line) {
+  //   //   if (line != null) {
+  //   //     transformed.add(Text('$line'));
+  //   //   }
+  //   //   return;
+  //   // });
+  //   return transformed;
+  // }
+
   Future<bool> _onWillPop() async {
     return (await showSearch(
         query: currentSong.searchText,
@@ -230,13 +243,35 @@ class _SongPageState extends State<SongPage> {
     }));
   }
 
+  transform(
+      List<String> displayedText, Orientation orientation, Settings settings) {
+    List<Widget> textWidgets = [];
+
+    displayedText.forEach((line) {
+      textWidgets.add(
+        AutoSizeText(
+          '$line',
+          style: settings.chords
+              ? TextStyle(fontSize: 40, fontFamily: 'RobotoMono')
+              : TextStyle(fontSize: 40, fontFamily: 'Roboto'),
+          maxLines: 1,
+          group: autoDisplay,
+        ),
+      );
+    });
+    return textWidgets;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('$displayedTitle'),
+          title: Text(
+            '$displayedTitle',
+            style: TextStyle(fontFamily: 'Roboto'),
+          ),
           actions: [
             IconButton(
                 icon: Icon(Icons.search),
@@ -271,19 +306,11 @@ class _SongPageState extends State<SongPage> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: OrientationBuilder(
-            builder: (context, orientation) => ListView.builder(
-                controller: _scrollController,
-                itemCount: displayedText.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return AutoSizeText(
-                    '${displayedText[index]}',
-                    style: orientation == Orientation.portrait
-                        ? TextStyle(fontSize: 25)
-                        : TextStyle(fontSize: 40),
-                    maxLines: 1,
-                    group: autoDisplay,
-                  );
-                }),
+            builder: (context, orientation) => ListView(
+              controller: _scrollController,
+              children: transform(
+                  displayedText, orientation, this.widget.currentSettings),
+            ),
           ),
         ),
       ),
