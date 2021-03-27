@@ -1,5 +1,5 @@
 Thank you Jesus
-order:1,2,3,4,5,
+order:1,2,3,4,5
 =
 D%
 Thank you Jesus,
