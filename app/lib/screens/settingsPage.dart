@@ -17,23 +17,27 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _darkMode = false;
   bool _chords = false;
   bool _songNumber = false;
+  bool _filterNavajo = true;
 
   @override
   void initState() {
     _darkMode = widget.currentSettings.darkMode;
     _chords = widget.currentSettings.chords;
     _songNumber = widget.currentSettings.songNumber;
+    _filterNavajo = widget.currentSettings.filterNavajo;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final selectedSettings =
-        Settings(darkMode: _darkMode, chords: _chords, songNumber: _songNumber);
+    final selectedSettings = Settings(darkMode: _darkMode, chords: _chords, songNumber: _songNumber, filterNavajo: _filterNavajo);
 
     return Scaffold(
         appBar: AppBar(
           title: const Text('Settings Page'),
+          leading: BackButton(
+            onPressed: () => {Navigator.pop(context, selectedSettings)},
+          ),
         ),
         body: Column(
           children: [
@@ -42,8 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 children: [
                   SwitchListTile(
                       title: Text('Dark Mode'),
-                      subtitle: Text(
-                          'Changes theme to dark for better night viewing'),
+                      subtitle: Text('Changes theme to dark for better night viewing'),
                       value: _darkMode,
                       onChanged: (value) {
                         setState(() {
@@ -71,6 +74,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _songNumber = value;
                           selectedSettings.songNumber = _songNumber;
+                        });
+                        widget.saveSettings(selectedSettings);
+                      }),
+                  SwitchListTile(
+                      title: Text('Filter Navajo'),
+                      subtitle: Text('Filters out most songs in the Navajo language'),
+                      value: _filterNavajo,
+                      onChanged: (value) {
+                        setState(() {
+                          _filterNavajo = value;
+                          selectedSettings.filterNavajo = _filterNavajo;
                         });
                         widget.saveSettings(selectedSettings);
                       }),

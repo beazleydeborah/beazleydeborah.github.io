@@ -1,3 +1,8 @@
+import 'package:app/helpers/edit_song_for_display.dart';
+import 'package:app/helpers/file_to_song.dart';
+import 'package:app/helpers/song_search.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import './settingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -14,9 +19,9 @@ class SongPage extends StatefulWidget {
   static const routeName = '/songpage';
   final Function saveSong;
   final Song song;
-  final Settings currentSettings;
+  final Settings settings;
 
-  SongPage(this.saveSong, this.song, this.currentSettings);
+  SongPage(this.saveSong, this.song, this.settings);
 
   @override
   _SongPageState createState() => _SongPageState();
@@ -30,22 +35,34 @@ class _SongPageState extends State<SongPage> {
   String errorHandle;
   var autoDisplay = AutoSizeGroup();
 
-  List<String> displayedText = [];
-  String displayedTitle = '';
+  Song displayedSong = Song(title: '', lyrics: [], fullText: [], chords: []);
+
   List<String> splitLineText = [];
   double displayedFontSize;
+  String currentQuery;
 
   Song currentSong = Song();
+  Settings currentSettings = Settings();
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     currentSong = this.widget.song;
+    currentSettings = this.widget.settings;
+    _getQuery();
     loadIndex();
-
     loadSong(currentSong);
 
     super.initState();
+  }
+
+  _getQuery() async {
+    final prefs = await SharedPreferences.getInstance();
+    String query = prefs.getString('query');
+    if (query == null) {
+      query = '';
+    }
+    currentQuery = query;
   }
 
   loadIndex() async {
@@ -63,12 +80,15 @@ class _SongPageState extends State<SongPage> {
   }
 
   loadSong(Song currentSong) async {
+    print(currentSong.bookPrefix);
+    _getQuery();
     try {
-      await rootBundle
-          .loadString(
-              'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
-          .then((value) {
-        fileToSong(value, currentSong);
+      await rootBundle.loadString('assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt').then((value) {
+        setState(() {
+          currentSong = fileToSong(value, currentSong);
+          displayedSong = editForDisplay(currentSong, currentSettings);
+          widget.saveSong(currentSong);
+        });
       });
     } catch (e) {
       print(e);
@@ -83,7 +103,7 @@ class _SongPageState extends State<SongPage> {
       });
     } else {
       setState(() {
-        displayedText = [
+        displayedSong.lyrics = [
           'An error occured with this song',
           '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
           '',
@@ -91,124 +111,6 @@ class _SongPageState extends State<SongPage> {
           'beazleyprograms@gmail.com ',
           'with the above song number'
         ];
-      });
-    }
-  }
-
-  fileToSong(String fileText, Song currentSong) {
-    fileText = fileText.replaceAll('�', '');
-    fileText = fileText.replaceAll('@', '');
-    List<String> splitTextData = LineSplitter().convert(fileText);
-    currentSong.lyrics = [];
-    currentSong.chords = [];
-
-    splitTextData.forEach((line) {
-      if (line.startsWith('title:')) {
-        currentSong.title = line.substring(6, line.length);
-      } else if (line.startsWith('order:')) {
-        line = line.replaceAll(';', ',');
-
-        List<String> stringOrder = (line.substring(6)).split(',');
-
-        List<int> intOrder = stringOrder.map(int.parse).toList();
-        currentSong.order = intOrder;
-      } else if (line.startsWith('topic:')) {
-        currentSong.topic = line.substring(6);
-      } else if (line.startsWith('subtitle:')) {
-        currentSong.subTitle = line.substring(9);
-      } else if (line.startsWith('chords:')) {
-        currentSong.chordNames = line.substring(7);
-      } else if (line.contains('%')) {
-        currentSong.chords.add(line);
-      } else {
-        currentSong.lyrics.add(line);
-      }
-    });
-
-    String fullTextString =
-        fileText.substring(fileText.indexOf('='), fileText.length);
-    List<String> fullText = LineSplitter().convert(fullTextString);
-    currentSong.fullText = fullText;
-
-    editForDisplay(currentSong);
-    widget.saveSong(currentSong);
-  }
-
-  editForDisplay(Song currentSong) {
-    List<String> lyricsOnly = [];
-    List<String> lyricsAndChords = [];
-
-    if (this.widget.currentSettings.songNumber) {
-      setState(() {
-        displayedTitle =
-            '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
-      });
-    } else {
-      setState(() {
-        displayedTitle = currentSong.title;
-      });
-    }
-
-//Lyrics only
-    if (!this.widget.currentSettings.chords) {
-      currentSong.fullText.removeWhere((line) => line.contains('%'));
-      if (currentSong.order == null) {
-        currentSong.fullText.forEach((line) {
-          line = line.replaceAll('=', '');
-
-          lyricsOnly.add(line);
-        });
-      } else {
-        currentSong.order.forEach((element) {
-          int verseIndex = 0;
-          currentSong.lyrics.forEach((line) {
-            if (line == '=') {
-              setState(() {
-                verseIndex = verseIndex + 1;
-              });
-            }
-            if (verseIndex == element) {
-              line = line.replaceAll('=', '');
-              lyricsOnly.add(line);
-            }
-          });
-        });
-      }
-      lyricsOnly.removeAt(0);
-      setState(() {
-        displayedText = lyricsOnly;
-      });
-    }
-//Lyrics and Chords
-    if (this.widget.currentSettings.chords) {
-      if (currentSong.order == null) {
-        currentSong.fullText.removeAt(0);
-        currentSong.fullText.forEach((line) {
-          line = line.replaceAll('=', '');
-          line = line.replaceAll('%', '');
-          lyricsAndChords.add(line);
-        });
-      } else {
-        currentSong.order.forEach((element) {
-          int verseIndex = 0;
-          currentSong.fullText.forEach((line) {
-            if (line == '=') {
-              setState(() {
-                verseIndex = verseIndex + 1;
-              });
-            }
-            if (verseIndex == element) {
-              line = line.replaceAll('=', '');
-              line = line.replaceAll('%', '');
-              lyricsAndChords.add(line);
-            }
-          });
-        });
-        lyricsAndChords.removeAt(0);
-      }
-
-      setState(() {
-        displayedText = lyricsAndChords;
       });
     }
   }
@@ -227,12 +129,12 @@ class _SongPageState extends State<SongPage> {
 
   Future<bool> _onWillPop() async {
     return (await showSearch(
-        query: currentSong.searchText,
+        query: currentQuery,
         context: context,
         delegate: SongSearch(
-          indexData,
-          currentSong,
-          this.widget.currentSettings,
+          indexData: indexData,
+          currentSettings: this.widget.settings,
+          currentSong: currentSong,
         )).then((value) {
       setState(() {
         currentSong = value;
@@ -243,22 +145,22 @@ class _SongPageState extends State<SongPage> {
     }));
   }
 
-  transform(
-      List<String> displayedText, Orientation orientation, Settings settings) {
+  transform(List<String> displayedText, Orientation orientation, Settings settings) {
     List<Widget> textWidgets = [];
 
     displayedText.forEach((line) {
-      textWidgets.add(
-        AutoSizeText(
-          '$line',
-          style: settings.chords
-              ? TextStyle(fontSize: 40, fontFamily: 'RobotoMono')
-              : TextStyle(fontSize: 40, fontFamily: 'Roboto'),
-          maxLines: 1,
-          group: autoDisplay,
-        ),
-      );
+      if (line != null) {
+        textWidgets.add(
+          AutoSizeText(
+            '$line',
+            style: currentSettings.chords ? TextStyle(fontSize: 40, fontFamily: 'RobotoMono') : TextStyle(fontSize: 40, fontFamily: 'Roboto'),
+            maxLines: 1,
+            group: autoDisplay,
+          ),
+        );
+      }
     });
+
     return textWidgets;
   }
 
@@ -269,38 +171,36 @@ class _SongPageState extends State<SongPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            '$displayedTitle',
+            '${displayedSong.title}',
             style: TextStyle(fontFamily: 'Roboto'),
           ),
           actions: [
             IconButton(
                 icon: Icon(Icons.search),
-                onPressed: () {
-                  showSearch(
+                onPressed: () async {
+                  final result = await showSearch(
+                      query: currentQuery,
                       context: context,
                       delegate: SongSearch(
-                        indexData,
-                        currentSong,
-                        this.widget.currentSettings,
-                      )).then((value) {
-                    setState(() {
-                      currentSong = value;
-                      _scrollController.jumpTo(0);
-                      loadSong(currentSong);
-                    });
+                        indexData: indexData,
+                        currentSettings: currentSettings,
+                        currentSong: currentSong,
+                      ));
+                  setState(() {
+                    currentSong = result;
+                    loadSong(result);
+                    _scrollController.jumpTo(0);
                   });
                 }),
             IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                return Navigator.pushNamed(context, SettingsPage.routeName)
-                    .then((result) {
+                icon: Icon(Icons.settings),
+                onPressed: () async {
+                  final result = await Navigator.pushNamed(context, SettingsPage.routeName);
                   setState(() {
+                    currentSettings = result;
                     loadSong(currentSong);
                   });
-                });
-              },
-            ),
+                })
           ],
         ),
         body: Padding(
@@ -308,199 +208,11 @@ class _SongPageState extends State<SongPage> {
           child: OrientationBuilder(
             builder: (context, orientation) => ListView(
               controller: _scrollController,
-              children: transform(
-                  displayedText, orientation, this.widget.currentSettings),
+              children: transform(displayedSong.lyrics, orientation, currentSettings),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class SongSearch extends SearchDelegate<Song> {
-  final Settings currentSettings;
-  final List<String> indexData;
-  Song currentSong;
-  String subtitle;
-  SongSearch(this.indexData, this.currentSong, this.currentSettings);
-  songNumberSubtitle(Song song) {
-    String subtitle = '';
-    int songNumber = int.tryParse(song.songNumber);
-    if (currentSettings.songNumber) {
-      subtitle = '${song.bookPrefix}-$songNumber';
-    }
-    return subtitle;
-  }
-
-  findSongs(String searchText, List<String> indexList) {
-    //finds  all indexString of format KBC-181 and converts to Song
-    String indexSubString = '';
-    String titleSubString = '';
-    String languageSubString = '';
-
-    List<Song> songList = [];
-
-    String formattedQuery = formatQuery(searchText);
-
-    indexList.forEach((indexLine) {
-      String formattedIndexLine = formatIndexLine(indexLine);
-
-      if (formattedIndexLine.contains(formattedQuery)) {
-        indexSubString = indexLine.substring(
-          indexLine.lastIndexOf('|') + 1,
-          indexLine.length,
-        );
-        titleSubString = indexLine.substring(
-          indexLine.indexOf('|') + 1,
-          indexLine.indexOf('||'),
-        );
-        languageSubString = indexLine.substring(
-          0,
-          indexLine.indexOf('|'),
-        );
-
-        Song indexedSong = Song(
-          bookPrefix: indexSubString.substring(0, 3),
-          songNumber: indexSubString
-              .substring(indexSubString.indexOf('-') + 1, indexSubString.length)
-              .padLeft(3, '0'),
-          title: titleSubString,
-          language: languageSubString,
-          subTitle: null,
-          order: null,
-          chordNames: null,
-          chords: null,
-          fullText: null,
-          lyrics: null,
-          topic: null,
-        );
-
-        songList.add(indexedSong);
-      }
-      return null;
-    });
-
-    return songList;
-  }
-
-  formatIndexLine(String indexLine) {
-    String formattedIndexLine;
-    indexLine = indexLine.toLowerCase();
-    indexLine = indexLine.replaceAll(
-        RegExp(r'(�|,|-|/s|!)', caseSensitive: false), " ");
-
-    formattedIndexLine = indexLine;
-    return formattedIndexLine;
-  }
-
-  formatQuery(String query) {
-    String formattedQuery;
-
-    query = query.toLowerCase();
-
-    // query = query.replaceAll(RegExp('(\:|,|;|\?|\.|_|\!|-| )',caseSensitive: false), "(\\:|,|;|\\?|\\.|\\!|-| )");
-    query = query.replaceAll(RegExp('(�|,|-|/s|!)', caseSensitive: false), "");
-
-    // 1st, 2nd, 3rd Bible references
-    query = query.replaceAll(RegExp('1st', caseSensitive: false), "1");
-    query = query.replaceAll(RegExp('2nd', caseSensitive: false), "2");
-    query = query.replaceAll(RegExp('3rd', caseSensitive: false), "3");
-
-    formattedQuery = query;
-    return formattedQuery;
-  }
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return theme.copyWith(
-        inputDecorationTheme: InputDecorationTheme(
-            hintStyle:
-                TextStyle(color: theme.primaryTextTheme.headline6.color)),
-        primaryColor: theme.primaryColor,
-        primaryIconTheme: theme.primaryIconTheme,
-        primaryColorBrightness: theme.primaryColorBrightness,
-        primaryTextTheme: theme.primaryTextTheme,
-        textTheme: theme.textTheme.copyWith(
-            headline6: theme.textTheme.headline6
-                .copyWith(color: theme.primaryTextTheme.headline6.color)));
-  }
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {
-          query = '';
-        },
-      )
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        query = query;
-        close(context, currentSong);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    List<Song> songList = findSongs(query, indexData);
-
-    return ListView.builder(
-      itemCount: songList.length,
-      itemBuilder: (ctx, index) {
-        return Card(
-          child: ListTile(
-            title: Text(
-              songList[index].title,
-              style: TextStyle(fontSize: 24),
-            ),
-            subtitle: currentSettings.songNumber == true
-                ? Text(songNumberSubtitle(songList[index]))
-                : null,
-            onTap: () {
-              currentSong = songList[index];
-              currentSong.searchText = query;
-              close(context, currentSong);
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<Song> songList = findSongs(query, indexData);
-
-    return ListView.builder(
-      itemCount: songList.length,
-      itemBuilder: (ctx, index) {
-        return Card(
-          child: ListTile(
-            title: Text(
-              songList[index].title,
-              style: TextStyle(fontSize: 24),
-            ),
-            subtitle: currentSettings.songNumber == true
-                ? Text(songNumberSubtitle(songList[index]))
-                : null,
-            onTap: () {
-              currentSong = songList[index];
-              currentSong.searchText = query;
-              close(context, currentSong);
-            },
-          ),
-        );
-      },
     );
   }
 }

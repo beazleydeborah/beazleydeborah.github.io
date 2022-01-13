@@ -21,7 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Settings settings;
-  Song song;
+  Song song = Song(lyrics: [], fullText: []);
   ThemeData theme;
 
   Future<bool> _getSettingsAndSong() async {
@@ -31,22 +31,15 @@ class _MyAppState extends State<MyApp> {
 
     Song savedSong;
 
-    final rawSettingsJson = prefs.getString('settings') ??
-        '{"darkMode":false,"chords":false,"songNumber":false}';
+    final rawSettingsJson = prefs.getString('settings') ?? '{"darkMode":false,"chords":false,"songNumber":false,"filterNavajo":true}';
 
     Map<String, dynamic> settingsMap = json.decode(rawSettingsJson);
     savedSettings = Settings(
-        chords: settingsMap['chords'],
-        darkMode: settingsMap['darkMode'],
-        songNumber: settingsMap['songNumber']);
+        chords: settingsMap['chords'], darkMode: settingsMap['darkMode'], songNumber: settingsMap['songNumber'], filterNavajo: settingsMap['filterNavajo']);
 
-    final rawSongJson = prefs.getString('song') ??
-        '{"title":"Overheads Mobile","bookPrefix":"KBC","songNumber":"000"}';
+    final rawSongJson = prefs.getString('song') ?? '{"title":"Overheads Mobile","bookPrefix":"KBC","songNumber":"000"}';
     Map<String, dynamic> songMap = json.decode(rawSongJson);
-    savedSong = Song(
-        title: songMap['title'],
-        bookPrefix: songMap['bookPrefix'],
-        songNumber: songMap['songNumber']);
+    savedSong = Song(title: songMap['title'], bookPrefix: songMap['bookPrefix'], songNumber: songMap['songNumber']);
     setState(() {
       settings = savedSettings;
       song = savedSong;
@@ -79,12 +72,14 @@ class _MyAppState extends State<MyApp> {
       'chords': data.chords,
       'darkMode': data.darkMode,
       'songNumber': data.songNumber,
+      'filterNavajo': data.filterNavajo,
     };
     String rawJson = json.encode(map);
     prefs.setString('settings', rawJson);
     setState(() {
       settings = settingsData;
     });
+    print(map);
   }
 
   void _saveSong(songData) async {
@@ -108,16 +103,10 @@ class _MyAppState extends State<MyApp> {
         future: _getSettingsAndSong(),
         builder: (buildContext, snapshot) {
           if (snapshot.hasData) {
-            return MaterialApp(
-                title: 'Overheads App',
-                theme: theme,
-                home: SongPage(_saveSong, song, settings),
-                routes: {
-                  SongPage.routeName: (ctx) =>
-                      SongPage(_saveSong, song, settings),
-                  SettingsPage.routeName: (ctx) =>
-                      SettingsPage(_saveSettings, settings),
-                });
+            return MaterialApp(title: 'Overheads App', theme: theme, home: SongPage(_saveSong, song, settings), routes: {
+              SongPage.routeName: (ctx) => SongPage(_saveSong, song, settings),
+              SettingsPage.routeName: (ctx) => SettingsPage(_saveSettings, settings),
+            });
           } else {
             return Center(
               child: CircularProgressIndicator(
