@@ -6,10 +6,10 @@ Song fileToSong(String fileText, Song oldSongValue) {
   fileText = fileText.replaceAll('@', '');
   List<String> splitTextData = LineSplitter().convert(fileText);
   Song currentSong = oldSongValue;
+
   currentSong.lyrics = [];
   currentSong.chords = [];
   currentSong.fullText = [];
-
   splitTextData.forEach((line) {
     if (line.startsWith('title:')) {
       currentSong.title = line.substring(6, line.length);

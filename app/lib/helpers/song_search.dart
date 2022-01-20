@@ -16,15 +16,6 @@ class SongSearch extends SearchDelegate<Song> {
     prefs.setString('query', query);
   }
 
-  songNumberSubtitle(Song song) {
-    String subtitle = '';
-    int songNumber = int.tryParse(song.songNumber);
-    if (currentSettings.songNumber) {
-      subtitle = '${song.bookPrefix}-$songNumber';
-    }
-    return subtitle;
-  }
-
   findSongs(String searchText, List<String> indexList, Settings currentSettings) {
     //finds  all indexString of format KBC-181 and converts to Song
     String indexSubString = '';
@@ -56,7 +47,6 @@ class SongSearch extends SearchDelegate<Song> {
           songNumber: indexSubString.substring(indexSubString.indexOf('-') + 1, indexSubString.length).padLeft(3, '0'),
           title: titleSubString,
           language: languageSubString,
-          subTitle: null,
           order: null,
           chordNames: null,
           chords: null,
@@ -73,6 +63,10 @@ class SongSearch extends SearchDelegate<Song> {
     });
 
     return songList;
+  }
+
+  formatSubtitle(Song indexedSong) {
+    return Text("${indexedSong.bookPrefix}-${indexedSong.songNumber}");
   }
 
   formatIndexLine(String indexLine) {
@@ -131,6 +125,7 @@ class SongSearch extends SearchDelegate<Song> {
       icon: Icon(Icons.arrow_back),
       onPressed: () {
         _saveQuery(query);
+
         close(context, currentSong);
       },
     );
@@ -150,9 +145,10 @@ class SongSearch extends SearchDelegate<Song> {
               songResults[index].title,
               style: TextStyle(fontSize: 24),
             ),
-            subtitle: currentSettings.songNumber == true ? Text(songNumberSubtitle(songResults[index])) : null,
+            subtitle: currentSettings.songNumber == true ? formatSubtitle((songResults[index])) : null,
             onTap: () {
               selectedSong = songResults[index];
+
               _saveQuery(query);
               close(context, selectedSong);
             },
@@ -175,7 +171,7 @@ class SongSearch extends SearchDelegate<Song> {
               songSuggestions[index].title,
               style: TextStyle(fontSize: 24),
             ),
-            subtitle: currentSettings.songNumber == true ? Text(songNumberSubtitle(songSuggestions[index])) : null,
+            subtitle: currentSettings.songNumber == true ? formatSubtitle((songSuggestions[index])) : null,
             onTap: () {
               _saveQuery(query);
               selectedSong = songSuggestions[index];

@@ -7,12 +7,6 @@ Song editForDisplay(Song currentSong, Settings currentSettings) {
 
   Song displayedSong = currentSong;
 
-  if (currentSettings.songNumber) {
-    displayedSong.title = '${currentSong.bookPrefix}-${currentSong.songNumber} ${currentSong.title}';
-  } else {
-    displayedSong.title = currentSong.title;
-  }
-
 //Lyrics only
   if (currentSettings.chords == false) {
     displayedSong.fullText.removeWhere((line) => line.contains('%'));

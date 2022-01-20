@@ -48,9 +48,11 @@ class _SongPageState extends State<SongPage> {
   @override
   void initState() {
     currentSong = this.widget.song;
+
     currentSettings = this.widget.settings;
     _getQuery();
     loadIndex();
+
     loadSong(currentSong);
 
     super.initState();
@@ -80,18 +82,21 @@ class _SongPageState extends State<SongPage> {
   }
 
   loadSong(Song currentSong) async {
-    print(currentSong.bookPrefix);
     _getQuery();
+
     try {
       await rootBundle.loadString('assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt').then((value) {
         setState(() {
           currentSong = fileToSong(value, currentSong);
+
           displayedSong = editForDisplay(currentSong, currentSettings);
-          widget.saveSong(currentSong);
         });
+
+        widget.saveSong(displayedSong);
       });
     } catch (e) {
       print(e);
+
       error(currentSong);
     }
   }
@@ -115,18 +120,6 @@ class _SongPageState extends State<SongPage> {
     }
   }
 
-  // transformText(List<String> displayedText) {
-  //   print(displayedText);
-  //   List<Widget> transformed;
-  //   // displayedText.forEach((line) {
-  //   //   if (line != null) {
-  //   //     transformed.add(Text('$line'));
-  //   //   }
-  //   //   return;
-  //   // });
-  //   return transformed;
-  // }
-
   Future<bool> _onWillPop() async {
     return (await showSearch(
         query: currentQuery,
@@ -134,14 +127,14 @@ class _SongPageState extends State<SongPage> {
         delegate: SongSearch(
           indexData: indexData,
           currentSettings: this.widget.settings,
-          currentSong: currentSong,
+          currentSong: displayedSong,
         )).then((value) {
       setState(() {
         currentSong = value;
         _scrollController.jumpTo(0);
         loadSong(currentSong);
       });
-      return;
+      return false;
     }));
   }
 
@@ -164,16 +157,27 @@ class _SongPageState extends State<SongPage> {
     return textWidgets;
   }
 
+  Text formatSongTitle(Settings currentSettings, Song displayedSong) {
+    if (currentSettings.songNumber) {
+      return Text(
+        '${displayedSong.bookPrefix}-${displayedSong.songNumber} ${displayedSong.title}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      );
+    } else {
+      return Text(
+        '${displayedSong.title}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            '${displayedSong.title}',
-            style: TextStyle(fontFamily: 'Roboto'),
-          ),
+          title: formatSongTitle(currentSettings, displayedSong),
           actions: [
             IconButton(
                 icon: Icon(Icons.search),

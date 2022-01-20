@@ -26,9 +26,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<bool> _getSettingsAndSong() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     Settings savedSettings;
-
     Song savedSong;
 
     final rawSettingsJson = prefs.getString('settings') ?? '{"darkMode":false,"chords":false,"songNumber":false,"filterNavajo":true}';
@@ -40,27 +38,23 @@ class _MyAppState extends State<MyApp> {
     final rawSongJson = prefs.getString('song') ?? '{"title":"Overheads Mobile","bookPrefix":"KBC","songNumber":"000"}';
     Map<String, dynamic> songMap = json.decode(rawSongJson);
     savedSong = Song(title: songMap['title'], bookPrefix: songMap['bookPrefix'], songNumber: songMap['songNumber']);
-    setState(() {
-      settings = savedSettings;
-      song = savedSong;
-    });
-    if (settings.darkMode) {
-      setState(() {
-        theme = ThemeData(
-          brightness: Brightness.dark,
-          canvasColor: Colors.black,
-          primarySwatch: Colors.indigo,
-        );
-      });
+
+    if (savedSettings.darkMode) {
+      theme = ThemeData(
+        brightness: Brightness.dark,
+        canvasColor: Colors.black,
+        primarySwatch: Colors.indigo,
+      );
     } else {
-      setState(() {
-        theme = ThemeData(
-          brightness: Brightness.light,
-          primarySwatch: Colors.indigo,
-          primaryColor: Color(0xFF010066),
-        );
-      });
+      theme = ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.indigo,
+        primaryColor: Color(0xFF010066),
+      );
     }
+
+    song = savedSong;
+    settings = savedSettings;
 
     return savedSong == null && savedSettings == null;
   }
@@ -82,7 +76,7 @@ class _MyAppState extends State<MyApp> {
     print(map);
   }
 
-  void _saveSong(songData) async {
+  void _saveSong(Song songData) async {
     Song data = songData;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> map = {
@@ -95,6 +89,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       song = songData;
     });
+    print(map);
   }
 
   @override
