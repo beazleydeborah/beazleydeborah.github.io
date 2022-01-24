@@ -1,18 +1,32 @@
 import 'dart:convert';
+
 import 'package:app/models/song.dart';
 
 Song fileToSong(String fileText, Song oldSongValue) {
   fileText = fileText.replaceAll('�', '');
   fileText = fileText.replaceAll('@', '');
   List<String> splitTextData = LineSplitter().convert(fileText);
-  Song currentSong = oldSongValue;
+  Song currentSong = Song();
 
+  if (fileText.contains("title:")) {
+    splitTextData.forEach((line) {
+      if (line.startsWith("title:")) {
+        currentSong.title = line.substring(6, line.length);
+      }
+      ;
+    });
+  } else {
+    currentSong.title = splitTextData.first;
+    splitTextData.removeAt(0);
+  }
+
+  currentSong = oldSongValue;
   currentSong.lyrics = [];
   currentSong.chords = [];
   currentSong.fullText = [];
   splitTextData.forEach((line) {
     if (line.startsWith('title:')) {
-      currentSong.title = line.substring(6, line.length);
+      return;
     } else if (line.startsWith('order:')) {
       line = line.replaceAll(';', ',');
       List<String> stringOrder = (line.substring(6)).split(',');
@@ -20,16 +34,28 @@ Song fileToSong(String fileText, Song oldSongValue) {
       currentSong.order = intOrder;
     } else if (line.startsWith('topic:')) {
       currentSong.topic = line.substring(6);
+    } else if (line.startsWith('language:')) {
+      currentSong.language = line.substring(9);
     } else if (line.startsWith('subtitle:')) {
       currentSong.subTitle = line.substring(9);
     } else if (line.startsWith('chords:')) {
       currentSong.chordNames = line.substring(7);
+    } else if (line.contains('=') || line == "") {
+      currentSong.chords.add(line);
+      currentSong.lyrics.add(line);
     } else if (line.contains('%')) {
       currentSong.chords.add(line);
     } else {
       currentSong.lyrics.add(line);
     }
   });
+  if (fileText.contains('%')) {
+  } else {
+    currentSong.chords = [" "];
+  }
+
+  currentSong.lyrics.removeAt(0);
+  currentSong.chords.removeAt(0);
 
   String fullTextString = fileText.substring(fileText.indexOf('='), fileText.length);
   List<String> fullText = LineSplitter().convert(fullTextString);

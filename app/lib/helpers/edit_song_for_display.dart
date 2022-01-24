@@ -1,67 +1,84 @@
 import 'package:app/models/settings.dart';
 import 'package:app/models/song.dart';
 
-Song editForDisplay(Song currentSong, Settings currentSettings) {
+List<String> editForDisplay(Song song, Settings currentSettings) {
   List<String> lyricsOnly = [];
-  List<String> lyricsAndChords = [];
+  List<String> chordsOnly = [];
 
-  Song displayedSong = currentSong;
+  Song displayedSong;
+  displayedSong = song;
+  displayedSong.fullText = [];
 
-//Lyrics only
-  if (currentSettings.chords == false) {
-    displayedSong.fullText.removeWhere((line) => line.contains('%'));
-    if (displayedSong.order == null) {
-      displayedSong.fullText.forEach((line) {
-        line = line.replaceAll('=', '');
+  if (displayedSong.order != null) {
+    displayedSong.order.forEach((element) {
+      int verseIndex = 1;
 
-        lyricsOnly.add(line);
+      displayedSong.lyrics.forEach((line) {
+        if (line == '=') {
+          verseIndex = verseIndex + 1;
+        }
+        if (verseIndex == element) {
+          lyricsOnly.add(line);
+        }
       });
-    } else {
-      displayedSong.order.forEach((element) {
-        int verseIndex = 0;
-        displayedSong.lyrics.forEach((line) {
-          if (line == '=') {
-            verseIndex = verseIndex + 1;
-          }
-          if (verseIndex == element) {
-            line = line.replaceAll('=', '');
-            lyricsOnly.add(line);
-          }
-        });
-      });
-    }
-    lyricsOnly.removeAt(0);
-
+    });
+    lyricsOnly = cleanList(lyricsOnly);
     displayedSong.lyrics = lyricsOnly;
+
+    displayedSong.order.forEach((element) {
+      int verseIndex = 1;
+
+      displayedSong.chords.forEach((line) {
+        if (line == '=') {
+          verseIndex = verseIndex + 1;
+        }
+        if (verseIndex == element) {
+          chordsOnly.add(line);
+        }
+      });
+    });
+    chordsOnly = cleanList(chordsOnly);
+
+    displayedSong.chords = chordsOnly;
   }
-//Lyrics and Chords
+
   if (currentSettings.chords) {
-    if (displayedSong.order == null) {
-      displayedSong.fullText.removeAt(0);
-      displayedSong.fullText.forEach((line) {
-        line = line.replaceAll('=', '');
-        line = line.replaceAll('%', '');
-        lyricsAndChords.add(line);
-      });
+    chordsOnly = cleanList(displayedSong.chords);
+    print(chordsOnly);
+    if (chordsOnly.isEmpty || chordsOnly[0] == " ") {
+      lyricsOnly = cleanList(displayedSong.lyrics);
+      displayedSong.fullText = lyricsOnly;
     } else {
-      displayedSong.order.forEach((element) {
-        int verseIndex = 0;
-        displayedSong.fullText.forEach((line) {
-          if (line == '=') {
-            verseIndex = verseIndex + 1;
-          }
-          if (verseIndex == element) {
-            line = line.replaceAll('=', '');
-            line = line.replaceAll('%', '');
-            lyricsAndChords.add(line);
-          }
-        });
-      });
-      lyricsAndChords.removeAt(0);
+      for (var i = 0; i < displayedSong.chords.length; i++) {
+        String trimmedChordline = displayedSong.chords[i].replaceAll("%", "").trimRight();
+        if (displayedSong.chords[i] == "=" && displayedSong.lyrics[i] == "=") {
+          displayedSong.fullText.add(' ');
+        } else {
+          displayedSong.fullText.add(trimmedChordline);
+          displayedSong.fullText.add(displayedSong.lyrics[i]);
+          displayedSong.fullText = cleanList(displayedSong.fullText);
+        }
+      }
     }
-
-    displayedSong.lyrics = lyricsAndChords;
+  } else {
+    displayedSong.lyrics = cleanList(displayedSong.lyrics);
+    displayedSong.fullText = displayedSong.lyrics;
   }
 
-  return displayedSong;
+  return displayedSong.fullText;
+}
+
+cleanList(List<String> list) {
+  List<String> cleaned = [];
+  list.forEach((element) {
+    if (element == "=") {
+      cleaned.add(" ");
+    } else if (element.contains("%")) {
+      element.replaceAll("%", " ");
+      cleaned.add(element);
+    } else {
+      cleaned.add(element);
+    }
+  });
+  return cleaned;
 }

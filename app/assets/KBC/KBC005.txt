@@ -1,6 +1,5 @@
 title:All In All
 order:1,2,3,2
-chordorder:1,2,3,2
 topic:worship
 =
 G          D                  Em%

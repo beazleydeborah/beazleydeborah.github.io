@@ -1,6 +1,7 @@
 import 'package:app/helpers/edit_song_for_display.dart';
 import 'package:app/helpers/file_to_song.dart';
 import 'package:app/helpers/song_search.dart';
+import 'package:app/helpers/transpose.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import './settingsPage.dart';
@@ -18,27 +19,24 @@ import '../models/settings.dart';
 class SongPage extends StatefulWidget {
   static const routeName = '/songpage';
   final Function saveSong;
-  final Song song;
+  final Song savedSong;
+
   final Settings settings;
 
-  SongPage(this.saveSong, this.song, this.settings);
+  SongPage(this.saveSong, this.savedSong, this.settings);
 
   @override
   _SongPageState createState() => _SongPageState();
 }
 
 class _SongPageState extends State<SongPage> {
-  int searchResults = 0;
-  List<String> searchIndexes = [];
   List<String> indexData = [];
-  List<Song> songListResults = [];
+
   String errorHandle;
   var autoDisplay = AutoSizeGroup();
 
-  Song displayedSong = Song(title: '', lyrics: [], fullText: [], chords: []);
-
   List<String> splitLineText = [];
-  double displayedFontSize;
+
   String currentQuery;
 
   Song currentSong = Song();
@@ -47,15 +45,109 @@ class _SongPageState extends State<SongPage> {
 
   @override
   void initState() {
-    currentSong = this.widget.song;
-
+    currentSong = this.widget.savedSong;
     currentSettings = this.widget.settings;
     _getQuery();
     loadIndex();
 
-    loadSong(currentSong);
-
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: loadSong(currentSong),
+        builder: (build, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            List<String> display = editForDisplay(currentSong, currentSettings);
+            return Container(
+              child: WillPopScope(
+                  onWillPop: _onWillPop,
+                  child: Scaffold(
+                      appBar: AppBar(
+                        title: formatSongTitle(currentSettings, currentSong),
+                        actions: [
+                          IconButton(
+                              icon: Icon(Icons.search),
+                              onPressed: () async {
+                                final result = await showSearch(
+                                    query: currentQuery,
+                                    context: context,
+                                    delegate: SongSearch(
+                                      indexData: indexData,
+                                      currentSettings: currentSettings,
+                                      currentSong: currentSong,
+                                    ));
+                                setState(() {
+                                  currentSong = result;
+                                  _scrollController.jumpTo(0);
+                                });
+                                widget.saveSong(currentSong);
+                              }),
+                          IconButton(
+                              icon: Icon(Icons.settings),
+                              onPressed: () async {
+                                final result = await Navigator.pushNamed(context, SettingsPage.routeName);
+                                setState(() {
+                                  currentSettings = result;
+                                });
+                                widget.saveSong(currentSong);
+                              })
+                        ],
+                      ),
+                      body: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: OrientationBuilder(
+                              builder: (context, orientation) => ListView(
+                                shrinkWrap: true,
+                                controller: _scrollController,
+                                children: transform(display, orientation, currentSettings),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.bottomRight,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Visibility(
+                                  visible: currentSettings.chords && currentSong.chords.isNotEmpty,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      currentSong.chords = transpose(currentSong.chords, true);
+                                      setState(() {});
+                                      widget.saveSong(currentSong);
+                                    },
+                                    icon: Icon(Icons.add),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: currentSettings.chords && currentSong.chords.isNotEmpty,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      currentSong.chords = transpose(currentSong.chords, false);
+                                      setState(() {});
+                                      widget.saveSong(currentSong);
+                                    },
+                                    icon: Icon(Icons.remove),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ))),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              ),
+            );
+          }
+        });
   }
 
   _getQuery() async {
@@ -76,48 +168,39 @@ class _SongPageState extends State<SongPage> {
 
     indexfileData = LineSplitter().convert(decoded);
 
-    setState(() {
-      indexData = indexfileData;
-    });
+    indexData = indexfileData;
   }
 
-  loadSong(Song currentSong) async {
+  Future<Song> loadSong(Song currentSong) async {
     _getQuery();
-
-    try {
-      await rootBundle.loadString('assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt').then((value) {
-        setState(() {
+    if (currentSong.chords != null) {
+      return currentSong;
+    } else {
+      try {
+        await rootBundle.loadString('assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt').then((value) {
           currentSong = fileToSong(value, currentSong);
-
-          displayedSong = editForDisplay(currentSong, currentSettings);
         });
+      } catch (e) {
+        print(e);
 
-        widget.saveSong(displayedSong);
-      });
-    } catch (e) {
-      print(e);
-
-      error(currentSong);
+        error(currentSong);
+      }
+      widget.saveSong(currentSong);
+      return currentSong;
     }
   }
 
   error(Song currentSong) {
-    if (currentSong.bookPrefix == null) {
-      setState(() {
-        currentSong = Song();
-      });
-    } else {
-      setState(() {
-        displayedSong.lyrics = [
-          'An error occured with this song',
-          '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
-          '',
-          'Send any other errors to:',
-          'beazleyprograms@gmail.com ',
-          'with the above song number'
-        ];
-      });
-    }
+    setState(() {
+      currentSong.lyrics = [
+        'An error occured with this song',
+        '${currentSong.bookPrefix} - ${currentSong.songNumber} ',
+        '',
+        'Send any other errors to:',
+        'beazleyprograms@gmail.com ',
+        'with the above song number'
+      ];
+    });
   }
 
   Future<bool> _onWillPop() async {
@@ -127,19 +210,18 @@ class _SongPageState extends State<SongPage> {
         delegate: SongSearch(
           indexData: indexData,
           currentSettings: this.widget.settings,
-          currentSong: displayedSong,
+          currentSong: currentSong,
         )).then((value) {
-      setState(() {
-        currentSong = value;
-        _scrollController.jumpTo(0);
-        loadSong(currentSong);
-      });
+      currentSong = value;
+      _scrollController.jumpTo(0);
+      loadSong(currentSong);
+
       return false;
     }));
   }
 
-  transform(List<String> displayedText, Orientation orientation, Settings settings) {
-    List<Widget> textWidgets = [];
+  List<AutoSizeText> transform(List<String> displayedText, Orientation orientation, Settings settings) {
+    List<AutoSizeText> textWidgets = [];
 
     displayedText.forEach((line) {
       if (line != null) {
@@ -171,52 +253,10 @@ class _SongPageState extends State<SongPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: formatSongTitle(currentSettings, displayedSong),
-          actions: [
-            IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () async {
-                  final result = await showSearch(
-                      query: currentQuery,
-                      context: context,
-                      delegate: SongSearch(
-                        indexData: indexData,
-                        currentSettings: currentSettings,
-                        currentSong: currentSong,
-                      ));
-                  setState(() {
-                    currentSong = result;
-                    loadSong(result);
-                    _scrollController.jumpTo(0);
-                  });
-                }),
-            IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () async {
-                  final result = await Navigator.pushNamed(context, SettingsPage.routeName);
-                  setState(() {
-                    currentSettings = result;
-                    loadSong(currentSong);
-                  });
-                })
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: OrientationBuilder(
-            builder: (context, orientation) => ListView(
-              controller: _scrollController,
-              children: transform(displayedSong.lyrics, orientation, currentSettings),
-            ),
-          ),
-        ),
-      ),
-    );
+  List<Text> listItems(Song song) {
+    List<Text> listItems = [];
+    song.fullText.forEach((line) => listItems.add(Text(line)));
+
+    return listItems;
   }
 }
