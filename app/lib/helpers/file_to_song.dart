@@ -38,6 +38,8 @@ Song fileToSong(String fileText, Song oldSongValue) {
       currentSong.language = line.substring(9);
     } else if (line.startsWith('subtitle:')) {
       currentSong.subTitle = line.substring(9);
+    } else if (line.startsWith('audio:')) {
+      currentSong.audio = line.substring(6);
     } else if (line.startsWith('chords:')) {
       currentSong.chordNames = line.substring(7);
     } else if (line.contains('=') || line == "") {

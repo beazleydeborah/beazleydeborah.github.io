@@ -11,6 +11,7 @@ class Song {
   List<int> order;
   String chordNames;
   List<String> fullText;
+  String audio;
 
   Song({
     this.id,
@@ -25,6 +26,7 @@ class Song {
     this.order,
     this.chordNames,
     this.fullText,
+    this.audio,
   });
 }
 
@@ -41,6 +43,7 @@ Song saveSong(
   _order,
   _chordNames,
   _fullText,
+  _audio,
 ) {
   Song song = Song(
     id: _id,
@@ -55,6 +58,7 @@ Song saveSong(
     order: _order,
     chordNames: _chordNames,
     fullText: _fullText,
+    audio: _audio,
   );
   return song;
 }
