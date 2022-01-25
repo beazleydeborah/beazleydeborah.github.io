@@ -44,12 +44,16 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
         canvasColor: Colors.black,
         primarySwatch: Colors.indigo,
+        primaryIconTheme: IconThemeData(color: Colors.grey[350]),
       );
     } else {
       theme = ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.indigo,
         primaryColor: Color(0xFF010066),
+        primaryIconTheme: IconThemeData(
+          color: Colors.indigoAccent,
+        ),
       );
     }
 

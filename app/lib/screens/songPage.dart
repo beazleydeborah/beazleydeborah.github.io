@@ -103,7 +103,7 @@ class _SongPageState extends State<SongPage> {
                               builder: (context, orientation) => ListView(
                                 shrinkWrap: true,
                                 controller: _scrollController,
-                                children: transform(display, orientation, currentSettings),
+                                children: transform(editForDisplay(currentSong, currentSettings), orientation, currentSettings),
                               ),
                             ),
                           ),
@@ -114,24 +114,30 @@ class _SongPageState extends State<SongPage> {
                               children: [
                                 Visibility(
                                   visible: currentSettings.chords && currentSong.chords.isNotEmpty,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      currentSong.chords = transpose(currentSong.chords, true);
-                                      setState(() {});
-                                      widget.saveSong(currentSong);
-                                    },
-                                    icon: Icon(Icons.add),
+                                  child: Container(
+                                    color: Theme.of(context).primaryColorLight,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        currentSong.chords = transpose(currentSong.chords, true);
+                                        setState(() {});
+                                        widget.saveSong(currentSong);
+                                      },
+                                      icon: Icon(Icons.add),
+                                    ),
                                   ),
                                 ),
                                 Visibility(
                                   visible: currentSettings.chords && currentSong.chords.isNotEmpty,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      currentSong.chords = transpose(currentSong.chords, false);
-                                      setState(() {});
-                                      widget.saveSong(currentSong);
-                                    },
-                                    icon: Icon(Icons.remove),
+                                  child: Container(
+                                    color: Theme.of(context).primaryIconTheme.color,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        currentSong.chords = transpose(currentSong.chords, false);
+                                        setState(() {});
+                                        widget.saveSong(currentSong);
+                                      },
+                                      icon: Icon(Icons.remove),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -212,7 +218,6 @@ class _SongPageState extends State<SongPage> {
           currentSettings: this.widget.settings,
           currentSong: currentSong,
         )).then((value) {
-      currentSong = value;
       _scrollController.jumpTo(0);
       loadSong(currentSong);
 
@@ -228,7 +233,7 @@ class _SongPageState extends State<SongPage> {
         textWidgets.add(
           AutoSizeText(
             '$line',
-            style: currentSettings.chords ? TextStyle(fontSize: 40, fontFamily: 'RobotoMono') : TextStyle(fontSize: 40, fontFamily: 'Roboto'),
+            style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
             maxLines: 1,
             group: autoDisplay,
           ),
