@@ -1,5 +1,5 @@
 title:JESUS, I AM RESTING
-order:1,3,4,5,2
+order:1,2,3,4,5,1
 =
 E           A        B  E%
 Jesus, I am resting, resting
@@ -9,6 +9,7 @@ in the joy of what Thou art;
 I am finding out the greatness
 E       A   B  E%
 of Thy loving heart.
+=
 B                (7)   E% 
 Thou hast bid me gaze upon Thee,
 G#7     A               B%
@@ -17,15 +18,6 @@ and Thy beauty fills my soul,
 for by Thy transforming power,
           B7      E%
 Thou hast made me whole.
-=
-E           A        B  E%
-Jesus, I am resting, resting,
-              F#7       B%
-in the joy of what Thou art;
-  E   (7)%
-I am finding out the greatness
-E      A  B   E%
-of Thy loving heart.
 =
 Oh, how great Thy loving kindness, vaster, broader
 than the sea! Oh, how marvelous Thy goodness,

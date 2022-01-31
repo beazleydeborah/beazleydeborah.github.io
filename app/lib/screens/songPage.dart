@@ -59,7 +59,6 @@ class _SongPageState extends State<SongPage> {
         future: loadSong(currentSong),
         builder: (build, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            List<String> display = editForDisplay(currentSong, currentSettings);
             return Container(
               child: WillPopScope(
                   onWillPop: _onWillPop,
