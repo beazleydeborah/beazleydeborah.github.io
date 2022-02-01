@@ -5,42 +5,35 @@ List<String> editForDisplay(Song song, Settings currentSettings) {
   List<String> lyricsOnly = [];
   List<String> chordsOnly = [];
 
-  Song displayedSong;
-  displayedSong = song;
+  Song displayedSong = song;
   displayedSong.fullText = [];
-  print(displayedSong.lyrics);
-  print(displayedSong.chords);
 
-  if (displayedSong.order != null) {
-    displayedSong.order.forEach((element) {
+  if (song.order != null) {
+    song.order.forEach((element) {
       int verseIndex = 1;
 
-      for (var i = 0; i < displayedSong.lyrics.length; i++) {
-        if (displayedSong.lyrics[i] == '=') {
+      for (var i = 0; i < song.lyrics.length; i++) {
+        if (song.lyrics[i] == '=') {
           verseIndex = verseIndex + 1;
         }
         if (verseIndex == element) {
-          lyricsOnly.add(displayedSong.lyrics[i]);
-          if (i < displayedSong.chords.length) {
-            chordsOnly.add(displayedSong.chords[i]);
+          lyricsOnly.add(song.lyrics[i]);
+          if (i < song.chords.length) {
+            chordsOnly.add(song.chords[i]);
           } else {
             chordsOnly.add(' ');
           }
         }
       }
     });
-    lyricsOnly = cleanList(lyricsOnly);
-    displayedSong.lyrics = lyricsOnly;
-    chordsOnly = cleanList(chordsOnly);
-    displayedSong.chords = chordsOnly;
+
+    displayedSong.lyrics = cleanList(lyricsOnly);
+    displayedSong.chords = cleanList(chordsOnly);
   }
 
   if (currentSettings.chords) {
-    chordsOnly = cleanList(displayedSong.chords);
-
-    if (chordsOnly.isEmpty || chordsOnly[0] == " ") {
-      lyricsOnly = cleanList(displayedSong.lyrics);
-      displayedSong.fullText = lyricsOnly;
+    if (displayedSong.chords.isEmpty || displayedSong.chords[0] == " ") {
+      displayedSong.fullText = cleanList(displayedSong.lyrics);
     } else {
       for (var i = 0; i < displayedSong.lyrics.length; i++) {
         if (i < displayedSong.chords.length) {
@@ -48,12 +41,11 @@ List<String> editForDisplay(Song song, Settings currentSettings) {
             displayedSong.fullText.add(' ');
           } else {
             String trimmedChordline = displayedSong.chords[i].replaceAll("%", "").trimRight();
-            print(trimmedChordline);
             displayedSong.fullText.add(trimmedChordline);
             displayedSong.fullText.add(displayedSong.lyrics[i]);
           }
         } else {
-          displayedSong.fullText.add(displayedSong.lyrics[i]);
+          displayedSong.fullText.add(song.lyrics[i]);
         }
       }
       displayedSong.fullText = cleanList(displayedSong.fullText);

@@ -197,6 +197,7 @@ class _SongPageState extends State<SongPage> {
 
   error(Song currentSong) {
     setState(() {
+      currentSong.chords = [];
       currentSong.lyrics = [
         'An error occured with this song',
         '${currentSong.bookPrefix} - ${currentSong.songNumber} ',

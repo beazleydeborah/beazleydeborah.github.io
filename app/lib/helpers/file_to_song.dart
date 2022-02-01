@@ -48,6 +48,10 @@ Song fileToSong(String fileText, Song oldSongValue) {
       currentSong.chords.add(line);
     } else {
       currentSong.lyrics.add(line);
+
+      if (currentSong.lyrics.length > currentSong.chords.length) {
+        currentSong.chords.add('%');
+      }
     }
   });
 
