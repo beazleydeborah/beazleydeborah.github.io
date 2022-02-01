@@ -6,6 +6,7 @@ List<String> transpose(List<String> songChords, bool ifup) {
 
   songChords.forEach((line) {
     line = line.replaceAll('%', ' ');
+    line = line.replaceAll('-', ' ');
 
     List<String> splitLine = line.split("");
 
