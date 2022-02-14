@@ -1,5 +1,7 @@
 import 'package:app/helpers/edit_song_for_display.dart';
 import 'package:app/helpers/file_to_song.dart';
+import 'package:app/helpers/index_service.dart';
+import 'package:app/helpers/indextoSong.dart';
 import 'package:app/helpers/song_search.dart';
 import 'package:app/helpers/transpose.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +10,6 @@ import './settingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'dart:typed_data';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'dart:convert';
@@ -30,8 +31,6 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
-  List<String> indexData = [];
-
   String errorHandle;
   var autoDisplay = AutoSizeGroup();
 
@@ -41,6 +40,7 @@ class _SongPageState extends State<SongPage> {
 
   Song currentSong = Song();
   Settings currentSettings = Settings();
+  List<Song> currentIndex = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -73,7 +73,7 @@ class _SongPageState extends State<SongPage> {
                                     query: currentQuery,
                                     context: context,
                                     delegate: SongSearch(
-                                      indexData: indexData,
+                                      indexData: currentIndex,
                                       currentSettings: currentSettings,
                                       currentSong: currentSong,
                                     ));
@@ -165,15 +165,21 @@ class _SongPageState extends State<SongPage> {
   }
 
   loadIndex() async {
-    List<String> indexfileData;
-    final ByteData data = await rootBundle.load('assets/index.txt');
-    final uint64list = data.buffer.asUint8List();
+    // List<String> indexfileData;
+    List<Song> songs = [];
+    var assets = await rootBundle.loadString('AssetManifest.json');
 
-    final decoded = utf8.decode(uint64list);
+    Map<String, dynamic> jsondata = json.decode(assets);
+    jsondata.removeWhere((key, value) => !key.contains('.txt'));
 
-    indexfileData = LineSplitter().convert(decoded);
-
-    indexData = indexfileData;
+    jsondata.forEach((key, value) {
+      loadIndexSong(key).then((value) {
+        Song indexedSong = indextoSong(value, key);
+        print(indexedSong.title);
+        songs.add(indexedSong);
+        currentIndex = songs;
+      });
+    });
   }
 
   Future<Song> loadSong(Song currentSong) async {
@@ -214,12 +220,13 @@ class _SongPageState extends State<SongPage> {
         query: currentQuery,
         context: context,
         delegate: SongSearch(
-          indexData: indexData,
+          indexData: currentIndex,
           currentSettings: this.widget.settings,
           currentSong: currentSong,
         )).then((value) {
       _scrollController.jumpTo(0);
       loadSong(currentSong);
+      widget.saveSong(currentSong);
 
       return false;
     }));

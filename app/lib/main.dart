@@ -22,6 +22,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Settings settings;
   Song song = Song(lyrics: [], fullText: []);
+
   ThemeData theme;
 
   Future<bool> _getSettingsAndSong() async {

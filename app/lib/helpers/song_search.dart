@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SongSearch extends SearchDelegate<Song> {
   final Settings currentSettings;
-  final List<String> indexData;
+  final List<Song> indexData;
   final Song currentSong;
 
   SongSearch({this.indexData, this.currentSettings, this.currentSong});
@@ -16,66 +16,23 @@ class SongSearch extends SearchDelegate<Song> {
     prefs.setString('query', query);
   }
 
-  findSongs(String searchText, List<String> indexList, Settings currentSettings) {
-    //finds  all indexString of format KBC-181 and converts to Song
-    String indexSubString = '';
-    String titleSubString = '';
-    String languageSubString = '';
-    List<Song> songList = [];
+  findSongs(String query, List<Song> indexData, Settings settings) {
+    String formattedQuery = formatQuery(query);
+    List<Song> results = [];
 
-    String formattedQuery = formatQuery(searchText);
-
-    indexList.forEach((indexLine) {
-      String formattedIndexLine = formatIndexLine(indexLine);
-
-      if (formattedIndexLine.contains(formattedQuery)) {
-        indexSubString = indexLine.substring(
-          indexLine.lastIndexOf('|') + 1,
-          indexLine.length,
-        );
-        titleSubString = indexLine.substring(
-          indexLine.indexOf('|') + 1,
-          indexLine.indexOf('||'),
-        );
-        languageSubString = indexLine.substring(
-          0,
-          indexLine.indexOf('|'),
-        );
-
-        Song indexedSong = Song(
-          bookPrefix: indexSubString.substring(0, 3),
-          songNumber: indexSubString.substring(indexSubString.indexOf('-') + 1, indexSubString.length).padLeft(3, '0'),
-          title: titleSubString,
-          language: languageSubString,
-          order: null,
-          chordNames: null,
-          chords: null,
-          fullText: null,
-          lyrics: null,
-          topic: null,
-        );
-
-        if ((currentSettings.filterNavajo == true) && (indexedSong.language != "english")) {
-          return;
-        }
-        songList.add(indexedSong);
+    indexData.forEach((song) {
+      String formattedSongtitle = song.title.toLowerCase();
+      String formattedSonglyrics = song.lyrics.join().toLowerCase();
+      if (formattedSonglyrics.contains(formattedQuery) || formattedSongtitle.contains(formattedQuery) || song.songNumber.contains(query)) {
+        results.add(song);
       }
     });
 
-    return songList;
+    return results;
   }
 
   formatSubtitle(Song indexedSong) {
     return Text("${indexedSong.bookPrefix}-${indexedSong.songNumber}");
-  }
-
-  formatIndexLine(String indexLine) {
-    String formattedIndexLine;
-    indexLine = indexLine.toLowerCase();
-    indexLine = indexLine.replaceAll(RegExp(r'(�|,|-|/s|!)', caseSensitive: false), " ");
-
-    formattedIndexLine = indexLine;
-    return formattedIndexLine;
   }
 
   formatQuery(String query) {
