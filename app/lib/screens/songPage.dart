@@ -175,7 +175,6 @@ class _SongPageState extends State<SongPage> {
     jsondata.forEach((key, value) {
       loadIndexSong(key).then((value) {
         Song indexedSong = indextoSong(value, key);
-        print(indexedSong.title);
         songs.add(indexedSong);
         currentIndex = songs;
       });

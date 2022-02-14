@@ -19,12 +19,15 @@ class SongSearch extends SearchDelegate<Song> {
   findSongs(String query, List<Song> indexData, Settings settings) {
     String formattedQuery = formatQuery(query);
     List<Song> results = [];
-
+    print(indexData.first.title);
     indexData.forEach((song) {
       String formattedSongtitle = song.title.toLowerCase();
       String formattedSonglyrics = song.lyrics.join().toLowerCase();
       if (formattedSonglyrics.contains(formattedQuery) || formattedSongtitle.contains(formattedQuery) || song.songNumber.contains(query)) {
         results.add(song);
+      }
+      if (settings.filterNavajo == true && song.language == "navajo") {
+        results.remove(song);
       }
     });
 

@@ -61,6 +61,7 @@ flutter:
     - assets/IMS/
     - assets/NHF/
     - assets/PCB/
+    - assets/XYZ/
     # - assets/Books/
     # - assets/index.txt
   
