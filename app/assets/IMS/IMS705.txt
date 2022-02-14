@@ -1,5 +1,6 @@
 The First Noel
 order:1,2,3,2,4,2,7,2
+topic:christmas
 =
 The first Noel the angel did say
 Was to certain poor shepherds

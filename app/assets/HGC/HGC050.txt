@@ -1,4 +1,5 @@
 HARK! THE HERALD ANGELS SING
+topic:christmas
 =
 E            B   E      B%
 Hark! The herald angels sing,

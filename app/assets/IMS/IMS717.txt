@@ -1,4 +1,5 @@
 Twelve Days of Christmas
+topic:christmas
 =
        F%
 On the first day of Christmas,

@@ -2,6 +2,7 @@ title:Doo Iits’a’í Da Hodííyi̜i̜d
 subtitle:Silent Night Holy Night
 language:navajo
 order:1,2,3,4
+topic:christmas
 =
 Doo’ íits’a’í da ho dííyi̜i̜d
 Chahałheeł adiłdíín,

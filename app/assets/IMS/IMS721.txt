@@ -1,6 +1,7 @@
 title:Ashkii Ásaá Yiłhaał
 subtitle:Little Drummer Boy
 language:navajo
+topic:christmas
 =
 Hósh dę́'ha'ní   
    pa rum pum pum pum

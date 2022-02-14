@@ -1,5 +1,6 @@
 Beautiful Star of Bethlehem
 order:1,2,3,2,4,2
+topic:christmas
 =
 Oh beautiful star of Bethlehem,
 Shining afar thru shadows dim,

@@ -1,6 +1,7 @@
 title:Bethlehem Kin Síníilii
 subtitle:O Little Town of Bethlehem
 language:navajo
+topic:christmas
 =
 Bethlehem kin sínínilii, Hasyéelgo nił haz’ą́,
 Honílǫ́ǫgi dóó wódahdi nikáa’di sǫ‘ deíkááh.

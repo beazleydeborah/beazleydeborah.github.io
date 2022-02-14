@@ -1,4 +1,5 @@
 Silent Night
+topic:christmas
 =
 A%
 Silent night, holy night,

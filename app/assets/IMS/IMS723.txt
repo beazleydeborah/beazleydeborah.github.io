@@ -1,5 +1,6 @@
 title:O Little Town of Bethlehem
 order:1,2,3,4
+topic:christmas
 =
 O little town of Bethlehem,
 How still we see you lie!
