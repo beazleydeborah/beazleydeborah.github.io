@@ -1,7 +1,5 @@
 Stranger of Galilee
 =
-order:
-=
 In fancy  I stood by the shore,one day,
 Of the beautiful murm'ring sea;
 I saw the great crowds as they thronged
@@ -25,4 +23,3 @@ He show'd me His hand and His riven side,
 And He whispered "It was for thee!"
 My burden fell off at the pierced feet
 Of the Stanger of Galilee.
-= 

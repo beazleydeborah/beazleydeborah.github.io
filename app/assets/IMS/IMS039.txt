@@ -1,4 +1,5 @@
 ﻿Jesus Loves Me
+language:navajo
 =
 D           A   D%
 Jesus loves me this I know

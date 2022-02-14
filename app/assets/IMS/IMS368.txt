@@ -1,4 +1,6 @@
-﻿Come Thou Fount (w/Navajo)
+﻿title:Come Thou Fount
+subtitle:w/Navajo
+language: navajo
 =
 Tó háálįijį’ ahohkáahgo
 Baa hózho-go dahohtaał,

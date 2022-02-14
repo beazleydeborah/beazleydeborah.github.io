@@ -1,12 +1,13 @@
-PSALMS 48:1-2
-=
-Great is the Lord, 
-and greatly to be praised,
-in the city of our God, 
-in the mountain of His holiness.
-Beautiful for situation,
-the joy of the whole earth,
-is Mount Zion on the sides of the north, 
-the city of the great King.
-Is Mount Zion on the sides of the north, 
-the city of the great King.
+PSALMS 117
+topic:scripture
+= 
+  E        B  A      E             B        A   B%
+Praise the Lord, all nations; laud Him, all peoples!
+          E    B           A           E%
+For His lovingkindness is great toward us,
+         F#m         A           B%
+and the truth of the Lord is everlasting.
+E          B     B          A-B E%
+Praise the Lord! Praise the Lord!
+Praise the Lord! Praise the Lord!
+Praise the Lord! Praise the Lord! 

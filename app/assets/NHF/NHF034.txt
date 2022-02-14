@@ -3,7 +3,7 @@ subtitle:Hark The Herald Angels Sing
 language:navajo
 order:1,2,3,2,4,2
 =
-Ge’! diyingonidaalaí
+Ge’ diyingonidaalaí
 Kódaanígo dahataał,
 Christ yizhchí̜ eí baa ha’niih,
 God,K’é, nánihidoo’niid,

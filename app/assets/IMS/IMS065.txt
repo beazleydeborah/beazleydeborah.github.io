@@ -1,4 +1,5 @@
 We Three Kings
+topic:christmas
 =
 We three kings of Orient are;
 Bearing gifts we traverse afar,

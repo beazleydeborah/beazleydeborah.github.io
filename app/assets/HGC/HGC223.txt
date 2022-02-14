@@ -1,4 +1,5 @@
 PSALMS 47
+topic:scripture
 =
 O clap your hands, all peoples;
 shout to God with the voice of joy.

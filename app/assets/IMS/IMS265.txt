@@ -1,5 +1,5 @@
-﻿title:Pledge of Allegiance in Navajo
-subtitle:
+﻿title:Pledge of Allegiance
+subtitle:w/Navajo
 language:navajo
 order:1,2,1,3,4,1
 =

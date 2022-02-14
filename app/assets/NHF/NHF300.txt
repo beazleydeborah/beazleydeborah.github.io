@@ -1,4 +1,5 @@
 Satisfied
+language:navajo
 =
 Hoséli̜i̜’dę́ę́’, tó sik’azii
 Bíká laanaa nisin lá.

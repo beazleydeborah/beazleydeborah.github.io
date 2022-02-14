@@ -1,4 +1,5 @@
 A Beautiful Life
+language:navajo
 =
 Nizhónígo hinishnáa doo,
 T’áá ákwíí jí̜ shił íli̜i̜ doo,

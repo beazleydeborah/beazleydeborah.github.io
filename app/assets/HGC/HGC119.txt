@@ -1,44 +1,37 @@
-WE'RE MARCHING TO ZION
-order:1,2,3,2,4,2,5,2
+Not My Will But Yours Be Done
+order:1,2,3,4,1,2,3,4
 =
-      G        D        G%
-Come, we that love the Lord, 
-                     D%
-and let our joys be known,
-     G               C%
-join in a song with sweet accord, 
-     D               A       D%
-join in a song with sweet accord,
-      G   D   G         C%
-and thus surround the throne, 
-     G        D          G%
-and thus surround the throne.
+     E                A%
+When I feel crushed beneath a load,
+     B                C#m%
+That seems to weigh a ton,
+E      A        B        E%
+Not my will but Yours be done.
 =
-      G%
-We're marching to Zion, 
-                       D%
-beautiful, beautiful Zion; 
-       G         (7)       C%
-we're marching upward to Zion, 
-     G         C       G%
-the beautiful city of God.
+E                    A%
+Though Your Spirit's full of strength
+   B                 C#m%
+In my flesh I've got none
+E      A        B        E%
+Not my will but Yours be done.
 =
-Let those refuse to sing 
-who never knew our God; 
-but children of the heav'nly King, 
-but children of the heav'nly King,
-may speak their joys abroad, 
-may speak their joys abroad.
+E                    A%
+When the task You've given me
+   B            C#m%
+Is anything but fun
+E      A        B        E%
+Not my will but Yours be done.
 =
-The hill of Zion yields a thousand sacred sweets
-before we reach the heav'nly fields, 
-before we reach the heav'nly fields, 
-or walk the golden streets, 
-or walk the golden streets.
-=
-Then let our songs abound, 
-and ev'ry tear be dry;
-we're marching thro' Immanuel's ground, 
-we're marching thro' Immanuel's ground, 
-to fairer worlds on high, 
-to fairer worlds on high.
+A             B      E%
+May I rise up with resolve
+A             B%
+Ready, Lord, to do it
+    A            B         C#m%
+May I care more about Your will
+     F#m7             B%
+Than whether I live through it
+
+A                 B         C#m%
+Make me like Your firstborn son
+A               B        E%
+Not my will but Yours be done.

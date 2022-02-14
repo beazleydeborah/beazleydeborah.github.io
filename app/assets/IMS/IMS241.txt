@@ -1,7 +1,6 @@
 Easter Song
 order:1,2,3,1,2,3,4
 =
-
 F          C    F       C       F%
 Hear the bells ringing they're singing
 C    F   C  F  Bb   F   C F C G F C%

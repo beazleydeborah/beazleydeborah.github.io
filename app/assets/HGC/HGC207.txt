@@ -1,21 +1,34 @@
-JOHN 13:34-35
+Psalms 18:46,49
+topic:scripture
+order:1,2,1,2
 =
-  D      Bm         G         A7%
-A new commandment I give unto you,
-         D        Bm% 
-that you love one another,
-   G            A7% 
-as I have loved you, 
-         D        Bm%
-that you love one another,
-   Em A         D% 
-as I have loved you.
+         G          C             G%
+The Lord lives, and blessed be my Rock;
+                   D         G   C  G (7)%
+and exalted be the God of my salvation
+                    C             G%
+The Lord lives, and blessed be my Rock;
+                   D            G   G7%
+and exalted be the God of my salvation 
 =
-   G          A                 D          Bm%
-By this shall all men know that you are My disciples,
-   G        A            D% 
-if you have love one for another.
-   G          A                 D          Bm% 
-By this shall all men know that you are My disciples,
-   G        A            D%
-if you have love one for another. 
+  C                     G%  
+Therefore, I will give thanks to
+                D% 
+Thee among the nations,
+  G  (7)% 
+O Lord, and I will sing 
+        G%
+praises to Thy name,
+          D    (7)    G-C-G% 
+among the nations, O Lord.
+=
+The Lord lives, and blessed be my Rock;
+and exalted be the God of my salvation 
+The Lord lives, and blessed be my Rock;
+and exalted be the God of my salvation 
+=
+Therefore, I will give thanks to 
+Thee among the nations, 
+O Lord, and I will sing 
+praises to Thy name, 
+among the nations, O Lord.

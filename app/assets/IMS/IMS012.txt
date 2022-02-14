@@ -1,5 +1,5 @@
 Romans 5:1 and 1:17
-Order: 1,1,2,2,1,1
+order: 1,1,2,2,1,1
 =
      C             Em         Am%
 Therefore being justified by faith,

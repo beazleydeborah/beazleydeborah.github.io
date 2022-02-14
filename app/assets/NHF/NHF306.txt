@@ -1,4 +1,5 @@
-title:Victory in Jesus (w/Navajo)
+title:Victory in Jesus
+subtitle:w/Navajo
 language:navajo
 =
 Jesus níhaa níyáago

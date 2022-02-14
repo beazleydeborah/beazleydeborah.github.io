@@ -1,6 +1,7 @@
 title:V'ne-emar
 subtitle:Zechariah 14:9
 order:1;2
+language:navajo
 =
 V'ne-emar v'haya Adonai
 L'melech al kol ha-aretz

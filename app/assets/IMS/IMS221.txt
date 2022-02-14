@@ -1,5 +1,5 @@
-title: Arky, Arky
-order: 1,3,6,3
+title:Arky, Arky
+order:1,3,6,3
 =
 The Lord told Noah
 There's gonna be a floody, floody,
