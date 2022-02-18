@@ -1,4 +1,5 @@
 1 Peter 2:19-25
+topic:memory
 =
 21 To this you were called, because Christ suffered for you,
 leaving you an example, that you should follow in his steps. 
@@ -12,5 +13,3 @@ we might die to sins and live for righteousness; “by his
 wounds you have been healed.” 
 25 For “you were like sheep going astray,” but now you have
 returned to the Shepherd and Overseer of your souls.
-
-.

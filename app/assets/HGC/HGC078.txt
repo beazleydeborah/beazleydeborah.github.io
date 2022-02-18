@@ -1,17 +1,30 @@
 I LOVE TO TELL THE STORY
+order:1,2,3,2,4,2,5,2
 =
-I love to tell the story 
-of unseen things above, 
-of Jesus and His glory, 
+  G                G7%
+I love to tell the story
+   C              G% 
+of unseen things above,
+   D7            G% 
+of Jesus and His glory,
+                 D% 
 of Jesus and His love.
-I love to tell the story, 
+  D7               G%
+I love to tell the story,
+   Em               B% 
 because I know 'tis true;
-it satisfies my longings 
+   C            G%
+it satisfies my longings
+   D7               G% 
 as nothing else can do.
 =
-I love to tell the story, 
+  D7               G%
+I love to tell the story,
+       C              G% 
 'twill be my theme in glory
-to tell the old, old story 
+                     C%
+to tell the old, old story
+   G     D       G% 
 of Jesus and His love.
 =
 I love to tell the story,
@@ -24,11 +37,6 @@ and that is just the reason
 I tell it now to thee.
 =
 I love to tell the story, 
-'twill be my theme in glory
-to tell the old, old story 
-of Jesus and His love.
-=
-I love to tell the story, 
 'tis pleasant to repeat 
 what seems, each time I tell it, 
 more wonderfully sweet.
@@ -38,11 +46,6 @@ the message of salvation
 from God's own holy Word.
 =
 I love to tell the story, 
-'twill be my theme in glory
-to tell the old, old story 
-of Jesus and His love.
-=
-I love to tell the story, 
 for those who know it best 
 seem hungering and thirsting 
 to hear it like the rest.
@@ -50,9 +53,4 @@ And when, in scenes of glory,
 I sing the new, new song,
 'twill be the old, old story 
 that I have loved so long.
-=
-I love to tell the story, 
-'twill be my theme in glory
-to tell the old, old story 
-of Jesus and His love.
-=
+

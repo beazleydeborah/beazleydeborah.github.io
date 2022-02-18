@@ -1,4 +1,5 @@
 2 Corinthians 3:18
+topic:memory
 =
 But we all, with unveiled face beholding
 as in a mirror the glory of the Lord,

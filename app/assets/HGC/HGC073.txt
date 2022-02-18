@@ -1,4 +1,5 @@
 HOW GREAT THOU ART
+order:1,2,3,2,4,2,5,2
 =
    E7      A       (7)    D%
 O Lord my God! When I in awesome wonder 
@@ -23,27 +24,12 @@ And hear the birds sing sweetly in the trees;
 When I look down from lofty mountain grandeur
 And hear the brook and feel the gentle breeze,
 =
-Then sings my soul, my Savior God to Thee;
-How great Thou art, how great Thou art!
-Then sings my soul, my Savior God to Thee;
-How great Thou art, how great Thou art!
-=
 And when I think that God, His Son not sparing
 Sent Him to die, I scarce can take it in;
 That on the cross, my burden gladly bearing,
 He bled and died to take away my sin!
 =
-Then sings my soul, my Savior God to Thee;
-How great Thou art, how great Thou art!
-Then sings my soul, my Savior God to Thee;
-How great Thou art, how great Thou art!
-=
 When Christ shall come with shout of acclamation
 And take me home, what joy shall fill my heart!
 Then I shall bow in humble adoration
 And there proclaim, my God, how great Thou art!
-=
-Then sings my soul, my Savior God to Thee;
-How great Thou art, how great Thou art!
-Then sings my soul, my Savior God to Thee;
-How great Thou art, how great Thou art!

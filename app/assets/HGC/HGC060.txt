@@ -1,20 +1,36 @@
 HE LIVES
+order:1,2,3,2,4,2
 =
+  G%
 I serve a risen Savior,
 He's in the world today;
-I know that He is living, 
+            B7    Em%
+I know that He is living,
+    A7           D7%
 whatever men may say;
+  G%
 I see His hand of mercy, 
 I hear His voice of cheer,
+    A                A7%
 and just the time I need Him 
+            D7%
 He's always near.
 =
-He lives, He lives, 
+    G         G7%
+He lives, He lives,
+       C             G% 
 Christ Jesus lives today!
-He walks with me and talks with me 
+   D7                G%
+He walks with me and talks with me
+ A7                 D    D7%
 Along life's narrow way.
-He lives, He lives, salvation to impart!
+   G         G7%
+He lives, He lives,
+C              B%
+Salvation to impart!
+    E7           A7%
 You ask me how I know He lives?
+   G         D      G%
 He lives within my heart.
 =
 In all the world around me 
@@ -26,14 +42,6 @@ through all the stormy blast,
 the day of His appearing 
 will come at last.
 =
-He lives, He lives, 
-Christ Jesus lives today!
-He walks with me and talks with me 
-Along life's narrow way.
-He lives, He lives, salvation to impart!
-You ask me how I know He lives?
-He lives within my heart.
-=
 Rejoice, rejoice, O Christian, 
 lift up your voice and sing
 eternal hallelujahs 
@@ -42,11 +50,3 @@ The hope of all who seek Him,
 the help of all who find,
 none other is so loving,
 so good and kind.
-=
-He lives, He lives, 
-Christ Jesus lives today!
-He walks with me and talks with me 
-Along life's narrow way.
-He lives, He lives, salvation to impart!
-You ask me how I know He lives?
-He lives within my heart.

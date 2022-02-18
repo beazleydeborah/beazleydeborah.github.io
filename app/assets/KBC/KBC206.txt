@@ -1,18 +1,31 @@
 Blessed Be Your Name
+order:1,2,3,4,2,3,5,3,5,5,3
 =
-G        D                    Em            C%
- Blessed be Your name, in the land that is plentiful
-           G          D               C%
-Where Your streams of abundance flow, blessed be Your name
-G        D                       Em           C%
- Blessed be Your name, when I'm found in the desert place
-         G                 D          C%
-Though I walk through the wilderness, blessed be Your name
+G        D%
+Blessed be Your name,
+       Em            C%
+In the land that is plentiful
+           G          D% 
+Where Your streams of abundance flow,
+C%
+Blessed be Your name
+G        D%           
+Blessed be Your name, 
+          Em           C%
+When I'm found in the desert place
+         G                 D%
+Though I walk through the wilderness,
+C%
+Blessed be Your name
 =
-G                     D              Em             C%
- Every blessing You pour out I'll turn back to praise
-G                 D               Em             C%
- When the darkness closes in, Lord, still I will say
+G                     D%    
+Every blessing You pour out
+         Em             C%
+I'll turn back to praise
+G                 D%           
+When the darkness closes in, Lord,
+Em             C%
+Still I will say
 =
                G           D%
 Blessed be the name of the Lord
@@ -23,28 +36,22 @@ Blessed be the name of the Lord
                 Em       C%
 Blessed be Your glorious name
 =
-G        D                      Em            C%
- Blessed be Your name, when the sun's shining down on me
-         G                D              C%
-When the world's, "all as it should be", blessed be Your name
-G        D                    Em               C%
- Blessed be Your name, on the road marked with suffering
-               G           D         C%
-Though there's pain in the offering, blessed be Your name
-=
-G                     D              Em             C%
- Every blessing You pour out I'll turn back to praise
-G                 D               Em             C%
- When the darkness closes in, Lord, still I will say
-=
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
+G        D%       
+Blessed be Your name,
+         Em            C%
+When the sun's shining down on me
+         G                D%
+When the world's, "all as it should be",
+C%
 Blessed be Your name
+G        D%           
+Blessed be Your name,
+        Em               C%
+On the road marked with suffering
                G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your glorious name
+Though there's pain in the offering,
+C%
+Blessed be Your name
 =
     G              D%
 You give and take away
@@ -54,39 +61,3 @@ You give and take away
 My heart will choose to say
       Em               C%
 Lord, blessed be Your name
-=
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your name
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your glorious name
-=
-    G              D%
-You give and take away
-    Em             C%
-You give and take away
-    G                   D%
-My heart will choose to say
-      Em               C%
-Lord, blessed be Your name
-= 
-    G              D%
-You give and take away
-    Em             C%
-You give and take away
-    G                   D%
-My heart will choose to say
-      Em               C%
-Lord, blessed be Your name
-=
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your name
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your glorious name

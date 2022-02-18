@@ -1,4 +1,4 @@
-Don't Look at the Giants
+DON'T LOOK AT THE GIANTS
 order:1,2,3,2
 =
     E%

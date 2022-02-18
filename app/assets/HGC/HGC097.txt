@@ -1,4 +1,5 @@
-Knowing You
+KNOWING YOU
+order:1,2,3,2,4,2
 =
 C      F     G    C              F  G  C %
 All I once held dear, built my life upon,
@@ -37,17 +38,6 @@ All surpassing gift
     Am        G%
 Of righteousness
 =
-F              C   F G       C%  
-Knowing You, Jesus, knowing You
-      Am     G        F%
-There is no greater thing.
-           C               F%
-You're my all, You're the best,
-           C              F%
-You're my joy, my righteousness,
- C              G%
-And I love You Lord.
-=
 C     F    G   C             F  G   C %
 Oh to know the power of Your risen life,
 C      F    G   C        Am      G%
@@ -60,14 +50,3 @@ In Your death, my Lord,
 So with You to live 
     Am    G%
 And never die.
-=
-F              C   F G       C%  
-Knowing You, Jesus, knowing You
-      Am     G        F%
-There is no greater thing.
-           C               F%
-You're my all, You're the best,
-           C              F%
-You're my joy, my righteousness,
- C              G%
-And I love You Lord.

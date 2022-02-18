@@ -1,4 +1,5 @@
-Onward, Christian Soldiers
+ONWARD, CHRISTIAN SOLDIERS
+order:1,2,3,2,4,2,5,2
 =
   C               G%
 Onward, Christian soldiers, 
@@ -35,11 +36,6 @@ all one body we,
 one in hope and doctrine, 
 one in charity.
 =
-Onward, Christian soldiers, 
-marching as to war, 
-with the cross of Jesus 
-going on before.
-=
 Crowns and thorns may perish,
 kingdoms rise and wane, 
 but the Church of Jesus
@@ -49,11 +45,6 @@ gates of hell can never
 we have Christ's own promise, 
 and that cannot fail.
 =
-Onward, Christian soldiers, 
-marching as to war, 
-with the cross of Jesus 
-going on before.
-=
 Onward, then, ye people, 
 join our happy throng,
 blend with ours your voices 
@@ -62,8 +53,3 @@ glory, laud, and honor
 unto Christ the King;
 this thru countless ages 
 men and angels sing.
-=
-Onward, Christian soldiers, 
-marching as to war, 
-with the cross of Jesus 
-going on before.

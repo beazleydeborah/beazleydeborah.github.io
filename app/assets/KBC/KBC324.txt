@@ -1,4 +1,5 @@
 Isaiah 55:1-2
+topic:scripture
 order:1,2,1,2,1
 =
 Ho! Everyone that thirsteth

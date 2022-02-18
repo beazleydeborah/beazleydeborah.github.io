@@ -1,6 +1,5 @@
 title:Hosea 6:3
-order:1,2,2
-chordorder:1,2,3
+order:1,2,3
 topic:scripture
 =
 G  Am7    Bm7 Am7 G%

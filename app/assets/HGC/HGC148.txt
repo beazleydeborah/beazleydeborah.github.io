@@ -1,4 +1,4 @@
-title:Shout To The Lord
+title:SHOUT TO THE LORD
 order:1,2,1,2
 =
 A         E%

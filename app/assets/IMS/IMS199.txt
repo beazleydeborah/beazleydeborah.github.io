@@ -1,4 +1,5 @@
 1 Peter
+topic:memory
 =
 Peter, an apostle of Jesus Christ,
 

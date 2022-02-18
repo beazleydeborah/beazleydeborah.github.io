@@ -241,6 +241,8 @@ class _SongPageState extends State<SongPage> {
             '$line',
             style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
             maxLines: 1,
+            minFontSize: 11,
+            overflow: TextOverflow.visible,
             group: autoDisplay,
           ),
         );

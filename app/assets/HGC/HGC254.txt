@@ -1,5 +1,6 @@
-Proverbs 4:18
+PROVERBS 4:18
 topic:scripture
+order:1,2,1,2,1
 =
     C             G%
 The path of the righteous
@@ -17,19 +18,4 @@ it grows brighter and brighter
 F  G% 
 it grows brighter and brighter 
 Am        F         G%
-until the light of day. 
-=
-The path of the righteous 
-is like the light of the dawn,
-the path of the righteous 
-is like the light of the dawn,
-=
-It grows brighter and brighter 
-it grows brighter and brighter 
-it grows brighter and brighter
-until the light of day. 
-=
-The path of the righteous is 
-like the light of the dawn,
-the path of the righteous is 
-like the light of the dawn,
+until the light of day.

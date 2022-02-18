@@ -1,4 +1,5 @@
-Blessed Be Your Name
+BLESSED BE YOUR NAME
+order:1,2,3,4,2,3,5,3,5,5,3
 =
 G        D                    Em            C%
  Blessed be Your name, in the land that is plentiful
@@ -32,20 +33,6 @@ G        D                    Em               C%
                G           D         C%
 Though there's pain in the offering, blessed be Your name
 =
-G                     D              Em             C%
- Every blessing You pour out I'll turn back to praise
-G                 D               Em             C%
- When the darkness closes in, Lord, still I will say
-=
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your name
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your glorious name
-=
     G              D%
 You give and take away
     Em             C%
@@ -54,39 +41,3 @@ You give and take away
 My heart will choose to say
       Em               C%
 Lord, blessed be Your name
-=
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your name
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your glorious name
-=
-    G              D%
-You give and take away
-    Em             C%
-You give and take away
-    G                   D%
-My heart will choose to say
-      Em               C%
-Lord, blessed be Your name
-= 
-    G              D%
-You give and take away
-    Em             C%
-You give and take away
-    G                   D%
-My heart will choose to say
-      Em               C%
-Lord, blessed be Your name
-=
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your name
-               G           D%
-Blessed be the name of the Lord
-                Em       C%
-Blessed be Your glorious name

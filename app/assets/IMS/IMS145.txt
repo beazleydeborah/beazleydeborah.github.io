@@ -1,5 +1,6 @@
 Isaiah 53
 order:1,2,2,3
+topic:scripture
 =
 They mocked Him and abused Him, 
 And looked the other way. 

@@ -1,4 +1,5 @@
 PSALMS 42:1
+topic:scripture
 =
 D      A/C#         Bm      D/A%
 As the deer panteth for the water,

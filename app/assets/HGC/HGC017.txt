@@ -1,4 +1,4 @@
-title:Awesome God
+title:AWESOME GOD
 order:1,2,3,4,5,3
 =
         Em%
