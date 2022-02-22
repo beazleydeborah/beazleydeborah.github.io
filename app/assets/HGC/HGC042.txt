@@ -1,4 +1,5 @@
 FATHER YOU HAVE SENT YOUR SON
+order:1,2,3,2
 =
  Bm7             Em%
 Father You have sent Your Son.  
@@ -21,12 +22,3 @@ He is Lord, allelujah.
 Father You've forgiven me.  
 Paid the debt that set me free.  
 Now my life is Yours, for He is Lord.
-=
-  D           (7)%
-Praise Him, praise Him, 
-G      D   G A D%
-He is Lord, allelujah.
-  D           (7)%
-Praise Him, praise Him, 
-G      D   G A D%
-He is Lord, allelujah.
