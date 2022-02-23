@@ -19,7 +19,8 @@ class SongSearch extends SearchDelegate<Song> {
   findSongs(String query, List<Song> indexData, Settings settings) {
     String formattedQuery = formatQuery(query);
     List<Song> results = [];
-    print(indexData.first.title);
+    List<Song> sortedResults = [];
+
     indexData.forEach((song) {
       String formattedSongtitle = song.title.toLowerCase();
       String formattedSonglyrics = song.lyrics.join().toLowerCase();
@@ -31,7 +32,15 @@ class SongSearch extends SearchDelegate<Song> {
       }
     });
 
-    return results;
+    currentSettings.books.forEach((book) {
+      results.forEach((song) {
+        if (song.bookPrefix == book) {
+          sortedResults.add(song);
+        }
+      });
+    });
+
+    return sortedResults;
   }
 
   formatSubtitle(Song indexedSong) {

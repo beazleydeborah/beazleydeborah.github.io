@@ -30,13 +30,19 @@ class _MyAppState extends State<MyApp> {
     Settings savedSettings;
     Song savedSong;
 
-    final rawSettingsJson = prefs.getString('settings') ?? '{"darkMode":false,"chords":false,"songNumber":false,"filterNavajo":true}';
+    final rawSettingsJson = prefs.getString('settings') ??
+        '{"darkMode":false,"chords":false,"songNumber":false,"filterNavajo":true,"books":["HGC", "KBC", "IMS", "PCB", "NHF", "HTP"]}';
 
     Map<String, dynamic> settingsMap = json.decode(rawSettingsJson);
     savedSettings = Settings(
-        chords: settingsMap['chords'], darkMode: settingsMap['darkMode'], songNumber: settingsMap['songNumber'], filterNavajo: settingsMap['filterNavajo']);
+      chords: settingsMap['chords'],
+      darkMode: settingsMap['darkMode'],
+      songNumber: settingsMap['songNumber'],
+      filterNavajo: settingsMap['filterNavajo'],
+      books: List.from(settingsMap['books']),
+    );
 
-    final rawSongJson = prefs.getString('song') ?? '{"title":"Overheads Mobile","bookPrefix":"KBC","songNumber":"000"}';
+    final rawSongJson = prefs.getString('song') ?? '{"title":"Welcome","bookPrefix":"KBC","songNumber":"000"}';
     Map<String, dynamic> songMap = json.decode(rawSongJson);
     savedSong = Song(title: songMap['title'], bookPrefix: songMap['bookPrefix'], songNumber: songMap['songNumber']);
 
@@ -72,6 +78,7 @@ class _MyAppState extends State<MyApp> {
       'darkMode': data.darkMode,
       'songNumber': data.songNumber,
       'filterNavajo': data.filterNavajo,
+      'books': data.books,
     };
     String rawJson = json.encode(map);
     prefs.setString('settings', rawJson);
