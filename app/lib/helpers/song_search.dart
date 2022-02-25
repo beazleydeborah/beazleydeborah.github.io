@@ -31,6 +31,7 @@ class SongSearch extends SearchDelegate<Song> {
         results.remove(song);
       }
     });
+    results.sort((a, b) => a.songNumber.compareTo(b.songNumber));
 
     currentSettings.books.forEach((book) {
       results.forEach((song) {
