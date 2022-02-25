@@ -18,7 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _chords = false;
   bool _songNumber = false;
   bool _filterNavajo = true;
-  List<String> _books = ['HGC', 'KBC', 'IMS', 'PCB', 'NHF', 'HTP'];
+  List<String> _books = ['KBC', 'HGC', 'IMS', 'PCB', 'NHF', 'HTP'];
   @override
   void initState() {
     _darkMode = widget.currentSettings.darkMode;
@@ -93,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ElevatedButton(
             onPressed: () async {
-              return await _displayReorder(_books).then((value) {
+              return await _displayReorder().then((value) {
                 if (value != null) {
                   _books = value;
                   selectedSettings.books = value;
@@ -124,47 +124,53 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Future<List<String>> _displayReorder(List<String> books) async {
-    List<String> bookList = books;
+  Future<List<String>> _displayReorder() async {
+    List<String> bookList = this._books;
+
     return showDialog<List<String>>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          actions: <Widget>[
-            ElevatedButton(
-              child: const Text('Save'),
-              onPressed: () => Navigator.of(context).pop(bookList),
-            )
-          ],
-          content: Container(
-            width: double.minPositive,
-            child: ReorderableListView(
-              shrinkWrap: true,
-              children: [
-                for (var i = 0; i < bookList.length; i++)
-                  Card(
-                    key: ValueKey(bookList[i]),
-                    child: ListTile(
-                      title: Text(bookList[i]),
-                      trailing: ReorderableDragStartListener(
-                        index: i,
-                        child: const Icon(Icons.drag_handle),
-                      ),
-                    ),
-                  ),
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              actions: <Widget>[
+                ElevatedButton(
+                    child: const Text('Save'),
+                    onPressed: () {
+                      Navigator.of(context).pop(bookList);
+                    })
               ],
-              onReorder: (int oldIndex, int newIndex) {
-                setState(() {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  final String book = bookList.removeAt(oldIndex);
-                  bookList.insert(newIndex, book);
-                  print(bookList);
-                });
-              },
-            ),
-          ),
+              content: Container(
+                width: double.minPositive,
+                child: ReorderableListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (var i = 0; i < bookList.length; i++)
+                      Card(
+                        key: ValueKey(bookList[i]),
+                        child: ListTile(
+                          title: Text(bookList[i]),
+                          trailing: ReorderableDragStartListener(
+                            index: i,
+                            child: const Icon(Icons.drag_handle),
+                          ),
+                        ),
+                      ),
+                  ],
+                  onReorder: (int oldIndex, int newIndex) {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    setState(() {
+                      final String book = bookList.removeAt(oldIndex);
+                      bookList.insert(newIndex, book);
+                      print(bookList);
+                    });
+                  },
+                ),
+              ),
+            );
+          },
         );
       },
     );
