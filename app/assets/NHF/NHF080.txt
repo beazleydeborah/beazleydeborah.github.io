@@ -1,6 +1,6 @@
 title:Christ Hanásdzá!
 subtitle:Christ Is Risen!
-language: navajo
+language:navajo
 =
 Christ hanásdzá, baa dohohniih!
 Aniné bideeni’ yę́ę́

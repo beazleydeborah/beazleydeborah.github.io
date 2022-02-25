@@ -1,5 +1,5 @@
-title: CHRIST AROSE
-order: 1,2,3,2,4,2
+title:CHRIST AROSE
+order:1,2,3,2,4,2
 =
 A                          E        A%
 Low in the grave He lay - Jesus my Savior!

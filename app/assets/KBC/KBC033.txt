@@ -1,6 +1,6 @@
 title:Isaiah 53
 topic:scripture
-order: 1,2,1
+order:1,2,1
 =
 Em                     D     Em%
 All we like sheep have gone astray.

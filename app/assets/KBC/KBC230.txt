@@ -1,6 +1,6 @@
 Philippians 4:8
 topic:scripture
-order: 1,2,1
+order:1,2,1
 =
     G                 C       G%
 Whatever is true, whatever is honorable,
