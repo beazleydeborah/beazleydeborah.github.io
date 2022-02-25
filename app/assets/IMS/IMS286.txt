@@ -1,5 +1,5 @@
 Glorious Day
-Order:1,2,3,2,4,2,5,6
+order:1,2,3,2,4,2,5,6
 =
 G2               Cmaj7%
 One day when Heaven 

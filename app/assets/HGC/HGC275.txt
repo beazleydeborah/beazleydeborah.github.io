@@ -1,5 +1,6 @@
 JOHN 6:35
 topic:scripture
+order:1,2,3,2,4,2,5,6
 =
   A               C#m           D%
 I am the bread of life. He who comes to Me shall not
@@ -17,14 +18,8 @@ The bread that I shall give is My flesh for the life of the
 world. He who eats this bread, he shall live forever.
 He shall live forever.
 =
-And I will raise him up, and I will raise him up, and I will
-raise him up on the last day.
-=
 I am the resurrection. I am the life. He who believes in
 Me, even if he dies, he shall live forever.
-=
-And I will raise him up, and I will raise him up, and I will
-raise him up on the last day.
 =
 Yes, Lord, I believe that You are the Christ, the Son of
 God, who has come into the world.
