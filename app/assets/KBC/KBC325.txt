@@ -1,5 +1,6 @@
 Psalm 1:1-3
 order:1,2,3,2
+topic:scripture
 =
 How blessed is the man who
 Does not walk

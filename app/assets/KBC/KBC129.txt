@@ -1,4 +1,5 @@
 Psalm 67
+topic:scripture
 =
 C                  Am%
 God be gracious to us and bless us

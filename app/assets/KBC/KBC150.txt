@@ -1,4 +1,5 @@
 Psalm 100
+topic:scripture
 =
 C%
 Make a joyful noise unto the Lord

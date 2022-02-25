@@ -1,5 +1,6 @@
 Psalm 97:9
 order:1,2,1
+topic:scripture
 =
     D           Em   A7%
 For You are the Lord Most High
