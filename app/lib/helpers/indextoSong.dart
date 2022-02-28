@@ -44,15 +44,15 @@ Song indextoSong(String fileText, String indexString) {
     } else if (line.startsWith('chords:')) {
       currentSong.chordNames = line.substring(7);
     } else if (line.contains('=') || line == "") {
-      currentSong.lyrics.add(line);
-      currentSong.chords.add(line);
+      currentSong.lyrics!.add(line);
+      currentSong.chords!.add(line);
     } else if (line.contains('%')) {
-      currentSong.chords.add(line);
+      currentSong.chords!.add(line);
     } else {
-      currentSong.lyrics.add(line);
+      currentSong.lyrics!.add(line);
 
-      if (currentSong.lyrics.length > currentSong.chords.length) {
-        currentSong.chords.add('%');
+      if (currentSong.lyrics!.length > currentSong.chords!.length) {
+        currentSong.chords!.add('%');
       }
     }
   });
@@ -61,18 +61,18 @@ Song indextoSong(String fileText, String indexString) {
   } else {
     currentSong.chords = [" "];
   }
-  if (currentSong.chords.last.contains('=')) {
-    currentSong.chords.removeLast();
+  if (currentSong.chords!.last.contains('=')) {
+    currentSong.chords!.removeLast();
   }
-  if (currentSong.lyrics.last.contains('=')) {
-    currentSong.lyrics.removeLast();
+  if (currentSong.lyrics!.last.contains('=')) {
+    currentSong.lyrics!.removeLast();
   }
 
-  currentSong.lyrics.removeAt(0);
-  currentSong.lyrics.removeAt(0);
-  currentSong.chords.removeAt(0);
-  if (currentSong.chords.isNotEmpty) {
-    currentSong.chords.removeAt(0);
+  currentSong.lyrics!.removeAt(0);
+  currentSong.lyrics!.removeAt(0);
+  currentSong.chords!.removeAt(0);
+  if (currentSong.chords!.isNotEmpty) {
+    currentSong.chords!.removeAt(0);
   }
   String fullTextString = fileText.substring(fileText.indexOf('='), fileText.length);
   List<String> fullText = LineSplitter().convert(fullTextString);

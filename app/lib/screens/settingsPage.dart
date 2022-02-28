@@ -5,7 +5,7 @@ class SettingsPage extends StatefulWidget {
   static const routeName = '/settingspage';
 
   final Function saveSettings;
-  final Settings currentSettings;
+  final Settings? currentSettings;
 
   SettingsPage(this.saveSettings, this.currentSettings);
 
@@ -14,17 +14,17 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _darkMode = false;
-  bool _chords = false;
-  bool _songNumber = false;
-  bool _filterNavajo = true;
+  bool? _darkMode = false;
+  bool? _chords = false;
+  bool? _songNumber = false;
+  bool? _filterNavajo = true;
 
   @override
   void initState() {
-    _darkMode = widget.currentSettings.darkMode;
-    _chords = widget.currentSettings.chords;
-    _songNumber = widget.currentSettings.songNumber;
-    _filterNavajo = widget.currentSettings.filterNavajo;
+    _darkMode = widget.currentSettings!.darkMode;
+    _chords = widget.currentSettings!.chords;
+    _songNumber = widget.currentSettings!.songNumber;
+    _filterNavajo = widget.currentSettings!.filterNavajo;
     super.initState();
   }
 
@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SwitchListTile(
                       title: Text('Dark Mode'),
                       subtitle: Text('Changes theme to dark for better night viewing'),
-                      value: _darkMode,
+                      value: _darkMode!,
                       onChanged: (value) {
                         setState(() {
                           _darkMode = value;
@@ -58,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SwitchListTile(
                       title: Text('Chords'),
                       subtitle: Text('Adds chords to displayed text'),
-                      value: _chords,
+                      value: _chords!,
                       onChanged: (value) {
                         setState(() {
                           _chords = value;
@@ -69,7 +69,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SwitchListTile(
                       title: Text('Song Number'),
                       subtitle: Text('Shows song numbers'),
-                      value: _songNumber,
+                      value: _songNumber!,
                       onChanged: (value) {
                         setState(() {
                           _songNumber = value;
@@ -80,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SwitchListTile(
                       title: Text('Filter Navajo'),
                       subtitle: Text('Filters out most songs in the Navajo language'),
-                      value: _filterNavajo,
+                      value: _filterNavajo!,
                       onChanged: (value) {
                         setState(() {
                           _filterNavajo = value;

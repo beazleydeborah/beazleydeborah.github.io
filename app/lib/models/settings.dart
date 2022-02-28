@@ -1,8 +1,8 @@
 class Settings {
-  bool songNumber;
-  bool darkMode;
-  bool chords;
-  bool filterNavajo;
+  bool? songNumber;
+  bool? darkMode;
+  bool? chords;
+  bool? filterNavajo;
 
   Settings({
     this.songNumber,
