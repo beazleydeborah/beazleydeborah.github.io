@@ -1,6 +1,6 @@
 PSALMS 19:1-6
 topic:scripture
-order: 1,2,3,1
+order:1,2,3,1
 =
 The heavens are telling
 Of the glory of God;

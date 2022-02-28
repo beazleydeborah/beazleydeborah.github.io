@@ -31,18 +31,40 @@ class _MyAppState extends State<MyApp> {
 
   Future<bool> _getSettingsAndSong() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Settings savedSettings;
-    Song savedSong;
 
-    final rawSettingsJson = prefs.getString('settings') ?? '{"darkMode":false,"chords":false,"songNumber":false,"filterNavajo":true}';
+    Settings savedSettings = Settings(
+      chords: false,
+      darkMode: false,
+      filterNavajo: false,
+      songNumber: false,
+      books: ["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"],
+    );
+    Song savedSong = Song(
+      title: "Welcome",
+      bookPrefix: "KBC",
+      songNumber: "000",
+    );
+
+    final rawSettingsJson = prefs.getString('settings') ??
+        '{"darkMode":false,"chords":false,"songNumber":false,"filterNavajo":true,"books":["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"]}';
 
     Map<String, dynamic> settingsMap = json.decode(rawSettingsJson);
-    savedSettings = Settings(
-        chords: settingsMap['chords'], darkMode: settingsMap['darkMode'], songNumber: settingsMap['songNumber'], filterNavajo: settingsMap['filterNavajo']);
 
-    final rawSongJson = prefs.getString('song') ?? '{"title":"Overheads Mobile","bookPrefix":"KBC","songNumber":"000"}';
+    savedSettings = Settings(
+      chords: settingsMap['chords'],
+      darkMode: settingsMap['darkMode'],
+      songNumber: settingsMap['songNumber'],
+      filterNavajo: settingsMap['filterNavajo'],
+      books: settingsMap['books'] != null ? List.from(settingsMap['books']) : ["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"],
+    );
+
+    final rawSongJson = prefs.getString('song') ?? '{"title":"Welcome","bookPrefix":"KBC","songNumber":"000"}';
     Map<String, dynamic> songMap = json.decode(rawSongJson);
-    savedSong = Song(title: songMap['title'], bookPrefix: songMap['bookPrefix'], songNumber: songMap['songNumber']);
+    savedSong = Song(
+      title: songMap['title'],
+      bookPrefix: songMap['bookPrefix'],
+      songNumber: songMap['songNumber'],
+    );
 
     if (savedSettings.darkMode!) {
       theme = ThemeData(
@@ -76,6 +98,7 @@ class _MyAppState extends State<MyApp> {
       'darkMode': data.darkMode,
       'songNumber': data.songNumber,
       'filterNavajo': data.filterNavajo,
+      'books': data.books,
     };
     String rawJson = json.encode(map);
     prefs.setString('settings', rawJson);

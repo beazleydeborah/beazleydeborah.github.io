@@ -1,4 +1,5 @@
 Psalm 117
+topic:scripture
 =
 E          B A       E%       
 Praise the Lord, all nations;

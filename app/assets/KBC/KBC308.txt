@@ -1,4 +1,5 @@
 PSALM 8
+topic:scripture
 =
 O Lord, our Lord,
 How majestic is Your name

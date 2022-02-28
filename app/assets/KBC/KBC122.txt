@@ -1,5 +1,6 @@
 Psalm 45:1-4
 order:1,2,3,2,1
+topic:scripture
 =
    D          Bm7         Em7    A7%
 My heart overflows with a good theme

@@ -1,6 +1,6 @@
 Jesus, All for Jesus
 =
-(verse: ims 801)
+(verse:IMS 801)
 
 Jesus, All for Jesus,
 All I am and have and ever hope to be;

@@ -1,5 +1,6 @@
 ROMANS 8:1
 topic:scripture
+order:1,2,1
 =
 There is therefore now no condemnation
 for those who are in Christ Jesus.
@@ -10,8 +11,3 @@ For the law of the Spirit
 of life in Christ Jesus
 has set you free from the
 law of sin and death.
-=
-There is therefore now no condemnation
-for those who are in Christ Jesus.
-There is therefore now no condemnation
-for those who are in Christ Jesus.

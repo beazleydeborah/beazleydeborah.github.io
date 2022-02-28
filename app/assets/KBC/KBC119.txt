@@ -1,4 +1,5 @@
 Psalm 34:1-4
+topic:scripture
 =
 I will bless the Lord at all times
 His praise shall continually

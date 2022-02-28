@@ -1,6 +1,6 @@
 ﻿title:Come Thou Fount
 subtitle:w/Navajo
-language: navajo
+language:navajo
 =
 Tó háálįijį’ ahohkáahgo
 Baa hózho-go dahohtaał,

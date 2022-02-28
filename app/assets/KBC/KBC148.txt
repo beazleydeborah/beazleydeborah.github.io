@@ -1,4 +1,5 @@
 Psalm 98
+topic:scripture
 =
 A G            E D    D C  A G%
 O sing to the Lord a new song

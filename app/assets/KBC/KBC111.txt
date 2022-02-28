@@ -1,4 +1,5 @@
 Psalm 9:1,2
+topic:scripture
 =
 I'll give thanks to the Lord
 With all my heart

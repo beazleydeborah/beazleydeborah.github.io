@@ -1,4 +1,5 @@
 Psalm 130:3-8
+topic:scripture
 =
   C                               G%
 I wait for the Lord, my soul does wait,

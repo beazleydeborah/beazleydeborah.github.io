@@ -1,4 +1,5 @@
 John 15:4-5
+topic:scripture
 =
   C    G  Am               F    G  C%
 Remain in Me, and I will remain in you. 
