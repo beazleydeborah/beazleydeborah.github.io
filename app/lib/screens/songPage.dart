@@ -4,6 +4,8 @@ import 'package:app/helpers/index_service.dart';
 import 'package:app/helpers/indextoSong.dart';
 import 'package:app/helpers/song_search.dart';
 import 'package:app/helpers/transpose.dart';
+import 'package:app/screens/webSongPage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import './settingsPage.dart';
@@ -22,7 +24,7 @@ class SongPage extends StatefulWidget {
   final Function saveSong;
   final Song savedSong;
 
-  final Settings settings;
+  final Settings? settings;
 
   SongPage(this.saveSong, this.savedSong, this.settings);
 
@@ -31,15 +33,15 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
-  String errorHandle;
+  String? errorHandle;
   var autoDisplay = AutoSizeGroup();
 
   List<String> splitLineText = [];
 
-  String currentQuery;
+  String? currentQuery;
 
-  Song currentSong = Song();
-  Settings currentSettings = Settings();
+  Song? currentSong = Song();
+  Settings? currentSettings = Settings();
   List<Song> currentIndex = [];
   final ScrollController _scrollController = ScrollController();
 
@@ -56,95 +58,99 @@ class _SongPageState extends State<SongPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: loadSong(currentSong),
+        future: loadSong(currentSong!),
         builder: (build, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Container(
-              child: WillPopScope(
-                  onWillPop: _onWillPop,
-                  child: Scaffold(
-                      appBar: AppBar(
-                        title: formatSongTitle(currentSettings, currentSong),
-                        actions: [
-                          IconButton(
-                              icon: Icon(Icons.search),
-                              onPressed: () async {
-                                final result = await showSearch(
-                                    query: currentQuery,
-                                    context: context,
-                                    delegate: SongSearch(
-                                      indexData: currentIndex,
-                                      currentSettings: currentSettings,
-                                      currentSong: currentSong,
-                                    ));
-                                setState(() {
-                                  currentSong = result;
-                                  _scrollController.jumpTo(0);
-                                });
-                                widget.saveSong(currentSong);
-                              }),
-                          IconButton(
-                              icon: Icon(Icons.settings),
-                              onPressed: () async {
-                                final result = await Navigator.pushNamed(context, SettingsPage.routeName);
-                                setState(() {
-                                  currentSettings = result;
-                                });
-                                widget.saveSong(currentSong);
-                              })
-                        ],
-                      ),
-                      body: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: OrientationBuilder(
-                              builder: (context, orientation) => ListView(
-                                shrinkWrap: true,
-                                controller: _scrollController,
-                                children: transform(editForDisplay(currentSong, currentSettings), orientation, currentSettings),
+            if (!kIsWeb) {
+              return Container(
+                child: WillPopScope(
+                    onWillPop: _onWillPop,
+                    child: Scaffold(
+                        appBar: AppBar(
+                          title: formatSongTitle(currentSettings!, currentSong),
+                          actions: [
+                            IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () async {
+                                  final result = await showSearch(
+                                      query: currentQuery,
+                                      context: context,
+                                      delegate: SongSearch(
+                                        indexData: currentIndex,
+                                        currentSettings: currentSettings,
+                                        currentSong: currentSong,
+                                      ));
+                                  setState(() {
+                                    currentSong = result;
+                                    _scrollController.jumpTo(0);
+                                  });
+                                  widget.saveSong(currentSong);
+                                }),
+                            IconButton(
+                                icon: Icon(Icons.settings),
+                                onPressed: () async {
+                                  final result = await Navigator.pushNamed(context, SettingsPage.routeName);
+                                  setState(() {
+                                    currentSettings = result as Settings?;
+                                  });
+                                  widget.saveSong(currentSong);
+                                })
+                          ],
+                        ),
+                        body: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: OrientationBuilder(
+                                builder: (context, orientation) => ListView(
+                                  shrinkWrap: true,
+                                  controller: _scrollController,
+                                  children: transform(editForDisplay(currentSong!, currentSettings!)!, orientation, currentSettings),
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Visibility(
-                                  visible: currentSettings.chords && currentSong.chords.isNotEmpty,
-                                  child: Container(
-                                    color: Theme.of(context).primaryColorLight,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        currentSong.chords = transpose(currentSong.chords, true);
-                                        setState(() {});
-                                        widget.saveSong(currentSong);
-                                      },
-                                      icon: Icon(Icons.add),
+                            Container(
+                              alignment: Alignment.bottomRight,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Visibility(
+                                    visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
+                                    child: Container(
+                                      color: Theme.of(context).primaryColorLight,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          currentSong!.chords = transpose(currentSong!.chords!, true);
+                                          setState(() {});
+                                          widget.saveSong(currentSong);
+                                        },
+                                        icon: Icon(Icons.add),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Visibility(
-                                  visible: currentSettings.chords && currentSong.chords.isNotEmpty,
-                                  child: Container(
-                                    color: Theme.of(context).primaryIconTheme.color,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        currentSong.chords = transpose(currentSong.chords, false);
-                                        setState(() {});
-                                        widget.saveSong(currentSong);
-                                      },
-                                      icon: Icon(Icons.remove),
+                                  Visibility(
+                                    visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
+                                    child: Container(
+                                      color: Theme.of(context).primaryIconTheme.color,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          currentSong!.chords = transpose(currentSong!.chords!, false);
+                                          setState(() {});
+                                          widget.saveSong(currentSong);
+                                        },
+                                        icon: Icon(Icons.remove),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ))),
-            );
+                                ],
+                              ),
+                            )
+                          ],
+                        ))),
+              );
+            } else {
+              return WebSongPage(currentSong, currentSettings);
+            }
           } else {
             return Center(
               child: CircularProgressIndicator(
@@ -157,7 +163,7 @@ class _SongPageState extends State<SongPage> {
 
   _getQuery() async {
     final prefs = await SharedPreferences.getInstance();
-    String query = prefs.getString('query');
+    String? query = prefs.getString('query');
     if (query == null) {
       query = '';
     }
@@ -224,14 +230,14 @@ class _SongPageState extends State<SongPage> {
           currentSong: currentSong,
         )).then((value) {
       _scrollController.jumpTo(0);
-      loadSong(currentSong);
+      loadSong(currentSong!);
       widget.saveSong(currentSong);
 
       return false;
     }));
   }
 
-  List<AutoSizeText> transform(List<String> displayedText, Orientation orientation, Settings settings) {
+  List<AutoSizeText> transform(List<String> displayedText, Orientation orientation, Settings? settings) {
     List<AutoSizeText> textWidgets = [];
 
     displayedText.forEach((line) {
@@ -239,7 +245,7 @@ class _SongPageState extends State<SongPage> {
         textWidgets.add(
           AutoSizeText(
             '$line',
-            style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
+            style: currentSettings!.chords! ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
             maxLines: 1,
             minFontSize: 11,
             overflow: TextOverflow.visible,
@@ -252,15 +258,15 @@ class _SongPageState extends State<SongPage> {
     return textWidgets;
   }
 
-  Text formatSongTitle(Settings currentSettings, Song displayedSong) {
-    if (currentSettings.songNumber) {
+  Text formatSongTitle(Settings currentSettings, Song? displayedSong) {
+    if (currentSettings.songNumber!) {
       return Text(
-        '${displayedSong.bookPrefix}-${displayedSong.songNumber} ${displayedSong.title}',
+        '${displayedSong!.bookPrefix}-${displayedSong.songNumber} ${displayedSong.title}',
         style: TextStyle(fontFamily: 'Roboto'),
       );
     } else {
       return Text(
-        '${displayedSong.title}',
+        '${displayedSong!.title}',
         style: TextStyle(fontFamily: 'Roboto'),
       );
     }
@@ -268,7 +274,7 @@ class _SongPageState extends State<SongPage> {
 
   List<Text> listItems(Song song) {
     List<Text> listItems = [];
-    song.fullText.forEach((line) => listItems.add(Text(line)));
+    song.fullText!.forEach((line) => listItems.add(Text(line)));
 
     return listItems;
   }

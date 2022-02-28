@@ -5,7 +5,7 @@ class SettingsPage extends StatefulWidget {
   static const routeName = '/settingspage';
 
   final Function saveSettings;
-  final Settings currentSettings;
+  final Settings? currentSettings;
 
   SettingsPage(this.saveSettings, this.currentSettings);
 
@@ -14,6 +14,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+
   bool _darkMode = false;
   bool _chords = false;
   bool _songNumber = false;
@@ -26,6 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _songNumber = widget.currentSettings.songNumber;
     _filterNavajo = widget.currentSettings.filterNavajo;
     _books = widget.currentSettings.books;
+
     super.initState();
   }
 

@@ -1,4 +1,5 @@
 class Settings {
+
   bool songNumber;
   bool darkMode;
   bool chords;

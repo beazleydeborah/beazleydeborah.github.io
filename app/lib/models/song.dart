@@ -1,17 +1,17 @@
 class Song {
-  int id;
-  String bookPrefix;
-  String title;
-  String subTitle;
-  String songNumber;
-  List<String> lyrics;
-  String language;
-  String topic;
-  List<String> chords;
-  List<int> order;
-  String chordNames;
-  List<String> fullText;
-  String audio;
+  int? id;
+  String? bookPrefix;
+  String? title;
+  String? subTitle;
+  String? songNumber;
+  List<String>? lyrics;
+  String? language;
+  String? topic;
+  List<String>? chords;
+  List<int>? order;
+  String? chordNames;
+  List<String>? fullText;
+  String? audio;
 
   Song({
     this.id,
