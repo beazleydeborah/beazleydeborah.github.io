@@ -14,35 +14,12 @@ class WebSongPage extends StatefulWidget {
 class _WebSongPageState extends State<WebSongPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: formatSongTitle(widget.currentSettings!, widget.currentSong),
-      ),
-      body: Container(
-        child: ListView(children: lyrics(widget.currentSong)),
-      ),
-    );
-  }
-}
-
-lyrics(currentSong) {
-  List<Text> lyrics = [];
-  currentSong.lyrics.forEach((line) {
-    lyrics.add(Text(line));
-  });
-  return lyrics;
-}
-
-Text formatSongTitle(Settings currentSettings, Song? displayedSong) {
-  if (currentSettings.songNumber!) {
-    return Text(
-      '${displayedSong!.bookPrefix}-${displayedSong.songNumber} ${displayedSong.title}',
-      style: TextStyle(fontFamily: 'Roboto'),
-    );
-  } else {
-    return Text(
-      '${displayedSong!.title}',
-      style: TextStyle(fontFamily: 'Roboto'),
+    return ListView.builder(
+      itemCount: widget.currentSong!.lyrics!.length,
+      itemBuilder: ((context, index) => Text(
+            widget.currentSong!.lyrics![index],
+            style: TextStyle(fontSize: 40),
+          )),
     );
   }
 }

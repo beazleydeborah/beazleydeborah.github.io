@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/helpers/edit_song_for_display.dart';
 import 'package:app/helpers/file_to_song.dart';
 import 'package:app/helpers/index_service.dart';
@@ -61,96 +63,96 @@ class _SongPageState extends State<SongPage> {
         future: loadSong(currentSong!),
         builder: (build, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (!kIsWeb) {
-              return Container(
-                child: WillPopScope(
-                    onWillPop: _onWillPop,
-                    child: Scaffold(
-                        appBar: AppBar(
-                          title: formatSongTitle(currentSettings!, currentSong),
-                          actions: [
-                            IconButton(
-                                icon: Icon(Icons.search),
-                                onPressed: () async {
-                                  final result = await showSearch(
-                                      query: currentQuery,
-                                      context: context,
-                                      delegate: SongSearch(
-                                        indexData: currentIndex,
-                                        currentSettings: currentSettings,
-                                        currentSong: currentSong,
-                                      ));
-                                  setState(() {
-                                    currentSong = result;
-                                    _scrollController.jumpTo(0);
-                                  });
-                                  widget.saveSong(currentSong);
-                                }),
-                            IconButton(
-                                icon: Icon(Icons.settings),
-                                onPressed: () async {
-                                  final result = await Navigator.pushNamed(context, SettingsPage.routeName);
-                                  setState(() {
-                                    currentSettings = result as Settings?;
-                                  });
-                                  widget.saveSong(currentSong);
-                                })
-                          ],
-                        ),
-                        body: Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: OrientationBuilder(
-                                builder: (context, orientation) => ListView(
+            return Container(
+              child: WillPopScope(
+                  onWillPop: _onWillPop,
+                  child: Scaffold(
+                      appBar: AppBar(
+                        title: formatSongTitle(currentSettings!, currentSong),
+                        actions: [
+                          IconButton(
+                              icon: Icon(Icons.search),
+                              onPressed: () async {
+                                final result = await showSearch(
+                                    query: currentQuery,
+                                    context: context,
+                                    delegate: SongSearch(
+                                      indexData: currentIndex,
+                                      currentSettings: currentSettings,
+                                      currentSong: currentSong,
+                                    ));
+                                setState(() {
+                                  currentSong = result;
+                                  _scrollController.jumpTo(0);
+                                });
+                                widget.saveSong(currentSong);
+                              }),
+                          IconButton(
+                              icon: Icon(Icons.settings),
+                              onPressed: () async {
+                                final result = await Navigator.pushNamed(context, SettingsPage.routeName);
+                                setState(() {
+                                  currentSettings = result as Settings?;
+                                });
+                                widget.saveSong(currentSong);
+                              })
+                        ],
+                      ),
+                      body: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: OrientationBuilder(builder: (context, orientation) {
+                              if (!kIsWeb && Platform.isAndroid) {
+                                return ListView(
                                   shrinkWrap: true,
                                   controller: _scrollController,
                                   children: transform(editForDisplay(currentSong!, currentSettings!)!, orientation, currentSettings),
+                                );
+                              } else {
+                                return WebSongPage(currentSong, currentSettings);
+                              }
+                            }),
+                          ),
+                          Container(
+                            alignment: Alignment.bottomRight,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Visibility(
+                                  visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
+                                  child: Container(
+                                    color: Theme.of(context).primaryColorLight,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        currentSong!.chords = transpose(currentSong!.chords!, true);
+                                        setState(() {});
+                                        widget.saveSong(currentSong);
+                                      },
+                                      icon: Icon(Icons.add),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Visibility(
+                                  visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
+                                  child: Container(
+                                    color: Theme.of(context).primaryIconTheme.color,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        currentSong!.chords = transpose(currentSong!.chords!, false);
+                                        setState(() {});
+                                        widget.saveSong(currentSong);
+                                      },
+                                      icon: Icon(Icons.remove),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Container(
-                              alignment: Alignment.bottomRight,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Visibility(
-                                    visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
-                                    child: Container(
-                                      color: Theme.of(context).primaryColorLight,
-                                      child: IconButton(
-                                        onPressed: () {
-                                          currentSong!.chords = transpose(currentSong!.chords!, true);
-                                          setState(() {});
-                                          widget.saveSong(currentSong);
-                                        },
-                                        icon: Icon(Icons.add),
-                                      ),
-                                    ),
-                                  ),
-                                  Visibility(
-                                    visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
-                                    child: Container(
-                                      color: Theme.of(context).primaryIconTheme.color,
-                                      child: IconButton(
-                                        onPressed: () {
-                                          currentSong!.chords = transpose(currentSong!.chords!, false);
-                                          setState(() {});
-                                          widget.saveSong(currentSong);
-                                        },
-                                        icon: Icon(Icons.remove),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ))),
-              );
-            } else {
-              return WebSongPage(currentSong, currentSettings);
-            }
+                          )
+                        ],
+                      ))),
+            );
           } else {
             return Center(
               child: CircularProgressIndicator(
