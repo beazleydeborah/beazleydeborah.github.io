@@ -1,5 +1,5 @@
-title: FAITH OF OUR FATHERS
-order: 1,2,3,2,4,2
+title:FAITH OF OUR FATHERS
+order:1,2,3,2,4,2
 =
 D%              
 Faith of our fathers!

@@ -1,5 +1,5 @@
 Freely, Freely
-order: 1,2,3,2
+order:1,2,3,2
 =
 God forgave my sin in Jesus' name,
 I've been born again in Jesus' name.

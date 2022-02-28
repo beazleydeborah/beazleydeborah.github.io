@@ -1,4 +1,5 @@
 Psalm 32:8-9
+topic:scripture
 =
 I will instruct you and teach you
    in the way you should go;

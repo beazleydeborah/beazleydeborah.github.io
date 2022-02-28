@@ -1,6 +1,6 @@
 title:Bóhólníihii Éí shaa Áhályą́
 subtitle:The Lord is My Shepherd
-language: navajo
+language:navajo
 =
 Jeusus shaa áhályą́,
 Bikéé’ yisháał dooleeł.

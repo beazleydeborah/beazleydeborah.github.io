@@ -1,4 +1,5 @@
 Psalm 121
+topic:scripture
 =
   C           F     G                G%
 I will lift up my eyes to the mountains;

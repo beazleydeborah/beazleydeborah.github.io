@@ -1,5 +1,5 @@
 title:Away in a Manger
-subtitle: w/Navajo
+subtitle:w/Navajo
 language:navajo
 topic:christmas
 =

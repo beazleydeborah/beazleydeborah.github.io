@@ -1,5 +1,6 @@
 Psalm 30:4-5
-Order:1,2,1,2
+topic:scripture
+order:1,2,1,2
 =
      C#m           Bm%
 Sing praise to the Lord
@@ -7,7 +8,8 @@ Sing praise to the Lord
 You His Godly ones
          C                  Esus  E%
 And give thanks to His holy name
-(repeat)
+(repeat)
+
 =
         Bm       C#m%
 For His anger is but for a moment

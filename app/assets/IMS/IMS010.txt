@@ -1,6 +1,6 @@
 title:Thank You Lord
 language:navajo
-order: 1,2,3
+order:1,2,3
 =
 E                  A         E%
 Thank you Lord for saving my soul.
