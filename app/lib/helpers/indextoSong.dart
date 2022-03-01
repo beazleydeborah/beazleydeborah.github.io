@@ -6,7 +6,11 @@ Song indextoSong(String fileText, String indexString) {
   fileText = fileText.replaceAll('�', '');
   fileText = fileText.replaceAll('@', '');
   List<String> splitTextData = LineSplitter().convert(fileText);
-  Song currentSong = Song();
+  Song currentSong = Song(
+    title: '',
+    bookPrefix: '',
+    songNumber: '',
+  );
 
   currentSong.bookPrefix = indexString.substring(11, 14);
   currentSong.songNumber = indexString.substring(14, 17);

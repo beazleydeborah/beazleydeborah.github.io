@@ -24,8 +24,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Settings? settings;
-  Song song = Song(lyrics: [], fullText: []);
+  Settings settings = Settings();
+  Song song = Song();
 
   ThemeData? theme;
 
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       songNumber: songMap['songNumber'],
     );
 
-    if (savedSettings.darkMode!) {
+    if (savedSettings.darkMode) {
       theme = ThemeData(
         brightness: Brightness.dark,
         canvasColor: Colors.black,
@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
     song = savedSong;
     settings = savedSettings;
 
-    return savedSong == null && savedSettings == null;
+    return false;
   }
 
   void _saveSettings(settingsData) async {

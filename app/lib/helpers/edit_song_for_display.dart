@@ -31,7 +31,7 @@ List<String>? editForDisplay(Song song, Settings currentSettings) {
     displayedSong.chords = cleanList(chordsOnly);
   }
 
-  if (currentSettings.chords!) {
+  if (currentSettings.chords) {
     if (displayedSong.chords!.isEmpty || displayedSong.chords![0] == " ") {
       displayedSong.fullText = cleanList(displayedSong.lyrics!);
     } else {

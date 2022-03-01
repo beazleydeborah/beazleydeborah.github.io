@@ -5,7 +5,7 @@ class SettingsPage extends StatefulWidget {
   static const routeName = '/settingspage';
 
   final Function saveSettings;
-  final Settings? currentSettings;
+  final Settings currentSettings;
 
   SettingsPage(this.saveSettings, this.currentSettings);
 
@@ -14,7 +14,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   bool _darkMode = false;
   bool _chords = false;
   bool _songNumber = false;
@@ -96,10 +95,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ElevatedButton(
             onPressed: () async {
               return await _displayReorder().then((value) {
-                if (value != null) {
-                  _books = value;
-                  selectedSettings.books = value;
-                }
+                _books = value;
+                selectedSettings.books = value;
+
                 widget.saveSettings(selectedSettings);
               });
             },
@@ -126,10 +124,9 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Future<List<String>> _displayReorder() async {
+  _displayReorder() async {
     List<String> bookList = this._books;
-
-    return showDialog<List<String>>(
+    await showDialog<List<String>>(
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(

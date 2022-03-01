@@ -1,9 +1,8 @@
 class Song {
-  int? id;
-  String? bookPrefix;
-  String? title;
+  String bookPrefix;
+  String title;
   String? subTitle;
-  String? songNumber;
+  String songNumber;
   List<String>? lyrics;
   String? language;
   String? topic;
@@ -14,11 +13,10 @@ class Song {
   String? audio;
 
   Song({
-    this.id,
-    this.bookPrefix,
-    this.title,
+    this.bookPrefix = "KBC",
+    this.title = "Welcome",
     this.subTitle,
-    this.songNumber,
+    this.songNumber = "000",
     this.lyrics,
     this.language,
     this.topic,

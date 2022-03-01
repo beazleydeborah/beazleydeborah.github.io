@@ -26,7 +26,7 @@ class SongPage extends StatefulWidget {
   final Function saveSong;
   final Song savedSong;
 
-  final Settings? settings;
+  final Settings settings;
 
   SongPage(this.saveSong, this.savedSong, this.settings);
 
@@ -120,7 +120,7 @@ class _SongPageState extends State<SongPage> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Visibility(
-                                  visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
+                                  visible: currentSettings!.chords && currentSong!.chords!.isNotEmpty,
                                   child: Container(
                                     color: Theme.of(context).primaryColorLight,
                                     child: IconButton(
@@ -134,7 +134,7 @@ class _SongPageState extends State<SongPage> {
                                   ),
                                 ),
                                 Visibility(
-                                  visible: currentSettings!.chords! && currentSong!.chords!.isNotEmpty,
+                                  visible: currentSettings!.chords && currentSong!.chords!.isNotEmpty,
                                   child: Container(
                                     color: Theme.of(context).primaryIconTheme.color,
                                     child: IconButton(
@@ -243,11 +243,11 @@ class _SongPageState extends State<SongPage> {
     List<AutoSizeText> textWidgets = [];
 
     displayedText.forEach((line) {
-      if (line != null) {
+      if (line.isNotEmpty) {
         textWidgets.add(
           AutoSizeText(
             '$line',
-            style: currentSettings!.chords! ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
+            style: currentSettings!.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
             maxLines: 1,
             minFontSize: 11,
             overflow: TextOverflow.visible,
@@ -261,7 +261,7 @@ class _SongPageState extends State<SongPage> {
   }
 
   Text formatSongTitle(Settings currentSettings, Song? displayedSong) {
-    if (currentSettings.songNumber!) {
+    if (currentSettings.songNumber) {
       return Text(
         '${displayedSong!.bookPrefix}-${displayedSong.songNumber} ${displayedSong.title}',
         style: TextStyle(fontFamily: 'Roboto'),

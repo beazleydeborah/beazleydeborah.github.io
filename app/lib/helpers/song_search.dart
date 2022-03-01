@@ -22,9 +22,9 @@ class SongSearch extends SearchDelegate<Song?> {
     List<Song> sortedResults = [];
 
     indexData.forEach((song) {
-      String formattedSongtitle = song.title!.toLowerCase();
+      String formattedSongtitle = song.title.toLowerCase();
       String formattedSonglyrics = song.lyrics!.join().toLowerCase();
-      if (formattedSonglyrics.contains(formattedQuery) || formattedSongtitle.contains(formattedQuery) || song.songNumber!.contains(query)) {
+      if (formattedSonglyrics.contains(formattedQuery) || formattedSongtitle.contains(formattedQuery) || song.songNumber.contains(query)) {
         results.add(song);
       }
       if (settings!.filterNavajo == true && song.language == "navajo") {
@@ -33,7 +33,7 @@ class SongSearch extends SearchDelegate<Song?> {
     });
     results.sort((a, b) => a.songNumber.compareTo(b.songNumber));
 
-    currentSettings.books.forEach((book) {
+    currentSettings?.books.forEach((book) {
       results.forEach((song) {
         if (song.bookPrefix == book) {
           sortedResults.add(song);
@@ -72,7 +72,6 @@ class SongSearch extends SearchDelegate<Song?> {
         inputDecorationTheme: InputDecorationTheme(hintStyle: TextStyle(color: theme.primaryTextTheme.headline6!.color)),
         primaryColor: theme.primaryColor,
         primaryIconTheme: theme.primaryIconTheme,
-        primaryColorBrightness: theme.primaryColorBrightness,
         primaryTextTheme: theme.primaryTextTheme,
         textTheme: theme.textTheme.copyWith(headline6: theme.textTheme.headline6!.copyWith(color: theme.primaryTextTheme.headline6!.color)));
   }
@@ -112,7 +111,7 @@ class SongSearch extends SearchDelegate<Song?> {
         return Card(
           child: ListTile(
             title: Text(
-              songResults[index].title!,
+              songResults[index].title,
               style: TextStyle(fontSize: 24),
             ),
             subtitle: currentSettings!.songNumber == true ? formatSubtitle((songResults[index])) : null,
@@ -138,7 +137,7 @@ class SongSearch extends SearchDelegate<Song?> {
         return Card(
           child: ListTile(
             title: Text(
-              songSuggestions[index].title!,
+              songSuggestions[index].title,
               style: TextStyle(fontSize: 24),
             ),
             subtitle: currentSettings!.songNumber == true ? formatSubtitle((songSuggestions[index])) : null,
