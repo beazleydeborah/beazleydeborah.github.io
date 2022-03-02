@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:app/helpers/edit_song_for_display.dart';
 import 'package:app/helpers/file_to_song.dart';
 import 'package:app/helpers/index_service.dart';
 import 'package:app/helpers/indextoSong.dart';
+import 'package:app/helpers/keystrokes.dart';
 import 'package:app/helpers/song_search.dart';
 import 'package:app/helpers/transpose.dart';
+
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import './settingsPage.dart';
@@ -31,17 +36,18 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
-  String errorHandle;
+  String? errorHandle;
   var autoDisplay = AutoSizeGroup();
 
   List<String> splitLineText = [];
 
-  String currentQuery;
+  String? currentQuery;
 
-  Song currentSong = Song();
+  Song? currentSong = Song();
   Settings currentSettings = Settings();
   List<Song> currentIndex = [];
   final ScrollController _scrollController = ScrollController();
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -56,94 +62,98 @@ class _SongPageState extends State<SongPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: loadSong(currentSong),
+        future: loadSong(currentSong!),
         builder: (build, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Container(
               child: WillPopScope(
                   onWillPop: _onWillPop,
-                  child: Scaffold(
-                      appBar: AppBar(
-                        title: formatSongTitle(currentSettings, currentSong),
-                        actions: [
-                          IconButton(
-                              icon: Icon(Icons.search),
-                              onPressed: () async {
-                                final result = await showSearch(
-                                    query: currentQuery,
-                                    context: context,
-                                    delegate: SongSearch(
-                                      indexData: currentIndex,
-                                      currentSettings: currentSettings,
-                                      currentSong: currentSong,
-                                    ));
-                                setState(() {
-                                  currentSong = result;
-                                  _scrollController.jumpTo(0);
-                                });
-                                widget.saveSong(currentSong);
+                  child: KeyboardShortcuts(
+                    onRightArrow: () {
+                      _pageController.nextPage(duration: Duration(milliseconds: 1), curve: Curves.easeIn);
+                    },
+                    onLeftArrow: () => _pageController.previousPage(duration: Duration(milliseconds: 1), curve: Curves.easeIn),
+                    onTab: () async {
+                      await search(context);
+                    },
+                    child: Scaffold(
+                        appBar: AppBar(
+                          title: formatSongTitle(currentSettings, currentSong),
+                          actions: [
+                            IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () async {
+                                  await search(context);
+                                }),
+                            IconButton(
+                                icon: Icon(Icons.settings),
+                                onPressed: () async {
+                                  final result = await Navigator.pushNamed(context, SettingsPage.routeName);
+                                  setState(() {
+                                    currentSettings = result as Settings;
+                                  });
+                                  widget.saveSong(currentSong);
+                                })
+                          ],
+                        ),
+                        body: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: OrientationBuilder(builder: (context, orientation) {
+                                if (!kIsWeb && Platform.isAndroid) {
+                                  return ListView(
+                                    shrinkWrap: true,
+                                    controller: _scrollController,
+                                    children: transform(editForDisplay(currentSong!, currentSettings)!, orientation, currentSettings),
+                                  );
+                                } else {
+                                  return PageView(
+                                    controller: _pageController,
+                                    children: transform(editForDisplay(currentSong!, currentSettings)!, orientation, currentSettings),
+                                  );
+                                }
                               }),
-                          IconButton(
-                              icon: Icon(Icons.settings),
-                              onPressed: () async {
-                                final result = await Navigator.pushNamed(context, SettingsPage.routeName);
-                                setState(() {
-                                  currentSettings = result;
-                                });
-                                widget.saveSong(currentSong);
-                              })
-                        ],
-                      ),
-                      body: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: OrientationBuilder(
-                              builder: (context, orientation) => ListView(
-                                shrinkWrap: true,
-                                controller: _scrollController,
-                                children: transform(editForDisplay(currentSong, currentSettings), orientation, currentSettings),
+                            ),
+                            Container(
+                              alignment: Alignment.bottomRight,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Visibility(
+                                    visible: currentSettings.chords && currentSong!.chords!.isNotEmpty,
+                                    child: Container(
+                                      color: Theme.of(context).primaryColorLight,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          currentSong!.chords = transpose(currentSong!.chords!, true);
+                                          setState(() {});
+                                          widget.saveSong(currentSong);
+                                        },
+                                        icon: Icon(Icons.add),
+                                      ),
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: currentSettings.chords && currentSong!.chords!.isNotEmpty,
+                                    child: Container(
+                                      color: Theme.of(context).primaryIconTheme.color,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          currentSong!.chords = transpose(currentSong!.chords!, false);
+                                          setState(() {});
+                                          widget.saveSong(currentSong);
+                                        },
+                                        icon: Icon(Icons.remove),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Visibility(
-                                  visible: currentSettings.chords && currentSong.chords.isNotEmpty,
-                                  child: Container(
-                                    color: Theme.of(context).primaryColorLight,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        currentSong.chords = transpose(currentSong.chords, true);
-                                        setState(() {});
-                                        widget.saveSong(currentSong);
-                                      },
-                                      icon: Icon(Icons.add),
-                                    ),
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: currentSettings.chords && currentSong.chords.isNotEmpty,
-                                  child: Container(
-                                    color: Theme.of(context).primaryIconTheme.color,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        currentSong.chords = transpose(currentSong.chords, false);
-                                        setState(() {});
-                                        widget.saveSong(currentSong);
-                                      },
-                                      icon: Icon(Icons.remove),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ))),
+                            )
+                          ],
+                        )),
+                  )),
             );
           } else {
             return Center(
@@ -155,9 +165,27 @@ class _SongPageState extends State<SongPage> {
         });
   }
 
+  Future<void> search(BuildContext context) async {
+    final result = await showSearch(
+        query: currentQuery,
+        context: context,
+        delegate: SongSearch(
+          indexData: currentIndex,
+          currentSettings: currentSettings,
+          currentSong: currentSong,
+        ));
+    setState(() {
+      currentSong = result;
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
+    });
+    widget.saveSong(currentSong);
+  }
+
   _getQuery() async {
     final prefs = await SharedPreferences.getInstance();
-    String query = prefs.getString('query');
+    String? query = prefs.getString('query');
     if (query == null) {
       query = '';
     }
@@ -223,53 +251,68 @@ class _SongPageState extends State<SongPage> {
           currentSettings: this.widget.settings,
           currentSong: currentSong,
         )).then((value) {
-      _scrollController.jumpTo(0);
-      loadSong(currentSong);
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
+      loadSong(currentSong!);
       widget.saveSong(currentSong);
 
       return false;
     }));
   }
 
-  List<AutoSizeText> transform(List<String> displayedText, Orientation orientation, Settings settings) {
-    List<AutoSizeText> textWidgets = [];
+  List<Widget> transform(List<String> displayedText, Orientation orientation, Settings settings) {
+    List<AutoSizeText> mobileTextWidgets = [];
+    List<String> temp = [];
+    List<AutoSizeText> desktopTextWidgets = [];
 
     displayedText.forEach((line) {
-      if (line != null) {
-        textWidgets.add(
+      temp.add(line);
+
+      mobileTextWidgets.add(
+        AutoSizeText(
+          line,
+          style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
+          maxLines: 1,
+          minFontSize: 11,
+          overflow: TextOverflow.visible,
+          group: autoDisplay,
+        ),
+      );
+
+      if (line == ' ') {
+        desktopTextWidgets.add(
           AutoSizeText(
-            '$line',
-            style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
-            maxLines: 1,
+            temp.join('\n'),
+            style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 40, fontFamily: 'Roboto'),
             minFontSize: 11,
             overflow: TextOverflow.visible,
             group: autoDisplay,
           ),
         );
+        temp = [];
       }
+      ;
     });
 
-    return textWidgets;
-  }
-
-  Text formatSongTitle(Settings currentSettings, Song displayedSong) {
-    if (currentSettings.songNumber) {
-      return Text(
-        '${displayedSong.bookPrefix}-${displayedSong.songNumber} ${displayedSong.title}',
-        style: TextStyle(fontFamily: 'Roboto'),
-      );
+    if (!kIsWeb && Platform.isAndroid) {
+      return mobileTextWidgets;
     } else {
-      return Text(
-        '${displayedSong.title}',
-        style: TextStyle(fontFamily: 'Roboto'),
-      );
+      return desktopTextWidgets;
     }
   }
+}
 
-  List<Text> listItems(Song song) {
-    List<Text> listItems = [];
-    song.fullText.forEach((line) => listItems.add(Text(line)));
-
-    return listItems;
+Text formatSongTitle(Settings currentSettings, Song? displayedSong) {
+  if (currentSettings.songNumber) {
+    return Text(
+      '${displayedSong!.bookPrefix}-${displayedSong.songNumber} ${displayedSong.title}',
+      style: TextStyle(fontFamily: 'Roboto'),
+    );
+  } else {
+    return Text(
+      '${displayedSong!.title}',
+      style: TextStyle(fontFamily: 'Roboto'),
+    );
   }
 }

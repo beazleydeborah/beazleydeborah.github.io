@@ -1,39 +1,40 @@
+import 'package:app/helpers/keystrokes.dart';
 import 'package:app/models/settings.dart';
 import 'package:app/models/song.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SongSearch extends SearchDelegate<Song> {
-  final Settings currentSettings;
-  final List<Song> indexData;
-  final Song currentSong;
+class SongSearch extends SearchDelegate<Song?> {
+  final Settings? currentSettings;
+  final List<Song>? indexData;
+  final Song? currentSong;
 
   SongSearch({this.indexData, this.currentSettings, this.currentSong});
-  String queryData;
+  String? queryData;
 
   void _saveQuery(String query) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('query', query);
   }
 
-  findSongs(String query, List<Song> indexData, Settings settings) {
+  findSongs(String query, List<Song> indexData, Settings? settings) {
     String formattedQuery = formatQuery(query);
     List<Song> results = [];
     List<Song> sortedResults = [];
 
     indexData.forEach((song) {
       String formattedSongtitle = song.title.toLowerCase();
-      String formattedSonglyrics = song.lyrics.join().toLowerCase();
+      String formattedSonglyrics = song.lyrics!.join().toLowerCase();
       if (formattedSonglyrics.contains(formattedQuery) || formattedSongtitle.contains(formattedQuery) || song.songNumber.contains(query)) {
         results.add(song);
       }
-      if (settings.filterNavajo == true && song.language == "navajo") {
+      if (settings!.filterNavajo == true && song.language == "navajo") {
         results.remove(song);
       }
     });
     results.sort((a, b) => a.songNumber.compareTo(b.songNumber));
 
-    currentSettings.books.forEach((book) {
+    currentSettings?.books.forEach((book) {
       results.forEach((song) {
         if (song.bookPrefix == book) {
           sortedResults.add(song);
@@ -69,18 +70,18 @@ class SongSearch extends SearchDelegate<Song> {
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
-        inputDecorationTheme: InputDecorationTheme(hintStyle: TextStyle(color: theme.primaryTextTheme.headline6.color)),
+        inputDecorationTheme: InputDecorationTheme(hintStyle: TextStyle(color: theme.primaryTextTheme.headline6!.color)),
         primaryColor: theme.primaryColor,
         primaryIconTheme: theme.primaryIconTheme,
-        primaryColorBrightness: theme.primaryColorBrightness,
         primaryTextTheme: theme.primaryTextTheme,
-        textTheme: theme.textTheme.copyWith(headline6: theme.textTheme.headline6.copyWith(color: theme.primaryTextTheme.headline6.color)));
+        textTheme: theme.textTheme.copyWith(headline6: theme.textTheme.headline6!.copyWith(color: theme.primaryTextTheme.headline6!.color)));
   }
 
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
+        focusNode: FocusNode(skipTraversal: true),
         icon: Icon(Icons.clear),
         onPressed: () {
           query = '';
@@ -103,34 +104,39 @@ class SongSearch extends SearchDelegate<Song> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final List<Song> songResults = findSongs(query, indexData, currentSettings);
+    final List<Song> songResults = findSongs(query, indexData!, currentSettings);
     Song selectedSong = Song();
 
-    return ListView.builder(
-      itemCount: songResults.length,
-      itemBuilder: (ctx, index) {
-        return Card(
-          child: ListTile(
-            title: Text(
-              songResults[index].title,
-              style: TextStyle(fontSize: 24),
-            ),
-            subtitle: currentSettings.songNumber == true ? formatSubtitle((songResults[index])) : null,
-            onTap: () {
-              selectedSong = songResults[index];
+    return KeyboardShortcuts(
+      onLeftArrow: () => null,
+      onRightArrow: () => null,
+      onTab: () => null,
+      child: ListView.builder(
+        itemCount: songResults.length,
+        itemBuilder: (ctx, index) {
+          return Card(
+            child: ListTile(
+              title: Text(
+                songResults[index].title,
+                style: TextStyle(fontSize: 24),
+              ),
+              subtitle: currentSettings!.songNumber == true ? formatSubtitle((songResults[index])) : null,
+              onTap: () {
+                selectedSong = songResults[index];
 
-              _saveQuery(query);
-              close(context, selectedSong);
-            },
-          ),
-        );
-      },
+                _saveQuery(query);
+                close(context, selectedSong);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<Song> songSuggestions = findSongs(query, indexData, currentSettings);
+    final List<Song> songSuggestions = findSongs(query, indexData!, currentSettings);
     Song selectedSong = Song();
     return ListView.builder(
       itemCount: songSuggestions.length,
@@ -141,7 +147,7 @@ class SongSearch extends SearchDelegate<Song> {
               songSuggestions[index].title,
               style: TextStyle(fontSize: 24),
             ),
-            subtitle: currentSettings.songNumber == true ? formatSubtitle((songSuggestions[index])) : null,
+            subtitle: currentSettings!.songNumber == true ? formatSubtitle((songSuggestions[index])) : null,
             onTap: () {
               _saveQuery(query);
               selectedSong = songSuggestions[index];

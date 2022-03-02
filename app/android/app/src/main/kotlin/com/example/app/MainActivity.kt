@@ -1,4 +1,4 @@
-package com.example.app
+package org.ksbiblecamp.overheads
 
 import io.flutter.embedding.android.FlutterActivity
 

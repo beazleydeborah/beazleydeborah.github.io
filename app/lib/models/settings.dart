@@ -6,11 +6,11 @@ class Settings {
   List<String> books;
 
   Settings({
-    this.songNumber,
-    this.darkMode,
-    this.chords,
-    this.filterNavajo,
-    this.books,
+    this.songNumber = false,
+    this.darkMode = false,
+    this.chords = false,
+    this.filterNavajo = false,
+    this.books = const [],
   });
 }
 

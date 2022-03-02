@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,9 @@ import './models/settings.dart';
 import './models/song.dart';
 
 main() {
+  if (kIsWeb) {
+    print("this is web");
+  }
   runApp(
     MyApp(),
   );
@@ -20,10 +24,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Settings settings;
-  Song song = Song(lyrics: [], fullText: []);
+  Settings settings = Settings();
+  Song song = Song();
 
-  ThemeData theme;
+  ThemeData? theme;
 
   Future<bool> _getSettingsAndSong() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -83,7 +87,7 @@ class _MyAppState extends State<MyApp> {
     song = savedSong;
     settings = savedSettings;
 
-    return savedSong == null && savedSettings == null;
+    return false;
   }
 
   void _saveSettings(settingsData) async {

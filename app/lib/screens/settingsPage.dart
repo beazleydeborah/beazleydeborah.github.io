@@ -26,6 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _songNumber = widget.currentSettings.songNumber;
     _filterNavajo = widget.currentSettings.filterNavajo;
     _books = widget.currentSettings.books;
+
     super.initState();
   }
 
@@ -94,10 +95,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ElevatedButton(
             onPressed: () async {
               return await _displayReorder().then((value) {
-                if (value != null) {
-                  _books = value;
-                  selectedSettings.books = value;
-                }
+                _books = value;
+                selectedSettings.books = value;
+
                 widget.saveSettings(selectedSettings);
               });
             },
@@ -124,10 +124,9 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Future<List<String>> _displayReorder() async {
+  _displayReorder() async {
     List<String> bookList = this._books;
-
-    return showDialog<List<String>>(
+    await showDialog<List<String>>(
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(
@@ -150,10 +149,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         key: ValueKey(bookList[i]),
                         child: ListTile(
                           title: Text(bookList[i]),
-                          trailing: ReorderableDragStartListener(
-                            index: i,
-                            child: const Icon(Icons.drag_handle),
-                          ),
                         ),
                       ),
                   ],
@@ -164,7 +159,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(() {
                       final String book = bookList.removeAt(oldIndex);
                       bookList.insert(newIndex, book);
-                      print(bookList);
                     });
                   },
                 ),
