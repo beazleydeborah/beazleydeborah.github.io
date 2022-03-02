@@ -149,10 +149,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         key: ValueKey(bookList[i]),
                         child: ListTile(
                           title: Text(bookList[i]),
-                          trailing: ReorderableDragStartListener(
-                            index: i,
-                            child: const Icon(Icons.drag_handle),
-                          ),
                         ),
                       ),
                   ],
@@ -163,7 +159,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(() {
                       final String book = bookList.removeAt(oldIndex);
                       bookList.insert(newIndex, book);
-                      print(bookList);
                     });
                   },
                 ),

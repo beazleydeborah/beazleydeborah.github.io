@@ -1,3 +1,4 @@
+import 'package:app/helpers/keystrokes.dart';
 import 'package:app/models/settings.dart';
 import 'package:app/models/song.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +81,7 @@ class SongSearch extends SearchDelegate<Song?> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
+        focusNode: FocusNode(skipTraversal: true),
         icon: Icon(Icons.clear),
         onPressed: () {
           query = '';
@@ -105,25 +107,30 @@ class SongSearch extends SearchDelegate<Song?> {
     final List<Song> songResults = findSongs(query, indexData!, currentSettings);
     Song selectedSong = Song();
 
-    return ListView.builder(
-      itemCount: songResults.length,
-      itemBuilder: (ctx, index) {
-        return Card(
-          child: ListTile(
-            title: Text(
-              songResults[index].title,
-              style: TextStyle(fontSize: 24),
-            ),
-            subtitle: currentSettings!.songNumber == true ? formatSubtitle((songResults[index])) : null,
-            onTap: () {
-              selectedSong = songResults[index];
+    return KeyboardShortcuts(
+      onLeftArrow: () => null,
+      onRightArrow: () => null,
+      onTab: () => null,
+      child: ListView.builder(
+        itemCount: songResults.length,
+        itemBuilder: (ctx, index) {
+          return Card(
+            child: ListTile(
+              title: Text(
+                songResults[index].title,
+                style: TextStyle(fontSize: 24),
+              ),
+              subtitle: currentSettings!.songNumber == true ? formatSubtitle((songResults[index])) : null,
+              onTap: () {
+                selectedSong = songResults[index];
 
-              _saveQuery(query);
-              close(context, selectedSong);
-            },
-          ),
-        );
-      },
+                _saveQuery(query);
+                close(context, selectedSong);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
