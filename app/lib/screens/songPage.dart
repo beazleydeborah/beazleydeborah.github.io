@@ -295,10 +295,10 @@ class _SongPageState extends State<SongPage> {
       ;
     });
 
-    if (kIsWeb) {
-      return desktopTextWidgets;
-    } else {
+    if (!kIsWeb && Platform.isAndroid) {
       return mobileTextWidgets;
+    } else {
+      return desktopTextWidgets;
     }
   }
 }
