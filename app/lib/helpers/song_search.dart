@@ -25,7 +25,9 @@ class SongSearch extends SearchDelegate<Song?> {
     indexData.forEach((song) {
       String formattedSongtitle = song.title.toLowerCase();
       String formattedSonglyrics = song.lyrics!.join().toLowerCase();
-      if (formattedSonglyrics.contains(formattedQuery) || formattedSongtitle.contains(formattedQuery) || song.songNumber.contains(query)) {
+      if (formattedSonglyrics.contains(formattedQuery) ||
+          formattedSongtitle.contains(formattedQuery) ||
+          song.songNumber.contains(query)) {
         results.add(song);
       }
       if (settings!.filterNavajo == true && song.language == "navajo") {
@@ -70,11 +72,15 @@ class SongSearch extends SearchDelegate<Song?> {
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
-        inputDecorationTheme: InputDecorationTheme(hintStyle: TextStyle(color: theme.primaryTextTheme.headline6!.color)),
+        inputDecorationTheme: InputDecorationTheme(
+            hintStyle:
+                TextStyle(color: theme.primaryTextTheme.headline6!.color)),
         primaryColor: theme.primaryColor,
         primaryIconTheme: theme.primaryIconTheme,
         primaryTextTheme: theme.primaryTextTheme,
-        textTheme: theme.textTheme.copyWith(headline6: theme.textTheme.headline6!.copyWith(color: theme.primaryTextTheme.headline6!.color)));
+        textTheme: theme.textTheme.copyWith(
+            headline6: theme.textTheme.headline6!
+                .copyWith(color: theme.primaryTextTheme.headline6!.color)));
   }
 
   @override
@@ -92,8 +98,7 @@ class SongSearch extends SearchDelegate<Song?> {
 
   @override
   Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
+    return BackButton(
       onPressed: () {
         _saveQuery(query);
 
@@ -104,7 +109,8 @@ class SongSearch extends SearchDelegate<Song?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final List<Song> songResults = findSongs(query, indexData!, currentSettings);
+    final List<Song> songResults =
+        findSongs(query, indexData!, currentSettings);
     Song selectedSong = Song();
 
     return KeyboardShortcuts(
@@ -120,7 +126,9 @@ class SongSearch extends SearchDelegate<Song?> {
                 songResults[index].title,
                 style: TextStyle(fontSize: 24),
               ),
-              subtitle: currentSettings!.songNumber == true ? formatSubtitle((songResults[index])) : null,
+              subtitle: currentSettings!.songNumber == true
+                  ? formatSubtitle((songResults[index]))
+                  : null,
               onTap: () {
                 selectedSong = songResults[index];
 
@@ -136,7 +144,8 @@ class SongSearch extends SearchDelegate<Song?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<Song> songSuggestions = findSongs(query, indexData!, currentSettings);
+    final List<Song> songSuggestions =
+        findSongs(query, indexData!, currentSettings);
     Song selectedSong = Song();
     return ListView.builder(
       itemCount: songSuggestions.length,
@@ -147,7 +156,9 @@ class SongSearch extends SearchDelegate<Song?> {
               songSuggestions[index].title,
               style: TextStyle(fontSize: 24),
             ),
-            subtitle: currentSettings!.songNumber == true ? formatSubtitle((songSuggestions[index])) : null,
+            subtitle: currentSettings!.songNumber == true
+                ? formatSubtitle((songSuggestions[index]))
+                : null,
             onTap: () {
               _saveQuery(query);
               selectedSong = songSuggestions[index];

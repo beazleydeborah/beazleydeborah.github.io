@@ -2,13 +2,20 @@ The First Noel
 order:1,2,3,2,4,2,7,2
 topic:christmas
 =
+      C   Am-G  F   C     F   C%
 The first Noel the angel did say
+ F      C       F    C   F%
 Was to certain poor shepherds
-   in fields as they lay;
+G    C        G7   C%
+in fields as they lay;
+G7   C    Am     G    F    C       F    C%
 In fields where they lay tending their sheep,
+F     C       F     C-F   G    C  G7   C%
 On a cold winter's night that was so deep.
 =
+G7-C    Em   C-F     C%
 Noel, Noel, Noel, Noel,
+Am   Em  F   C   G7 C-G7-C%
 Born is the King of Israel.
 =
 They looked up and saw a star

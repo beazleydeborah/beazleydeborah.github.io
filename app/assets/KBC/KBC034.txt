@@ -1,5 +1,5 @@
 title:Shout To The Lord
-order:1,2,1,2
+order:1,2,3,4,1,2,3,4
 =
 A         E%
 My Jesus, my Savior,
@@ -9,6 +9,7 @@ D         A/C# D         A/E%
 All of my days I want to praise
     F#m             G-D/F#-Esus-E-D/E%
 The wonders of Your mighty love
+=
 A           E%
 My comfort, my shelter,
 F#m      E          D%
@@ -26,6 +27,7 @@ F#m                        D%
 Mountains bow down and the seas will roar
        E     F#m     E/G#%
 At the sound of Your name
+=
 A          F#m        D            D/E-E%
 I sing for joy at the work of Your hand
 A            F#m          D         Esus-E%

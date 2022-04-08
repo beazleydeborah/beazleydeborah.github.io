@@ -105,12 +105,12 @@ class _SongPageState extends State<SongPage> {
                                   return ListView(
                                     shrinkWrap: true,
                                     controller: _scrollController,
-                                    children: transform(editForDisplay(currentSong!, currentSettings)!, orientation, currentSettings),
+                                    children: transform(editForDisplay(currentSong!, currentSettings)!, currentSettings),
                                   );
                                 } else {
                                   return PageView(
                                     controller: _pageController,
-                                    children: transform(editForDisplay(currentSong!, currentSettings)!, orientation, currentSettings),
+                                    children: transform(editForDisplay(currentSong!, currentSettings)!, currentSettings),
                                   );
                                 }
                               }),
@@ -201,7 +201,7 @@ class _SongPageState extends State<SongPage> {
     jsondata.removeWhere((key, value) => !key.contains('.txt'));
 
     jsondata.forEach((key, value) {
-      loadIndexSong(key).then((value) {
+      loadIndexSong(key, context).then((value) {
         Song indexedSong = indextoSong(value, key);
         songs.add(indexedSong);
         currentIndex = songs;
@@ -261,13 +261,15 @@ class _SongPageState extends State<SongPage> {
     }));
   }
 
-  List<Widget> transform(List<String> displayedText, Orientation orientation, Settings settings) {
+  List<Widget> transform(List<String> displayedText, Settings settings) {
     List<AutoSizeText> mobileTextWidgets = [];
     List<String> temp = [];
     List<AutoSizeText> desktopTextWidgets = [];
-
+    displayedText.add(' ');
+    String prevline = displayedText.first;
     displayedText.forEach((line) {
       temp.add(line);
+      prevline = line;
 
       mobileTextWidgets.add(
         AutoSizeText(
@@ -280,11 +282,13 @@ class _SongPageState extends State<SongPage> {
         ),
       );
 
-      if (line == ' ') {
+      if (prevline == ' ') {
+        String verse = temp.join('\n');
+
         desktopTextWidgets.add(
           AutoSizeText(
-            temp.join('\n'),
-            style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 40, fontFamily: 'Roboto'),
+            verse,
+            style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 60, fontFamily: 'Roboto'),
             minFontSize: 11,
             overflow: TextOverflow.visible,
             group: autoDisplay,
@@ -292,7 +296,6 @@ class _SongPageState extends State<SongPage> {
         );
         temp = [];
       }
-      ;
     });
 
     if (!kIsWeb && Platform.isAndroid) {
