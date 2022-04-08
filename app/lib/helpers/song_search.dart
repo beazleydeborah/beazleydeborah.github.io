@@ -111,7 +111,7 @@ class SongSearch extends SearchDelegate<Song?> {
   Widget buildResults(BuildContext context) {
     final List<Song> songResults =
         findSongs(query, indexData!, currentSettings);
-    Song selectedSong = Song();
+    Song selectedSong = Song(songNumber: '', title: '', bookPrefix: '');
 
     return KeyboardShortcuts(
       onLeftArrow: () => null,
@@ -146,7 +146,7 @@ class SongSearch extends SearchDelegate<Song?> {
   Widget buildSuggestions(BuildContext context) {
     final List<Song> songSuggestions =
         findSongs(query, indexData!, currentSettings);
-    Song selectedSong = Song();
+    Song selectedSong = Song(songNumber: '', title: '', bookPrefix: '');
     return ListView.builder(
       itemCount: songSuggestions.length,
       itemBuilder: (ctx, index) {

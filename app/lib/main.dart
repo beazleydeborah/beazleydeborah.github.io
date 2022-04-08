@@ -24,8 +24,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Settings settings = Settings();
-  Song song = Song();
+  Settings settings = Settings(
+    chords: false,
+    darkMode: false,
+    filterNavajo: false,
+    songNumber: false,
+    books: ["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"],
+  );
+  Song song = Song(
+    title: "Welcome",
+    bookPrefix: "KBC",
+    songNumber: "000",
+  );
 
   ThemeData? theme;
 
@@ -55,10 +65,13 @@ class _MyAppState extends State<MyApp> {
       darkMode: settingsMap['darkMode'],
       songNumber: settingsMap['songNumber'],
       filterNavajo: settingsMap['filterNavajo'],
-      books: settingsMap['books'] != null ? List.from(settingsMap['books']) : ["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"],
+      books: settingsMap['books'] != null
+          ? List.from(settingsMap['books'])
+          : ["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"],
     );
 
-    final rawSongJson = prefs.getString('song') ?? '{"title":"Welcome","bookPrefix":"KBC","songNumber":"000"}';
+    final rawSongJson = prefs.getString('song') ??
+        '{"title":"Welcome","bookPrefix":"KBC","songNumber":"000"}';
     Map<String, dynamic> songMap = json.decode(rawSongJson);
     savedSong = Song(
       title: songMap['title'],
@@ -87,7 +100,7 @@ class _MyAppState extends State<MyApp> {
     song = savedSong;
     settings = savedSettings;
 
-    return false;
+    return (song.title.isNotEmpty && settings.books.isNotEmpty);
   }
 
   void _saveSettings(settingsData) async {
@@ -130,10 +143,16 @@ class _MyAppState extends State<MyApp> {
         future: _getSettingsAndSong(),
         builder: (buildContext, snapshot) {
           if (snapshot.hasData) {
-            return MaterialApp(title: 'Overheads App', theme: theme, home: SongPage(_saveSong, song, settings), routes: {
-              SongPage.routeName: (ctx) => SongPage(_saveSong, song, settings),
-              SettingsPage.routeName: (ctx) => SettingsPage(_saveSettings, settings),
-            });
+            return MaterialApp(
+                title: 'Overheads App',
+                theme: theme,
+                home: SongPage(_saveSong, song, settings),
+                routes: {
+                  SongPage.routeName: (ctx) =>
+                      SongPage(_saveSong, song, settings),
+                  SettingsPage.routeName: (ctx) =>
+                      SettingsPage(_saveSettings, settings),
+                });
           } else {
             return Center(
               child: CircularProgressIndicator(
