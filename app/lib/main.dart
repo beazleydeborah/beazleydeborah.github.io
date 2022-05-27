@@ -61,10 +61,10 @@ class _MyAppState extends State<MyApp> {
     Map<String, dynamic> settingsMap = json.decode(rawSettingsJson);
 
     savedSettings = Settings(
-      chords: settingsMap['chords'],
-      darkMode: settingsMap['darkMode'],
-      songNumber: settingsMap['songNumber'],
-      filterNavajo: settingsMap['filterNavajo'],
+      chords: settingsMap['chords'] ?? false,
+      darkMode: settingsMap['darkMode'] ?? false,
+      songNumber: settingsMap['songNumber'] ?? false,
+      filterNavajo: settingsMap['filterNavajo'] ?? false,
       books: settingsMap['books'] != null
           ? List.from(settingsMap['books'])
           : ["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"],
@@ -74,9 +74,9 @@ class _MyAppState extends State<MyApp> {
         '{"title":"Welcome","bookPrefix":"KBC","songNumber":"000"}';
     Map<String, dynamic> songMap = json.decode(rawSongJson);
     savedSong = Song(
-      title: songMap['title'],
-      bookPrefix: songMap['bookPrefix'],
-      songNumber: songMap['songNumber'],
+      title: songMap['title'] ?? 'Welcome',
+      bookPrefix: songMap['bookPrefix'] ?? "KBC",
+      songNumber: songMap['songNumber'] ?? "000",
     );
 
     if (savedSettings.darkMode) {

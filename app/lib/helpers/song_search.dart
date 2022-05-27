@@ -1,6 +1,6 @@
-import 'package:app/helpers/keystrokes.dart';
-import 'package:app/models/settings.dart';
-import 'package:app/models/song.dart';
+import 'keystrokes.dart';
+import '/models/settings.dart';
+import '/models/song.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

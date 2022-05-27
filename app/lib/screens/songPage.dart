@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:app/helpers/edit_song_for_display.dart';
-import 'package:app/helpers/file_to_song.dart';
-import 'package:app/helpers/index_service.dart';
-import 'package:app/helpers/indextoSong.dart';
-import 'package:app/helpers/keystrokes.dart';
-import 'package:app/helpers/song_search.dart';
-import 'package:app/helpers/transpose.dart';
+import '/helpers/edit_song_for_display.dart';
+import '/helpers/file_to_song.dart';
+import '/helpers/index_service.dart';
+import '/helpers/indextoSong.dart';
+import '/helpers/keystrokes.dart';
+import '/helpers/song_search.dart';
+import '/helpers/transpose.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
