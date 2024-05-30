@@ -74,13 +74,13 @@ class SongSearch extends SearchDelegate<Song?> {
     return theme.copyWith(
         inputDecorationTheme: InputDecorationTheme(
             hintStyle:
-                TextStyle(color: theme.primaryTextTheme.headline6!.color)),
+                TextStyle(color: theme.primaryTextTheme.headline5!.color)),
         primaryColor: theme.primaryColor,
         primaryIconTheme: theme.primaryIconTheme,
         primaryTextTheme: theme.primaryTextTheme,
         textTheme: theme.textTheme.copyWith(
-            headline6: theme.textTheme.headline6!
-                .copyWith(color: theme.primaryTextTheme.headline6!.color)));
+            headline5: theme.textTheme.headline5!
+                .copyWith(color: theme.primaryTextTheme.headline5!.color)));
   }
 
   @override
