@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:app/helpers/edit_song_for_display.dart';
-import 'package:app/helpers/file_to_song.dart';
-import 'package:app/helpers/index_service.dart';
-import 'package:app/helpers/indextoSong.dart';
-import 'package:app/helpers/keystrokes.dart';
-import 'package:app/helpers/song_search.dart';
-import 'package:app/helpers/transpose.dart';
+import '/helpers/edit_song_for_display.dart';
+import '/helpers/file_to_song.dart';
+import '/helpers/index_service.dart';
+import '/helpers/indextoSong.dart';
+import '/helpers/keystrokes.dart';
+import '/helpers/song_search.dart';
+import '/helpers/transpose.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,8 +43,18 @@ class _SongPageState extends State<SongPage> {
 
   String? currentQuery;
 
-  Song? currentSong = Song();
-  Settings currentSettings = Settings();
+  Song? currentSong = Song(
+    title: "Welcome",
+    bookPrefix: "KBC",
+    songNumber: "000",
+  );
+  Settings currentSettings = Settings(
+    chords: false,
+    darkMode: false,
+    filterNavajo: false,
+    songNumber: false,
+    books: ["KBC", "HGC", "IMS", "PCB", "NHF", "HTP"],
+  );
   List<Song> currentIndex = [];
   final ScrollController _scrollController = ScrollController();
   final PageController _pageController = PageController();
@@ -70,9 +80,13 @@ class _SongPageState extends State<SongPage> {
                   onWillPop: _onWillPop,
                   child: KeyboardShortcuts(
                     onRightArrow: () {
-                      _pageController.nextPage(duration: Duration(milliseconds: 1), curve: Curves.easeIn);
+                      _pageController.nextPage(
+                          duration: Duration(milliseconds: 1),
+                          curve: Curves.easeIn);
                     },
-                    onLeftArrow: () => _pageController.previousPage(duration: Duration(milliseconds: 1), curve: Curves.easeIn),
+                    onLeftArrow: () => _pageController.previousPage(
+                        duration: Duration(milliseconds: 1),
+                        curve: Curves.easeIn),
                     onTab: () async {
                       await search(context);
                     },
@@ -88,7 +102,8 @@ class _SongPageState extends State<SongPage> {
                             IconButton(
                                 icon: Icon(Icons.settings),
                                 onPressed: () async {
-                                  final result = await Navigator.pushNamed(context, SettingsPage.routeName);
+                                  final result = await Navigator.pushNamed(
+                                      context, SettingsPage.routeName);
                                   setState(() {
                                     currentSettings = result as Settings;
                                   });
@@ -100,17 +115,24 @@ class _SongPageState extends State<SongPage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: OrientationBuilder(builder: (context, orientation) {
+                              child: OrientationBuilder(
+                                  builder: (context, orientation) {
                                 if (!kIsWeb && Platform.isAndroid) {
                                   return ListView(
                                     shrinkWrap: true,
                                     controller: _scrollController,
-                                    children: transform(editForDisplay(currentSong!, currentSettings)!, orientation, currentSettings),
+                                    children: transform(
+                                        editForDisplay(
+                                            currentSong!, currentSettings)!,
+                                        currentSettings),
                                   );
                                 } else {
                                   return PageView(
                                     controller: _pageController,
-                                    children: transform(editForDisplay(currentSong!, currentSettings)!, orientation, currentSettings),
+                                    children: transform(
+                                        editForDisplay(
+                                            currentSong!, currentSettings)!,
+                                        currentSettings),
                                   );
                                 }
                               }),
@@ -121,12 +143,15 @@ class _SongPageState extends State<SongPage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Visibility(
-                                    visible: currentSettings.chords && currentSong!.chords!.isNotEmpty,
+                                    visible: currentSettings.chords &&
+                                        currentSong!.chords!.isNotEmpty,
                                     child: Container(
-                                      color: Theme.of(context).primaryColorLight,
+                                      color:
+                                          Theme.of(context).primaryColorLight,
                                       child: IconButton(
                                         onPressed: () {
-                                          currentSong!.chords = transpose(currentSong!.chords!, true);
+                                          currentSong!.chords = transpose(
+                                              currentSong!.chords!, true);
                                           setState(() {});
                                           widget.saveSong(currentSong);
                                         },
@@ -135,12 +160,16 @@ class _SongPageState extends State<SongPage> {
                                     ),
                                   ),
                                   Visibility(
-                                    visible: currentSettings.chords && currentSong!.chords!.isNotEmpty,
+                                    visible: currentSettings.chords &&
+                                        currentSong!.chords!.isNotEmpty,
                                     child: Container(
-                                      color: Theme.of(context).primaryIconTheme.color,
+                                      color: Theme.of(context)
+                                          .primaryIconTheme
+                                          .color,
                                       child: IconButton(
                                         onPressed: () {
-                                          currentSong!.chords = transpose(currentSong!.chords!, false);
+                                          currentSong!.chords = transpose(
+                                              currentSong!.chords!, false);
                                           setState(() {});
                                           widget.saveSong(currentSong);
                                         },
@@ -201,7 +230,7 @@ class _SongPageState extends State<SongPage> {
     jsondata.removeWhere((key, value) => !key.contains('.txt'));
 
     jsondata.forEach((key, value) {
-      loadIndexSong(key).then((value) {
+      loadIndexSong(key, context).then((value) {
         Song indexedSong = indextoSong(value, key);
         songs.add(indexedSong);
         currentIndex = songs;
@@ -215,7 +244,10 @@ class _SongPageState extends State<SongPage> {
       return currentSong;
     } else {
       try {
-        await rootBundle.loadString('assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt').then((value) {
+        await rootBundle
+            .loadString(
+                'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
+            .then((value) {
           currentSong = fileToSong(value, currentSong);
         });
       } catch (e) {
@@ -261,18 +293,22 @@ class _SongPageState extends State<SongPage> {
     }));
   }
 
-  List<Widget> transform(List<String> displayedText, Orientation orientation, Settings settings) {
+  List<Widget> transform(List<String> displayedText, Settings settings) {
     List<AutoSizeText> mobileTextWidgets = [];
     List<String> temp = [];
     List<AutoSizeText> desktopTextWidgets = [];
-
+    displayedText.add(' ');
+    String prevline = displayedText.first;
     displayedText.forEach((line) {
       temp.add(line);
+      prevline = line;
 
       mobileTextWidgets.add(
         AutoSizeText(
           line,
-          style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
+          style: currentSettings.chords
+              ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono')
+              : TextStyle(fontSize: 30, fontFamily: 'Roboto'),
           maxLines: 1,
           minFontSize: 11,
           overflow: TextOverflow.visible,
@@ -280,11 +316,15 @@ class _SongPageState extends State<SongPage> {
         ),
       );
 
-      if (line == ' ') {
+      if (prevline == ' ') {
+        String verse = temp.join('\n');
+
         desktopTextWidgets.add(
           AutoSizeText(
-            temp.join('\n'),
-            style: currentSettings.chords ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono') : TextStyle(fontSize: 40, fontFamily: 'Roboto'),
+            verse,
+            style: currentSettings.chords
+                ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono')
+                : TextStyle(fontSize: 60, fontFamily: 'Roboto'),
             minFontSize: 11,
             overflow: TextOverflow.visible,
             group: autoDisplay,
@@ -292,7 +332,6 @@ class _SongPageState extends State<SongPage> {
         );
         temp = [];
       }
-      ;
     });
 
     if (!kIsWeb && Platform.isAndroid) {

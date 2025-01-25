@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/models/song.dart';
+import '/models/song.dart';
 
 Song indextoSong(String fileText, String indexString) {
   fileText = fileText.replaceAll('�', '');

@@ -1,5 +1,5 @@
-import 'package:app/models/settings.dart';
-import 'package:app/models/song.dart';
+import '/models/settings.dart';
+import '/models/song.dart';
 
 List<String>? editForDisplay(Song song, Settings currentSettings) {
   List<String> lyricsOnly = [];
@@ -13,7 +13,7 @@ List<String>? editForDisplay(Song song, Settings currentSettings) {
       int verseIndex = 1;
 
       for (var i = 0; i < song.lyrics!.length; i++) {
-        if (song.lyrics![i] == '=') {
+        if (song.lyrics![i].contains('=')) {
           verseIndex = verseIndex + 1;
         }
         if (verseIndex == element) {
@@ -37,7 +37,7 @@ List<String>? editForDisplay(Song song, Settings currentSettings) {
     } else {
       for (var i = 0; i < displayedSong.lyrics!.length; i++) {
         if (i < displayedSong.chords!.length) {
-          if (displayedSong.chords![i] == "=" && displayedSong.lyrics![i] == "=") {
+          if (displayedSong.chords![i].contains('=') && displayedSong.lyrics![i].contains('=')) {
             displayedSong.fullText!.add(' ');
           } else {
             String trimmedChordline = displayedSong.chords![i].replaceAll("%", "").trimRight();

@@ -1,4 +1,4 @@
-Blessed Be Your Name
+BLESSED BE YOUR NAME
 order:1,2,3,4,2,3,5,3,5,5,3
 =
 G        D%

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/models/song.dart';
+import '/models/song.dart';
 
 Song fileToSong(String fileText, Song oldSongValue) {
   fileText = fileText.replaceAll('�', '');

@@ -1,6 +1,6 @@
-import 'package:app/helpers/keystrokes.dart';
-import 'package:app/models/settings.dart';
-import 'package:app/models/song.dart';
+import 'keystrokes.dart';
+import '/models/settings.dart';
+import '/models/song.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +25,9 @@ class SongSearch extends SearchDelegate<Song?> {
     indexData.forEach((song) {
       String formattedSongtitle = song.title.toLowerCase();
       String formattedSonglyrics = song.lyrics!.join().toLowerCase();
-      if (formattedSonglyrics.contains(formattedQuery) || formattedSongtitle.contains(formattedQuery) || song.songNumber.contains(query)) {
+      if (formattedSonglyrics.contains(formattedQuery) ||
+          formattedSongtitle.contains(formattedQuery) ||
+          song.songNumber.contains(query)) {
         results.add(song);
       }
       if (settings!.filterNavajo == true && song.language == "navajo") {
@@ -70,11 +72,15 @@ class SongSearch extends SearchDelegate<Song?> {
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
-        inputDecorationTheme: InputDecorationTheme(hintStyle: TextStyle(color: theme.primaryTextTheme.headline6!.color)),
+        inputDecorationTheme: InputDecorationTheme(
+            hintStyle:
+                TextStyle(color: theme.primaryTextTheme.bodySmall!.color)),
         primaryColor: theme.primaryColor,
         primaryIconTheme: theme.primaryIconTheme,
         primaryTextTheme: theme.primaryTextTheme,
-        textTheme: theme.textTheme.copyWith(headline6: theme.textTheme.headline6!.copyWith(color: theme.primaryTextTheme.headline6!.color)));
+        textTheme: theme.textTheme.copyWith(
+            bodySmall: theme.textTheme.bodySmall!
+                .copyWith(color: theme.primaryTextTheme.bodySmall!.color)));
   }
 
   @override
@@ -92,8 +98,7 @@ class SongSearch extends SearchDelegate<Song?> {
 
   @override
   Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
+    return BackButton(
       onPressed: () {
         _saveQuery(query);
 
@@ -104,8 +109,9 @@ class SongSearch extends SearchDelegate<Song?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final List<Song> songResults = findSongs(query, indexData!, currentSettings);
-    Song selectedSong = Song();
+    final List<Song> songResults =
+        findSongs(query, indexData!, currentSettings);
+    Song selectedSong = Song(songNumber: '', title: '', bookPrefix: '');
 
     return KeyboardShortcuts(
       onLeftArrow: () => null,
@@ -120,7 +126,9 @@ class SongSearch extends SearchDelegate<Song?> {
                 songResults[index].title,
                 style: TextStyle(fontSize: 24),
               ),
-              subtitle: currentSettings!.songNumber == true ? formatSubtitle((songResults[index])) : null,
+              subtitle: currentSettings!.songNumber == true
+                  ? formatSubtitle((songResults[index]))
+                  : null,
               onTap: () {
                 selectedSong = songResults[index];
 
@@ -136,8 +144,9 @@ class SongSearch extends SearchDelegate<Song?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<Song> songSuggestions = findSongs(query, indexData!, currentSettings);
-    Song selectedSong = Song();
+    final List<Song> songSuggestions =
+        findSongs(query, indexData!, currentSettings);
+    Song selectedSong = Song(songNumber: '', title: '', bookPrefix: '');
     return ListView.builder(
       itemCount: songSuggestions.length,
       itemBuilder: (ctx, index) {
@@ -147,7 +156,9 @@ class SongSearch extends SearchDelegate<Song?> {
               songSuggestions[index].title,
               style: TextStyle(fontSize: 24),
             ),
-            subtitle: currentSettings!.songNumber == true ? formatSubtitle((songSuggestions[index])) : null,
+            subtitle: currentSettings!.songNumber == true
+                ? formatSubtitle((songSuggestions[index]))
+                : null,
             onTap: () {
               _saveQuery(query);
               selectedSong = songSuggestions[index];

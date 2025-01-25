@@ -13,10 +13,10 @@ class Song {
   String? audio;
 
   Song({
-    this.bookPrefix = "KBC",
-    this.title = "Welcome",
+    required this.bookPrefix,
+    required this.title,
     this.subTitle,
-    this.songNumber = "000",
+    required this.songNumber,
     this.lyrics,
     this.language,
     this.topic,
