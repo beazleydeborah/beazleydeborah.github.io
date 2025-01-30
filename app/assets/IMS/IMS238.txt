@@ -1,5 +1,4 @@
 Happy Day
-order:1,2,3,2,4,2
 =
 E%
 The greatest day in history,
@@ -42,6 +41,17 @@ Celebrate, Jesus is alive,
        B%
 He's alive!
 =
+E          A          C#m%
+Oh, happy day, happy day,
+    B%
+You washed my sin away
+E          A          C#m%
+Oh, happy day, happy day,
+    B                 E    A    C#m%
+I'll never be the same, Oh no,
+    B             E/G#  A  C#m  (B)%
+Forever I am changed.
+=
 C#m                   G#m%
 Oh, what a glorious day
                  A%
@@ -50,5 +60,15 @@ What a glorious way
 That you have saved me!
 C#m                   G#m%
 Oh, what a glorious day
-                 A%
+                     A        E%
 What a glorious name  YEAH!
+=E          A          C#m%
+Oh, happy day, happy day,
+    B%
+You washed my sin away
+E          A          C#m%
+Oh, happy day, happy day,
+    B              E     A    C#m%
+I'll never be the same, oh no,
+    B             E%
+Forever I am changed.

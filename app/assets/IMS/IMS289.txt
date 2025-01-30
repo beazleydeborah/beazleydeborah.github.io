@@ -1,5 +1,5 @@
 Who Am I
-order:1,2,3,4,2,3
+order:1,2,3,4,2,5
 =
        G           D/F#            Em7%
 Who am I that the Lord of all the earth
@@ -24,7 +24,7 @@ Not because of what I've done
 But because of who You are
 =
 G         D/F#            Em7%
-I am a flower quickly fading
+ I am a flower quickly fading
         D               C%
 Here today and gone tomorrow
     D                 C%
@@ -37,7 +37,7 @@ Still You hear me when I'm calling
 Lord you catch me when I'm falling
             D             C%
 And you've told me who I am
-      G    C2      Em7   D   G  C   Em7  Dsus%
+      G    C2      Em7   D%
 I am Yours  I am Yours
 =
        G         D/F#            Em7%
@@ -52,3 +52,20 @@ Who am I that the voice that calmed the sea
 Would call out through the rain 
     D/C              C  G/B%
 and calm the storm in me
+=
+G         D/F#            Em7%
+ I am a flower quickly fading
+        D               C%
+Here today and gone tomorrow
+    D                 C%
+A wave tossed in the ocean
+         D      G%
+A vapor in the wind
+           D/F#               Em7%
+Still You hear me when I'm calling
+           D                 C%
+Lord you catch me when I'm falling
+            D             C%
+And you've told me who I am
+      G    C2      Em7   D      G%
+I am Yours  I am Yours   I am Yours

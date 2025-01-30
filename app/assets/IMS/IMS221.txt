@@ -1,5 +1,5 @@
 title:Arky, Arky
-order:1,3,6,3
+order:1,3,2,3,4,3,5,3,6,3
 =
 The Lord told Noah
 There's gonna be a floody, floody,
@@ -47,8 +47,5 @@ And dried up the landy, landy,
 Everything was
 Fine and dandy, dandy
 Children of the Lord
-
-
-e Lord
 
 

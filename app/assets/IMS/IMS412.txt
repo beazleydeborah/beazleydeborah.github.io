@@ -1,5 +1,4 @@
 I Can Only Imagine
-order:1,2,3,4,2,3
 =
             D%
 I can only imagine what it will be like

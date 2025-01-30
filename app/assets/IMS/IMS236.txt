@@ -1,5 +1,5 @@
 title:Mighty to Save
-order:1,2,3,2,4,2
+order:1,2,3,2,4,5
 =
 C                 G%
  Everyone needs compassion
@@ -60,6 +60,22 @@ C                 G%
   We're singing  for the glory
                D%
   Of the risen  King
-
+=
+  G%
+   Saviour
+                    D%
+   He can move the mountains
+              Em            C%
+   My God is mighty to save
+         Em          D%
+   He is mighty to save
+     G%
+   Forever
+                 D%
+   Author of Salvation
+                   Em          C%
+   He rose and conquered the grave
+         Em                D    G%
+   Jesus Conquered the grave
 
               

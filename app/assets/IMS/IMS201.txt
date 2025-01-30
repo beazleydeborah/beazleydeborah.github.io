@@ -1,5 +1,5 @@
 title:If I Were A Butterfly
-order:1,2,3,2,4,2,5,6,7,6,8,6
+order:1,2,3,2,4,2
 =
 D%
 If I were a butterfly
