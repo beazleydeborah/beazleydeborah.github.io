@@ -1,5 +1,5 @@
-import '/models/settings.dart';
-import '/models/song.dart';
+import '../models/settings.dart';
+import '../models/song.dart';
 
 List<String> editForDisplay(Song song, Settings currentSettings) {
   List<String> lyricsOnly = [];
