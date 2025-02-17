@@ -1,21 +1,12 @@
 title:He is Lord (w/Navajo)
 language:navajo
-order: 1,1
 =
-A7                D%
 He is Lord, He is Lord,
-                      E7             A7%
 He is risen from the dead and He is Lord.
-        D           D7       G%
 Ev'ry knee shall bow, Ev'ry tongue confess
-      D       A7      D%
 That Jesus Christ is Lord.
-------
-        A7         D%
-Jesus Christ bóhólnííh,
-            E7         A7%
-Éí daaztsąądęę’ náádiidzá,
-         D        D7             G%
-T’áádzíłtso bich’į’ yaa ádazhdoonííł,
-       D        A7    D%
-Jesus Christ éí bóhólnííh.
+=
+Jesus Christ bóhólnííh,
+Éí daaztsá̜á̜dę́ę́’ náádiidzá
+T’áádzíłtso bich’i̜’ yaa ádazhdoonííł,
+Jesus Christ éíbóhólnííh.
