@@ -1,15 +1,12 @@
 Back to Bethel
-order:1,2,3,4,5,6,5
+order: 1,2,3,4,5,4
 =
           C%
 The stars that shone on Abraham,
   F    G                 C%
 testified your grace
-         C                    Am                F%
-The sand on the shore I walk, testify the
-   G%
-same
-=
+         C                    Am   F      G%
+The sand on the shore I walk, testify the same
 C%
 The path I'm on is rough at times, 
 F                             Am%
@@ -49,9 +46,9 @@ you're the one who led my fathers,
     F                  G%
 the same way you lead me
 =
-C                                     F       G        C%
+C                      F    G     C%
 Back to Bethel, to the land of my fathers
-        C       C/Am     Am             F%
+        C       C/Am     Am        F%
 The inheritance of Abraham, and his
                    G%
 sons and daughters
