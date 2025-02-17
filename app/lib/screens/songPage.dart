@@ -211,11 +211,28 @@ class _SongPageState extends State<SongPage> {
 
   Future<Song> loadSong(Song currentSong) async {
     _getQuery();
+<<<<<<< Updated upstream
     if (currentSong.chords != null) {
       return currentSong;
     } else {
       try {
         await rootBundle.loadString('assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt').then((value) {
+=======
+
+    try {
+      if (kIsWeb) {
+        await rootBundle
+            .loadString(
+                'assets/assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
+            .then((value) {
+          currentSong = fileToSong(value, currentSong);
+        });
+      } else {
+        await rootBundle
+            .loadString(
+                'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
+            .then((value) {
+>>>>>>> Stashed changes
           currentSong = fileToSong(value, currentSong);
         });
       } catch (e) {
