@@ -245,12 +245,21 @@ class _SongPageState extends State<SongPage> {
       return currentSong;
     } else {
       try {
-        await rootBundle
-            .loadString(
-                'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
-            .then((value) {
-          currentSong = fileToSong(value, currentSong);
-        });
+        if (kIsWeb) {
+          await rootBundle
+              .loadString(
+                  'assets/assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
+              .then((value) {
+            currentSong = fileToSong(value, currentSong);
+          });
+        } else {
+          await rootBundle
+              .loadString(
+                  'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
+              .then((value) {
+            currentSong = fileToSong(value, currentSong);
+          });
+        }
       } catch (e) {
         print(e);
 
