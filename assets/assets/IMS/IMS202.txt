@@ -1,7 +1,7 @@
 title:Lamb of God
 order:1,2,3,4,3
 =
-  Fmaj7/G  C      FM7/G G7 C%
+           C      FM7/G G7 C%
 Your only Son, no sin to hide
         G/B   Am      FM9       Gsus G7%
 But you have sent Him from Your side
@@ -10,7 +10,7 @@ To walk upon this guilty sod
          C/E       FM7 G7  C%
 And to become the Lamb of God
 =
-   Fmaj7/G    C        FM7/G G7 C%
+              C        FM7/G G7 C%
 Your gift of love, they crucified
         G/B       Am       FM9    Gsus G7%
 They mocked and scorned Him as He died,
@@ -28,7 +28,7 @@ Oh wash me in His precious blood
    Fm/A   C/G       FM7  G7  C%
 My Jesus Christ the Lamb of God
 =
-  Fmaj7/G  C      FM7/G  G7   C%
+          C      FM7/G  G7   C%
 I was so lost, I should have died
         G/B    Am      FM9       Gsus G7%
 But you have brought me to your side

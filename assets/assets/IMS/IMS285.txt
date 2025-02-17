@@ -1,5 +1,5 @@
 The Stand
-order:1,2,3,3,4,3,3,5,5,3
+order:1,2,3,4,3,5,5,3
 =
 A%
 You stood before creation

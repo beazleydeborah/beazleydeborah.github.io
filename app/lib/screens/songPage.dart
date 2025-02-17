@@ -127,13 +127,14 @@ class _SongPageState extends State<SongPage> {
                                         currentSettings),
                                   );
                                 } else {
-                                  return PageView(
+                                  return Center(
+                                      child: PageView(
                                     controller: _pageController,
                                     children: transform(
                                         editForDisplay(
                                             currentSong!, currentSettings)!,
                                         currentSettings),
-                                  );
+                                  ));
                                 }
                               }),
                             ),
