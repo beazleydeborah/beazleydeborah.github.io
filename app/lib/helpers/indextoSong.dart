@@ -78,7 +78,8 @@ Song indextoSong(String fileText, String indexString) {
   if (currentSong.chords!.isNotEmpty) {
     currentSong.chords!.removeAt(0);
   }
-  String fullTextString = fileText.substring(fileText.indexOf('='), fileText.length);
+  String fullTextString =
+      fileText.substring(fileText.indexOf('='), fileText.length).toString();
   List<String> fullText = LineSplitter().convert(fullTextString);
   currentSong.fullText = fullText;
 

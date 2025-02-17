@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
 
     final rawSongJson = prefs.getString('song') ??
         '{"title":"Welcome","bookPrefix":"KBC","songNumber":"000"}';
-    Map<String, dynamic> songMap = json.decode(rawSongJson);
+    Map<String, dynamic> songMap = json.decode(rawSongJson.toString());
     savedSong = Song(
       title: songMap['title'] ?? 'Welcome',
       bookPrefix: songMap['bookPrefix'] ?? "KBC",
@@ -118,7 +118,6 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       settings = settingsData;
     });
-    print(map);
   }
 
   void _saveSong(Song songData) async {
@@ -134,7 +133,6 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       song = songData;
     });
-    print(map);
   }
 
   @override
