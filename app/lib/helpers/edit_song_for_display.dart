@@ -1,7 +1,7 @@
 import '/models/settings.dart';
 import '/models/song.dart';
 
-List<String>? editForDisplay(Song song, Settings currentSettings) {
+List<String> editForDisplay(Song song, Settings currentSettings) {
   List<String> lyricsOnly = [];
   List<String> chordsOnly = [];
 
@@ -12,14 +12,14 @@ List<String>? editForDisplay(Song song, Settings currentSettings) {
     song.order!.forEach((element) {
       int verseIndex = 1;
 
-      for (var i = 0; i < song.lyrics!.length; i++) {
-        if (song.lyrics![i].contains('=')) {
+      for (var i = 0; i < song.lyrics.length; i++) {
+        if (song.lyrics[i].contains('=')) {
           verseIndex = verseIndex + 1;
         }
         if (verseIndex == element) {
-          lyricsOnly.add(song.lyrics![i]);
-          if (i < song.chords!.length) {
-            chordsOnly.add(song.chords![i]);
+          lyricsOnly.add(song.lyrics[i]);
+          if (i < song.chords.length) {
+            chordsOnly.add(song.chords[i]);
           } else {
             chordsOnly.add(' ');
           }
@@ -32,26 +32,28 @@ List<String>? editForDisplay(Song song, Settings currentSettings) {
   }
 
   if (currentSettings.chords) {
-    if (displayedSong.chords!.isEmpty || displayedSong.chords![0] == " ") {
-      displayedSong.fullText = cleanList(displayedSong.lyrics!);
+    if (displayedSong.chords.isEmpty || displayedSong.chords[0] == " ") {
+      displayedSong.fullText = cleanList(displayedSong.lyrics);
     } else {
-      for (var i = 0; i < displayedSong.lyrics!.length; i++) {
-        if (i < displayedSong.chords!.length) {
-          if (displayedSong.chords![i].contains('=') && displayedSong.lyrics![i].contains('=')) {
-            displayedSong.fullText!.add(' ');
+      for (var i = 0; i < displayedSong.lyrics.length; i++) {
+        if (i < displayedSong.chords.length) {
+          if (displayedSong.chords[i].contains('=') &&
+              displayedSong.lyrics[i].contains('=')) {
+            displayedSong.fullText.add(' ');
           } else {
-            String trimmedChordline = displayedSong.chords![i].replaceAll("%", "").trimRight();
-            displayedSong.fullText!.add(trimmedChordline);
-            displayedSong.fullText!.add(displayedSong.lyrics![i]);
+            String trimmedChordline =
+                displayedSong.chords[i].replaceAll("%", "").trimRight();
+            displayedSong.fullText.add(trimmedChordline);
+            displayedSong.fullText.add(displayedSong.lyrics[i]);
           }
         } else {
-          displayedSong.fullText!.add(song.lyrics![i]);
+          displayedSong.fullText.add(song.lyrics[i]);
         }
       }
-      displayedSong.fullText = cleanList(displayedSong.fullText!);
+      displayedSong.fullText = cleanList(displayedSong.fullText);
     }
   } else {
-    displayedSong.lyrics = cleanList(displayedSong.lyrics!);
+    displayedSong.lyrics = cleanList(displayedSong.lyrics);
     displayedSong.fullText = displayedSong.lyrics;
   }
 

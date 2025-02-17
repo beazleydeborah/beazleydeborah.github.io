@@ -3,13 +3,13 @@ class Song {
   String title;
   String? subTitle;
   String songNumber;
-  List<String>? lyrics;
+  List<String> lyrics;
   String? language;
   String? topic;
-  List<String>? chords;
+  List<String> chords;
   List<int>? order;
   String? chordNames;
-  List<String>? fullText;
+  List<String> fullText;
   String? audio;
 
   Song({
@@ -17,13 +17,13 @@ class Song {
     required this.title,
     this.subTitle,
     required this.songNumber,
-    this.lyrics,
+    this.lyrics = const [''],
     this.language,
     this.topic,
-    this.chords,
+    this.chords = const [''],
     this.order,
     this.chordNames,
-    this.fullText,
+    this.fullText = const [],
     this.audio,
   });
 }

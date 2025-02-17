@@ -41,9 +41,9 @@ class _SongPageState extends State<SongPage> {
 
   List<String> splitLineText = [];
 
-  String? currentQuery;
+  String currentQuery = '';
 
-  Song? currentSong = Song(
+  Song currentSong = Song(
     title: "Welcome",
     bookPrefix: "KBC",
     songNumber: "000",
@@ -72,7 +72,7 @@ class _SongPageState extends State<SongPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: loadSong(currentSong!),
+        future: loadSong(currentSong),
         builder: (build, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Container(
@@ -123,7 +123,7 @@ class _SongPageState extends State<SongPage> {
                                     controller: _scrollController,
                                     children: transform(
                                         editForDisplay(
-                                            currentSong!, currentSettings)!,
+                                            currentSong, currentSettings),
                                         currentSettings),
                                   );
                                 } else {
@@ -132,7 +132,7 @@ class _SongPageState extends State<SongPage> {
                                     controller: _pageController,
                                     children: transform(
                                         editForDisplay(
-                                            currentSong!, currentSettings)!,
+                                            currentSong, currentSettings),
                                         currentSettings),
                                   ));
                                 }
@@ -145,14 +145,14 @@ class _SongPageState extends State<SongPage> {
                                 children: [
                                   Visibility(
                                     visible: currentSettings.chords &&
-                                        currentSong!.chords!.isNotEmpty,
+                                        currentSong.chords.isNotEmpty,
                                     child: Container(
                                       color:
                                           Theme.of(context).primaryColorLight,
                                       child: IconButton(
                                         onPressed: () {
-                                          currentSong!.chords = transpose(
-                                              currentSong!.chords!, true);
+                                          currentSong.chords = transpose(
+                                              currentSong.chords, true);
                                           setState(() {});
                                           widget.saveSong(currentSong);
                                         },
@@ -162,15 +162,15 @@ class _SongPageState extends State<SongPage> {
                                   ),
                                   Visibility(
                                     visible: currentSettings.chords &&
-                                        currentSong!.chords!.isNotEmpty,
+                                        currentSong.chords.isNotEmpty,
                                     child: Container(
                                       color: Theme.of(context)
                                           .primaryIconTheme
                                           .color,
                                       child: IconButton(
                                         onPressed: () {
-                                          currentSong!.chords = transpose(
-                                              currentSong!.chords!, false);
+                                          currentSong.chords = transpose(
+                                              currentSong.chords, false);
                                           setState(() {});
                                           widget.saveSong(currentSong);
                                         },
@@ -205,7 +205,7 @@ class _SongPageState extends State<SongPage> {
           currentSong: currentSong,
         ));
     setState(() {
-      currentSong = result;
+      currentSong = result ?? currentSong;
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(0);
       }
@@ -296,7 +296,7 @@ class _SongPageState extends State<SongPage> {
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(0);
       }
-      loadSong(currentSong!);
+      loadSong(currentSong);
       widget.saveSong(currentSong);
 
       return false;

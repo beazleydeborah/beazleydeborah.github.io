@@ -24,7 +24,7 @@ class SongSearch extends SearchDelegate<Song?> {
 
     indexData.forEach((song) {
       String formattedSongtitle = song.title.toLowerCase();
-      String formattedSonglyrics = song.lyrics!.join().toLowerCase();
+      String formattedSonglyrics = song.lyrics.join().toLowerCase();
       if (formattedSonglyrics.contains(formattedQuery) ||
           formattedSongtitle.contains(formattedQuery) ||
           song.songNumber.contains(query)) {
