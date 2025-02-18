@@ -231,6 +231,11 @@ class _SongPageState extends State<SongPage> {
     jsondata.removeWhere(
         (key, value) => !(key.contains('.txt') || key.contains('.TXT')));
     jsondata.forEach((key, value) {
+      if (kIsWeb) {
+        key = 'assets/' + key;
+        value = 'assets/' + value;
+      }
+
       loadIndexSong(key, context).then((value) {
         Song indexedSong = indextoSong(value, key);
         songs.add(indexedSong);
