@@ -55,13 +55,13 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/KBC/
-    - assets/HGC/
-    - assets/HTP/
-    - assets/IMS/
-    - assets/NHF/
-    - assets/PCB/
-    - assets/XYZ/
+    - assets/assets/KBC/
+    - assets/assets/HGC/
+    - assets/assets/HTP/
+    - assets/assets/IMS/
+    - assets/assets/NHF/
+    - assets/assets/PCB/
+    - assets/assets/XYZ/
     # - assets/Books/
     # - assets/index.txt
   
