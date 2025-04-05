@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import './settingsPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -225,14 +225,13 @@ class _SongPageState extends State<SongPage> {
   loadIndex() async {
     // List<String> indexfileData;
     List<Song> songs = [];
-    var assets = await rootBundle.loadString('AssetManifest.json');
-
-    Map<String, dynamic> jsondata = jsonDecode(assets);
-    jsondata.removeWhere(
-        (key, value) => !(key.contains('.txt') || key.contains('.TXT')));
-    jsondata.forEach((key, value) {
-      loadIndexSong(key, context).then((value) {
-        Song indexedSong = indextoSong(value, key);
+    var assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    var assets = assetManifest.listAssets();
+    assets.removeWhere((assetName) =>
+        !(assetName.contains('.txt') || assetName.contains('.TXT')));
+    assets.forEach((assetName) {
+      loadIndexSong(assetName, context).then((fileData) {
+        Song indexedSong = indextoSong(fileData, assetName);
         songs.add(indexedSong);
         currentIndex = songs;
       });
@@ -248,7 +247,7 @@ class _SongPageState extends State<SongPage> {
         if (kIsWeb) {
           await rootBundle
               .loadString(
-                  'assets/assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
+                  'assets/${currentSong.bookPrefix}/${currentSong.bookPrefix}${currentSong.songNumber}.txt')
               .then((value) {
             currentSong = fileToSong(value, currentSong);
           });
