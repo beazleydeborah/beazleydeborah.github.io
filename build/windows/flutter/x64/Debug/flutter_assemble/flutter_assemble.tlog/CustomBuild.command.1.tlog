@@ -1,0 +1,28 @@
+^C:\USERS\DEBORAHBEAZLEY\DESKTOP\PERSONAL_PROJECTS\BEAZLEYDEBORAH.GITHUB.IO\APP\BUILD\WINDOWS\CMAKEFILES\4AD68FE5DE47557BA93E2B8AFAA09C9A\FLUTTER_WINDOWS.DLL.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\Users\DeborahBeazley\Desktop\flutter PROJECT_DIR=C:\Users\DeborahBeazley\Desktop\Personal_Projects\beazleydeborah.github.io\app FLUTTER_ROOT=C:\Users\DeborahBeazley\Desktop\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\DeborahBeazley\Desktop\Personal_Projects\beazleydeborah.github.io\app\windows\flutter\ephemeral PROJECT_DIR=C:\Users\DeborahBeazley\Desktop\Personal_Projects\beazleydeborah.github.io\app FLUTTER_TARGET=C:\Users\DeborahBeazley\Desktop\Personal_Projects\beazleydeborah.github.io\app\lib\main.dart DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ== DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\DeborahBeazley\Desktop\Personal_Projects\beazleydeborah.github.io\app\.dart_tool\package_config.json C:/Users/DeborahBeazley/Desktop/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEBORAHBEAZLEY\DESKTOP\PERSONAL_PROJECTS\BEAZLEYDEBORAH.GITHUB.IO\APP\BUILD\WINDOWS\CMAKEFILES\029528D00D791F2449EAA338F16F99D2\FLUTTER_ASSEMBLE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEBORAHBEAZLEY\DESKTOP\PERSONAL_PROJECTS\BEAZLEYDEBORAH.GITHUB.IO\APP\WINDOWS\FLUTTER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/DeborahBeazley/Desktop/Personal_Projects/beazleydeborah.github.io/app/windows -BC:/Users/DeborahBeazley/Desktop/Personal_Projects/beazleydeborah.github.io/app/build/windows --check-stamp-file C:/Users/DeborahBeazley/Desktop/Personal_Projects/beazleydeborah.github.io/app/build/windows/flutter/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

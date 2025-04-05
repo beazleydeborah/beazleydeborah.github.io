@@ -1,0 +1,10 @@
+^C:\USERS\DEBORAHBEAZLEY\DESKTOP\PERSONAL_PROJECTS\BEAZLEYDEBORAH.GITHUB.IO\APP\BUILD\WINDOWS\CMAKEFILES\BF0B588BDA9938788F5EC9890619CD80\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

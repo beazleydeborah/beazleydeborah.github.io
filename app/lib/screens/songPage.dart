@@ -228,7 +228,6 @@ class _SongPageState extends State<SongPage> {
     var assets = await rootBundle.loadString('AssetManifest.json');
 
     Map<String, dynamic> jsondata = jsonDecode(assets);
-    print(jsondata);
     jsondata.removeWhere(
         (key, value) => !(key.contains('.txt') || key.contains('.TXT')));
     jsondata.forEach((key, value) {
