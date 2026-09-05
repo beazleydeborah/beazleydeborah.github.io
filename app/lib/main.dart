@@ -10,9 +10,6 @@ import './models/settings.dart';
 import './models/song.dart';
 
 main() {
-  if (kIsWeb) {
-    print("this is web");
-  }
   runApp(
     MyApp(),
   );

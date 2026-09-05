@@ -34,6 +34,10 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
+  static const double _desktopLyricsMaxWidth = 900;
+  static const double _desktopLyricsHorizontalPadding = 32;
+  static const double _desktopLyricsTopPadding = 16;
+
   String? errorHandle;
   var autoDisplay = AutoSizeGroup();
 
@@ -123,15 +127,21 @@ class _SongPageState extends State<SongPage> {
                                         useScrollableLayout),
                                   );
                                 } else {
-                                  return Center(
-                                      child: PageView(
-                                    controller: _pageController,
-                                    children: transform(
-                                        editForDisplay(
-                                            currentSong, currentSettings),
-                                        currentSettings,
-                                        useScrollableLayout),
-                                  ));
+                                  return LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      return PageView(
+                                        controller: _pageController,
+                                        children: transform(
+                                          editForDisplay(
+                                              currentSong, currentSettings),
+                                          currentSettings,
+                                          useScrollableLayout,
+                                          _desktopTextWidth(
+                                              constraints.maxWidth),
+                                        ),
+                                      );
+                                    },
+                                  );
                                 }
                               }),
                             ),
@@ -328,19 +338,15 @@ class _SongPageState extends State<SongPage> {
   }
 
   List<Widget> transform(
-    List<String> displayedText,
-    Settings settings,
-    bool useScrollableLayout,
-  ) {
-    List<AutoSizeText> mobileTextWidgets = [];
+      List<String> displayedText, Settings settings, bool useScrollableLayout,
+      [double desktopTextWidth = _desktopLyricsMaxWidth]) {
+    List<Widget> mobileTextWidgets = [];
     List<String> temp = [];
-    List<AutoSizeText> desktopTextWidgets = [];
-    displayedText.add(' ');
-    String prevline = displayedText.first;
+    List<Widget> desktopTextWidgets = [];
+    final desktopFontSize = useScrollableLayout
+        ? 0.0
+        : _calculateDesktopFontSize(displayedText, settings, desktopTextWidth);
     displayedText.forEach((line) {
-      temp.add(line);
-      prevline = line;
-
       mobileTextWidgets.add(
         AutoSizeText(
           line,
@@ -354,29 +360,147 @@ class _SongPageState extends State<SongPage> {
         ),
       );
 
-      if (prevline == ' ') {
-        String verse = temp.join('\n');
+      if (line.trim().isEmpty) {
+        if (temp.any((verseLine) => verseLine.trim().isNotEmpty)) {
+          String verse = temp.join('\n');
 
-        desktopTextWidgets.add(
-          AutoSizeText(
-            verse,
-            style: currentSettings.chords
-                ? TextStyle(fontSize: 30, fontFamily: 'RobotoMono')
-                : TextStyle(fontSize: 60, fontFamily: 'Roboto'),
-            minFontSize: 11,
-            overflow: TextOverflow.visible,
-            group: autoDisplay,
-          ),
-        );
+          desktopTextWidgets.add(
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: _desktopLyricsTopPadding,
+                  left: _desktopLyricsHorizontalPadding,
+                  right: _desktopLyricsHorizontalPadding,
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: _desktopLyricsMaxWidth,
+                  ),
+                  child: Text(
+                    verse,
+                    style: currentSettings.chords
+                        ? TextStyle(
+                            fontSize: desktopFontSize,
+                            fontFamily: 'RobotoMono',
+                          )
+                        : TextStyle(
+                            fontSize: desktopFontSize,
+                            fontFamily: 'Roboto',
+                          ),
+                    overflow: TextOverflow.visible,
+                    softWrap: false,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
         temp = [];
+        return;
       }
+
+      temp.add(line);
     });
+
+    if (temp.any((verseLine) => verseLine.trim().isNotEmpty)) {
+      String verse = temp.join('\n');
+
+      desktopTextWidgets.add(
+        Align(
+          alignment: Alignment.topCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: _desktopLyricsTopPadding,
+              left: _desktopLyricsHorizontalPadding,
+              right: _desktopLyricsHorizontalPadding,
+            ),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: _desktopLyricsMaxWidth,
+              ),
+              child: Text(
+                verse,
+                style: currentSettings.chords
+                    ? TextStyle(
+                        fontSize: desktopFontSize,
+                        fontFamily: 'RobotoMono',
+                      )
+                    : TextStyle(
+                        fontSize: desktopFontSize,
+                        fontFamily: 'Roboto',
+                      ),
+                overflow: TextOverflow.visible,
+                softWrap: false,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     if (useScrollableLayout) {
       return mobileTextWidgets;
     } else {
       return desktopTextWidgets;
     }
+  }
+
+  double _desktopTextWidth(double availableWidth) {
+    final paddedWidth = availableWidth - (_desktopLyricsHorizontalPadding * 2);
+    if (paddedWidth <= 0) {
+      return _desktopLyricsMaxWidth;
+    }
+
+    if (paddedWidth < _desktopLyricsMaxWidth) {
+      return paddedWidth;
+    }
+
+    return _desktopLyricsMaxWidth;
+  }
+
+  double _calculateDesktopFontSize(
+    List<String> displayedText,
+    Settings settings,
+    double maxWidth,
+  ) {
+    final maxFontSize = settings.chords ? 30.0 : 60.0;
+    const minFontSize = 11.0;
+
+    if (maxWidth <= 0) {
+      return maxFontSize;
+    }
+
+    final textStyle = settings.chords
+        ? TextStyle(fontSize: maxFontSize, fontFamily: 'RobotoMono')
+        : TextStyle(fontSize: maxFontSize, fontFamily: 'Roboto');
+
+    double fontSize = maxFontSize;
+    while (fontSize > minFontSize) {
+      final sizedStyle = textStyle.copyWith(fontSize: fontSize);
+      final allLinesFit = displayedText
+          .where((line) => line.trim().isNotEmpty)
+          .every((line) => _lineFitsWidth(line, sizedStyle, maxWidth));
+
+      if (allLinesFit) {
+        return fontSize;
+      }
+
+      fontSize -= 1;
+    }
+
+    return minFontSize;
+  }
+
+  bool _lineFitsWidth(String line, TextStyle style, double maxWidth) {
+    final painter = TextPainter(
+      text: TextSpan(text: line, style: style),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout(minWidth: 0, maxWidth: double.infinity);
+
+    return painter.width <= maxWidth;
   }
 }
 
