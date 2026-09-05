@@ -5,7 +5,20 @@ List<String> editForDisplay(Song song, Settings currentSettings) {
   List<String> lyricsOnly = [];
   List<String> chordsOnly = [];
 
-  Song displayedSong = song;
+  Song displayedSong = Song(
+    bookPrefix: song.bookPrefix,
+    title: song.title,
+    subTitle: song.subTitle,
+    songNumber: song.songNumber,
+    lyrics: List<String>.from(song.lyrics),
+    language: song.language,
+    topic: song.topic,
+    chords: List<String>.from(song.chords),
+    order: song.order == null ? null : List<int>.from(song.order!),
+    chordNames: song.chordNames,
+    fullText: List<String>.from(song.fullText),
+    audio: song.audio,
+  );
   displayedSong.fullText = [];
 
   if (song.order != null) {
