@@ -259,8 +259,9 @@ class _SongPageState extends State<SongPage> {
   loadIndex() async {
     // List<String> indexfileData;
     List<Song> songs = [];
-    var assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-    var assets = assetManifest.listAssets();
+    final manifestJson = await rootBundle.loadString('AssetManifest.json');
+    final manifestMap = json.decode(manifestJson) as Map<String, dynamic>;
+    final assets = manifestMap.keys.toList();
     assets.removeWhere((assetName) =>
         !(assetName.contains('.txt') || assetName.contains('.TXT')));
     assets.forEach((assetName) {
