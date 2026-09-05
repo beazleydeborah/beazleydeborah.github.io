@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../helpers/edit_song_for_display.dart';
 import '../helpers/file_to_song.dart';
 import '../helpers/index_service.dart';
@@ -69,28 +67,25 @@ class _SongPageState extends State<SongPage> {
     super.initState();
   }
 
+  bool _useScrollableLayout(BuildContext context) {
+    return MediaQuery.of(context).size.shortestSide < 600;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: loadSong(currentSong),
         builder: (build, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
+            final useScrollableLayout = _useScrollableLayout(context);
+
             return Container(
               child: WillPopScope(
                   onWillPop: _onWillPop,
-                  child: KeyboardShortcuts(
-                    onRightArrow: () {
-                      _pageController.nextPage(
-                          duration: Duration(milliseconds: 1),
-                          curve: Curves.easeIn);
-                    },
-                    onLeftArrow: () => _pageController.previousPage(
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeIn),
-                    onTab: () async {
-                      await search(context);
-                    },
-                    child: Scaffold(
+                  child: _buildKeyboardWrapper(
+                    context,
+                    useScrollableLayout,
+                    Scaffold(
                         appBar: AppBar(
                           title: formatSongTitle(currentSettings, currentSong),
                           actions: [
@@ -117,14 +112,15 @@ class _SongPageState extends State<SongPage> {
                               padding: const EdgeInsets.all(10.0),
                               child: OrientationBuilder(
                                   builder: (context, orientation) {
-                                if (!kIsWeb && Platform.isAndroid) {
+                                if (useScrollableLayout) {
                                   return ListView(
                                     shrinkWrap: true,
                                     controller: _scrollController,
                                     children: transform(
                                         editForDisplay(
                                             currentSong, currentSettings),
-                                        currentSettings),
+                                        currentSettings,
+                                        useScrollableLayout),
                                   );
                                 } else {
                                   return Center(
@@ -133,7 +129,8 @@ class _SongPageState extends State<SongPage> {
                                     children: transform(
                                         editForDisplay(
                                             currentSong, currentSettings),
-                                        currentSettings),
+                                        currentSettings,
+                                        useScrollableLayout),
                                   ));
                                 }
                               }),
@@ -195,6 +192,33 @@ class _SongPageState extends State<SongPage> {
         });
   }
 
+  Widget _buildKeyboardWrapper(
+    BuildContext context,
+    bool useScrollableLayout,
+    Widget child,
+  ) {
+    if (useScrollableLayout) {
+      return child;
+    }
+
+    return KeyboardShortcuts(
+      onRightArrow: () {
+        _pageController.nextPage(
+          duration: Duration(milliseconds: 1),
+          curve: Curves.easeIn,
+        );
+      },
+      onLeftArrow: () => _pageController.previousPage(
+        duration: Duration(milliseconds: 1),
+        curve: Curves.easeIn,
+      ),
+      onTab: () async {
+        await search(context);
+      },
+      child: child,
+    );
+  }
+
   Future<void> search(BuildContext context) async {
     final result = await showSearch(
         query: currentQuery,
@@ -240,7 +264,8 @@ class _SongPageState extends State<SongPage> {
 
   Future<Song> loadSong(Song currentSong) async {
     _getQuery();
-    if (currentSong.chords != null) {
+    if (currentSong.fullText.isNotEmpty ||
+        currentSong.lyrics.any((line) => line.trim().isNotEmpty)) {
       return currentSong;
     } else {
       try {
@@ -302,7 +327,11 @@ class _SongPageState extends State<SongPage> {
     }));
   }
 
-  List<Widget> transform(List<String> displayedText, Settings settings) {
+  List<Widget> transform(
+    List<String> displayedText,
+    Settings settings,
+    bool useScrollableLayout,
+  ) {
     List<AutoSizeText> mobileTextWidgets = [];
     List<String> temp = [];
     List<AutoSizeText> desktopTextWidgets = [];
@@ -343,7 +372,7 @@ class _SongPageState extends State<SongPage> {
       }
     });
 
-    if (!kIsWeb && Platform.isAndroid) {
+    if (useScrollableLayout) {
       return mobileTextWidgets;
     } else {
       return desktopTextWidgets;
