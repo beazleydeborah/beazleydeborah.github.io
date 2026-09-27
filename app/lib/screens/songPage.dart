@@ -729,8 +729,8 @@ class _SongPageState extends State<SongPage> {
     double maxWidth,
   ) {
     const maxFontSize = 30.0;
-    const minFontSize = 6.0;
-    const stepGranularity = 0.5;
+    const minFontSize = 4.0;
+    const stepGranularity = 0.25;
 
     if (maxWidth <= 0 || maxWidth.isInfinite || displayedLines.isEmpty) {
       return maxFontSize;
@@ -739,7 +739,38 @@ class _SongPageState extends State<SongPage> {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final textDirection = Directionality.of(context);
 
-    for (double fontSize = maxFontSize;
+    double widestLineWidth = 0;
+    for (final line in displayedLines) {
+      if (line.text.isEmpty) {
+        continue;
+      }
+
+      final painter = TextPainter(
+        text: TextSpan(
+          text: line.text,
+          style: _lineTextStyle(line, settings, maxFontSize),
+        ),
+        maxLines: 1,
+        textDirection: textDirection,
+        textScaleFactor: textScaleFactor,
+      )..layout();
+
+      if (painter.width > widestLineWidth) {
+        widestLineWidth = painter.width;
+      }
+    }
+
+    if (widestLineWidth <= 0) {
+      return maxFontSize;
+    }
+
+    final estimatedFontSize = (maxWidth / widestLineWidth) * maxFontSize;
+    final startingFontSize = estimatedFontSize.clamp(
+      minFontSize,
+      maxFontSize,
+    );
+
+    for (double fontSize = startingFontSize;
         fontSize >= minFontSize;
         fontSize -= stepGranularity) {
       final allLinesFit = displayedLines.every((line) {
