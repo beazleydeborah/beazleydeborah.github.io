@@ -627,6 +627,10 @@ class _SongPageState extends State<SongPage> {
       return 0;
     }
 
+    if (availableWidth < 600) {
+      return paddedWidth;
+    }
+
     return paddedWidth * _desktopLyricsWidthFactor;
   }
 
@@ -656,8 +660,8 @@ class _SongPageState extends State<SongPage> {
     double maxWidth,
     double maxHeight,
   ) {
-    const minFontSize = 11.0;
     const stepGranularity = 0.5;
+    final minFontSize = maxWidth < 600 ? 4.0 : 11.0;
     final maxFontSize = _desktopMaxFontSize(settings, maxWidth);
 
     if (maxWidth <= 0 ||
