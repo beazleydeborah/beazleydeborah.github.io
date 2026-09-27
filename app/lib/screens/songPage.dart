@@ -650,6 +650,10 @@ class _SongPageState extends State<SongPage> {
       return 11;
     }
 
+    if (maxWidth < 600) {
+      return settings.chords ? 24 : 30;
+    }
+
     return settings.chords ? maxWidth / 4 : maxWidth / 2;
   }
 
@@ -679,6 +683,29 @@ class _SongPageState extends State<SongPage> {
         fontSize >= minFontSize;
         fontSize -= stepGranularity) {
       final allPagesFit = pages.every((page) {
+        final allLinesFit = page.lines.every((line) {
+          if (line.text.isEmpty) {
+            return true;
+          }
+
+          final linePainter = TextPainter(
+            text: TextSpan(
+              text: line.text,
+              style: _lineTextStyle(line, settings, fontSize),
+            ),
+            maxLines: 1,
+            textDirection: textDirection,
+            textScaleFactor: textScaleFactor,
+          )..layout(maxWidth: maxWidth);
+
+          return !linePainter.didExceedMaxLines &&
+              linePainter.width <= maxWidth;
+        });
+
+        if (!allLinesFit) {
+          return false;
+        }
+
         final painter = TextPainter(
           text: _buildDesktopPageSpan(page, settings, fontSize),
           maxLines: page.lines.length,
