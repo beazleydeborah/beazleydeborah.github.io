@@ -663,7 +663,7 @@ class _SongPageState extends State<SongPage> {
       return minFontSize;
     }
 
-    final textScaler = MediaQuery.of(context).textScaler;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final textDirection = Directionality.of(context);
 
     for (double fontSize = maxFontSize;
@@ -674,7 +674,7 @@ class _SongPageState extends State<SongPage> {
           text: _buildDesktopPageSpan(page, settings, fontSize),
           maxLines: page.lines.length,
           textDirection: textDirection,
-          textScaler: textScaler,
+          textScaleFactor: textScaleFactor,
         )..layout(maxWidth: maxWidth);
 
         final previewHeight = page.nextPreviewLine == null
@@ -707,7 +707,7 @@ class _SongPageState extends State<SongPage> {
     double fontSize,
     double maxWidth,
   ) {
-    final textScaler = MediaQuery.of(context).textScaler;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final textDirection = Directionality.of(context);
     final painter = TextPainter(
       text: TextSpan(
@@ -716,7 +716,7 @@ class _SongPageState extends State<SongPage> {
       ),
       maxLines: 1,
       textDirection: textDirection,
-      textScaler: textScaler,
+      textScaleFactor: textScaleFactor,
     )..layout(maxWidth: maxWidth);
 
     return painter.height + fontSize;
@@ -736,7 +736,7 @@ class _SongPageState extends State<SongPage> {
       return maxFontSize;
     }
 
-    final textScaler = MediaQuery.of(context).textScaler;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final textDirection = Directionality.of(context);
 
     for (double fontSize = maxFontSize;
@@ -754,7 +754,7 @@ class _SongPageState extends State<SongPage> {
           ),
           maxLines: 1,
           textDirection: textDirection,
-          textScaler: textScaler,
+          textScaleFactor: textScaleFactor,
         )..layout(maxWidth: maxWidth);
 
         return !painter.didExceedMaxLines && painter.width <= maxWidth;
