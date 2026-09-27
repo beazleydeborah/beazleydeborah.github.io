@@ -35,6 +35,7 @@ class _SongPageState extends State<SongPage> {
   static const double _desktopLyricsHorizontalPadding = 32;
   static const double _desktopLyricsTopPadding = 16;
   static const double _desktopLyricsBottomPadding = 16;
+  static const double _mobileWidthSafetyPadding = 12;
   static const Color _desktopChordColor = Color(0xFFC7A6FF);
 
   String? errorHandle;
@@ -736,6 +737,11 @@ class _SongPageState extends State<SongPage> {
       return maxFontSize;
     }
 
+    final effectiveMaxWidth = maxWidth - _mobileWidthSafetyPadding;
+    if (effectiveMaxWidth <= 0) {
+      return minFontSize;
+    }
+
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final textDirection = Directionality.of(context);
 
@@ -764,7 +770,8 @@ class _SongPageState extends State<SongPage> {
       return maxFontSize;
     }
 
-    final estimatedFontSize = (maxWidth / widestLineWidth) * maxFontSize;
+    final estimatedFontSize =
+        (effectiveMaxWidth / widestLineWidth) * maxFontSize;
     final startingFontSize = estimatedFontSize.clamp(
       minFontSize,
       maxFontSize,
@@ -786,9 +793,9 @@ class _SongPageState extends State<SongPage> {
           maxLines: 1,
           textDirection: textDirection,
           textScaleFactor: textScaleFactor,
-        )..layout(maxWidth: maxWidth);
+        )..layout(maxWidth: effectiveMaxWidth);
 
-        return !painter.didExceedMaxLines && painter.width <= maxWidth;
+        return !painter.didExceedMaxLines && painter.width <= effectiveMaxWidth;
       });
 
       if (allLinesFit) {
