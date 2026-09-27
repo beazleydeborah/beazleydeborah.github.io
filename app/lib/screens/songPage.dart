@@ -1,4 +1,3 @@
-import '../helpers/edit_song_for_display.dart';
 import '../helpers/file_to_song.dart';
 import '../helpers/index_service.dart';
 import '../helpers/indextoSong.dart';
@@ -12,8 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './settingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:auto_size_text/auto_size_text.dart';
 
 import 'dart:convert';
 
@@ -41,8 +38,6 @@ class _SongPageState extends State<SongPage> {
   static const Color _desktopChordColor = Color(0xFFC7A6FF);
 
   String? errorHandle;
-  var autoDisplay = AutoSizeGroup();
-  var desktopAutoDisplay = AutoSizeGroup();
 
   List<String> splitLineText = [];
 
@@ -377,6 +372,13 @@ class _SongPageState extends State<SongPage> {
       ];
     } else {
       final renderedDesktopPages = _buildDesktopRenderedPages(settings);
+      final desktopFontSize = _resolveDesktopFontSize(
+        context,
+        settings,
+        renderedDesktopPages,
+        desktopTextWidth,
+        desktopTextHeight,
+      );
 
       for (final page in renderedDesktopPages) {
         desktopTextWidgets.add(
@@ -395,18 +397,30 @@ class _SongPageState extends State<SongPage> {
                 ),
                 child: SizedBox(
                   height: desktopTextHeight,
-                  child: AutoSizeText.rich(
-                    _buildDesktopPageSpan(page, settings, desktopTextWidth),
-                    group: desktopAutoDisplay,
-                    maxLines: page.lines.length,
-                    minFontSize: 11,
-                    stepGranularity: 0.5,
-                    style: _baseTextStyle(
-                      settings,
-                      _desktopMaxFontSize(settings, desktopTextWidth),
-                    ),
-                    overflow: TextOverflow.visible,
-                    softWrap: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text.rich(
+                        _buildDesktopPageSpan(page, settings, desktopFontSize),
+                        maxLines: page.lines.length,
+                        style: _baseTextStyle(
+                          settings,
+                          desktopFontSize,
+                        ),
+                        overflow: TextOverflow.visible,
+                        softWrap: false,
+                      ),
+                      if (page.nextPreviewLine != null) ...[
+                        SizedBox(height: desktopFontSize),
+                        Text(
+                          _formatNextPagePreviewLine(page.nextPreviewLine!),
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.visible,
+                          style: _baseTextStyle(settings, desktopFontSize),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               ),
@@ -438,12 +452,9 @@ class _SongPageState extends State<SongPage> {
   TextSpan _buildDesktopPageSpan(
     _DesktopPageData page,
     Settings settings,
-    double maxWidth,
+    double fontSize,
   ) {
-    final baseStyle = _baseTextStyle(
-      settings,
-      _desktopMaxFontSize(settings, maxWidth),
-    );
+    final baseStyle = _baseTextStyle(settings, fontSize);
 
     return TextSpan(
       children: List<TextSpan>.generate(page.lines.length, (index) {
@@ -465,23 +476,13 @@ class _SongPageState extends State<SongPage> {
 
     return List<_DesktopPageData>.generate(desktopPages.length, (index) {
       final nextPageFirstLine = index + 1 < desktopPages.length
-          ? desktopPages[index + 1].firstLyricLine
+          ? desktopPages[index + 1].firstPreviewLine
           : null;
 
-      if (nextPageFirstLine == null) {
-        return desktopPages[index];
-      }
-
       return _DesktopPageData(
-        lines: [
-          ...desktopPages[index].lines,
-          _DisplayLineData(text: '', isChordLine: false),
-          _DisplayLineData(
-            text: _formatNextPagePreviewLine(nextPageFirstLine),
-            isChordLine: false,
-          ),
-        ],
-        firstLyricLine: desktopPages[index].firstLyricLine,
+        lines: desktopPages[index].lines,
+        firstPreviewLine: desktopPages[index].firstPreviewLine,
+        nextPreviewLine: nextPageFirstLine,
       );
     });
   }
@@ -525,22 +526,28 @@ class _SongPageState extends State<SongPage> {
   List<_DesktopPageData> _buildDesktopPages(Settings settings) {
     final desktopPages = <_DesktopPageData>[];
     final currentLines = <_DisplayLineData>[];
-    String? firstLyricLine;
+    String? firstPreviewLine;
 
     void pushPage() {
       if (currentLines.isEmpty) {
-        firstLyricLine = null;
+        firstPreviewLine = null;
         return;
       }
 
       desktopPages.add(
         _DesktopPageData(
           lines: List<_DisplayLineData>.from(currentLines),
-          firstLyricLine: firstLyricLine,
+          firstPreviewLine: firstPreviewLine,
         ),
       );
       currentLines.clear();
-      firstLyricLine = null;
+      firstPreviewLine = null;
+    }
+
+    void captureFirstPreviewLine(String text) {
+      if (firstPreviewLine == null && text.trim().isNotEmpty) {
+        firstPreviewLine = text;
+      }
     }
 
     for (final line in _buildOrderedSongLines()) {
@@ -549,19 +556,17 @@ class _SongPageState extends State<SongPage> {
         continue;
       }
 
-      if (firstLyricLine == null && line.lyricLine.trim().isNotEmpty) {
-        firstLyricLine = line.lyricLine;
-      }
-
       if (settings.chords && line.chordLine.contains('%')) {
         final trimmedChordLine = line.chordLine.replaceAll('%', '').trimRight();
         if (trimmedChordLine.trim().isNotEmpty) {
+          captureFirstPreviewLine(trimmedChordLine);
           currentLines.add(
             _DisplayLineData(text: trimmedChordLine, isChordLine: true),
           );
         }
       }
 
+      captureFirstPreviewLine(line.lyricLine);
       currentLines.add(
         _DisplayLineData(text: line.lyricLine, isChordLine: false),
       );
@@ -639,6 +644,84 @@ class _SongPageState extends State<SongPage> {
     return settings.chords ? maxWidth / 4 : maxWidth / 2;
   }
 
+  double _resolveDesktopFontSize(
+    BuildContext context,
+    Settings settings,
+    List<_DesktopPageData> pages,
+    double maxWidth,
+    double maxHeight,
+  ) {
+    const minFontSize = 11.0;
+    const stepGranularity = 0.5;
+    final maxFontSize = _desktopMaxFontSize(settings, maxWidth);
+
+    if (maxWidth <= 0 ||
+        maxWidth.isInfinite ||
+        maxHeight <= 0 ||
+        maxHeight.isInfinite ||
+        pages.isEmpty) {
+      return minFontSize;
+    }
+
+    final textScaler = MediaQuery.of(context).textScaler;
+    final textDirection = Directionality.of(context);
+
+    for (double fontSize = maxFontSize;
+        fontSize >= minFontSize;
+        fontSize -= stepGranularity) {
+      final allPagesFit = pages.every((page) {
+        final painter = TextPainter(
+          text: _buildDesktopPageSpan(page, settings, fontSize),
+          maxLines: page.lines.length,
+          textDirection: textDirection,
+          textScaler: textScaler,
+        )..layout(maxWidth: maxWidth);
+
+        final previewHeight = page.nextPreviewLine == null
+            ? 0.0
+            : _measureDesktopPreviewHeight(
+                context,
+                settings,
+                page.nextPreviewLine!,
+                fontSize,
+                maxWidth,
+              );
+
+        return !painter.didExceedMaxLines &&
+            painter.width <= maxWidth &&
+            painter.height + previewHeight <= maxHeight;
+      });
+
+      if (allPagesFit) {
+        return fontSize;
+      }
+    }
+
+    return minFontSize;
+  }
+
+  double _measureDesktopPreviewHeight(
+    BuildContext context,
+    Settings settings,
+    String previewLine,
+    double fontSize,
+    double maxWidth,
+  ) {
+    final textScaler = MediaQuery.of(context).textScaler;
+    final textDirection = Directionality.of(context);
+    final painter = TextPainter(
+      text: TextSpan(
+        text: _formatNextPagePreviewLine(previewLine),
+        style: _baseTextStyle(settings, fontSize),
+      ),
+      maxLines: 1,
+      textDirection: textDirection,
+      textScaler: textScaler,
+    )..layout(maxWidth: maxWidth);
+
+    return painter.height + fontSize;
+  }
+
   double _resolveMobileFontSize(
     BuildContext context,
     Settings settings,
@@ -653,7 +736,7 @@ class _SongPageState extends State<SongPage> {
       return maxFontSize;
     }
 
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final textScaler = MediaQuery.of(context).textScaler;
     final textDirection = Directionality.of(context);
 
     for (double fontSize = maxFontSize;
@@ -671,7 +754,7 @@ class _SongPageState extends State<SongPage> {
           ),
           maxLines: 1,
           textDirection: textDirection,
-          textScaleFactor: textScaleFactor,
+          textScaler: textScaler,
         )..layout(maxWidth: maxWidth);
 
         return !painter.didExceedMaxLines && painter.width <= maxWidth;
@@ -688,11 +771,13 @@ class _SongPageState extends State<SongPage> {
 
 class _DesktopPageData {
   final List<_DisplayLineData> lines;
-  final String? firstLyricLine;
+  final String? firstPreviewLine;
+  final String? nextPreviewLine;
 
   _DesktopPageData({
     required this.lines,
-    required this.firstLyricLine,
+    required this.firstPreviewLine,
+    this.nextPreviewLine,
   });
 }
 

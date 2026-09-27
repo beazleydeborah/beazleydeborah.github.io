@@ -24,28 +24,33 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="app">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png?v={{flutter_service_worker_version}}">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png?v={{flutter_service_worker_version}}"/>
 
   <title>app</title>
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json?v={{flutter_service_worker_version}}">
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
-    var serviceWorkerVersion = null;
+    const buildVersion = '{{flutter_service_worker_version}}';
     var scriptLoaded = false;
+
+    function assetUrl(path) {
+      return path + '?v=' + buildVersion;
+    }
+
     function loadMainDartJs() {
       if (scriptLoaded) {
         return;
       }
       scriptLoaded = true;
       var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
+      scriptTag.src = assetUrl('main.dart.js');
       scriptTag.type = 'application/javascript';
       document.body.append(scriptTag);
     }
@@ -56,7 +61,7 @@
         // Wait for registration to finish before dropping the <script> tag.
         // Otherwise, the browser will load the script multiple times,
         // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+        var serviceWorkerUrl = assetUrl('flutter_service_worker.js');
         navigator.serviceWorker.register(serviceWorkerUrl)
           .then((reg) => {
             function waitForActivation(serviceWorker) {
@@ -71,7 +76,7 @@
               // No active web worker and we have installed or are installing
               // one for the first time. Simply wait for it to activate.
               waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+            } else if (!reg.active.scriptURL.endsWith(buildVersion)) {
               // When the app updates the serviceWorkerVersion changes, so we
               // need to ask the service worker to update.
               console.log('New service worker available.');
