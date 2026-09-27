@@ -341,28 +341,40 @@ class _SongPageState extends State<SongPage> {
   List<Widget> transform(Settings settings, bool useScrollableLayout,
       [double desktopTextWidth = 0, double desktopTextHeight = 0]) {
     final displayedLines = _buildDisplayLines(settings);
-    List<Widget> mobileTextWidgets = [];
     List<Widget> desktopTextWidgets = [];
-    displayedLines.forEach((line) {
-      mobileTextWidgets.add(
-        AutoSizeText(
-          line.text,
-          style: _lineTextStyle(
-            line,
-            settings,
-            30,
-          ),
-          maxLines: 1,
-          minFontSize: 6,
-          stepGranularity: 0.5,
-          overflow: TextOverflow.visible,
-          group: autoDisplay,
-        ),
-      );
-    });
 
     if (useScrollableLayout) {
-      return mobileTextWidgets;
+      return [
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final mobileFontSize = _resolveMobileFontSize(
+              context,
+              settings,
+              displayedLines,
+              constraints.maxWidth,
+            );
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: displayedLines
+                  .map(
+                    (line) => Text(
+                      line.text,
+                      maxLines: 1,
+                      softWrap: false,
+                      overflow: TextOverflow.visible,
+                      style: _lineTextStyle(
+                        line,
+                        settings,
+                        mobileFontSize,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            );
+          },
+        ),
+      ];
     } else {
       final renderedDesktopPages = _buildDesktopRenderedPages(settings);
 
@@ -625,6 +637,52 @@ class _SongPageState extends State<SongPage> {
     }
 
     return settings.chords ? maxWidth / 4 : maxWidth / 2;
+  }
+
+  double _resolveMobileFontSize(
+    BuildContext context,
+    Settings settings,
+    List<_DisplayLineData> displayedLines,
+    double maxWidth,
+  ) {
+    const maxFontSize = 30.0;
+    const minFontSize = 6.0;
+    const stepGranularity = 0.5;
+
+    if (maxWidth <= 0 || maxWidth.isInfinite || displayedLines.isEmpty) {
+      return maxFontSize;
+    }
+
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final textDirection = Directionality.of(context);
+
+    for (double fontSize = maxFontSize;
+        fontSize >= minFontSize;
+        fontSize -= stepGranularity) {
+      final allLinesFit = displayedLines.every((line) {
+        if (line.text.isEmpty) {
+          return true;
+        }
+
+        final painter = TextPainter(
+          text: TextSpan(
+            text: line.text,
+            style: _lineTextStyle(line, settings, fontSize),
+          ),
+          maxLines: 1,
+          textDirection: textDirection,
+          textScaleFactor: textScaleFactor,
+        )..layout(maxWidth: maxWidth);
+
+        return !painter.didExceedMaxLines && painter.width <= maxWidth;
+      });
+
+      if (allLinesFit) {
+        return fontSize;
+      }
+    }
+
+    return minFontSize;
   }
 }
 
