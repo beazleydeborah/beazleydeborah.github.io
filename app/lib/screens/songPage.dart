@@ -71,10 +71,6 @@ class _SongPageState extends State<SongPage> {
   }
 
   bool _useScrollableLayout(BuildContext context) {
-    if (kIsWeb) {
-      return false;
-    }
-
     return MediaQuery.of(context).size.shortestSide < 600;
   }
 
